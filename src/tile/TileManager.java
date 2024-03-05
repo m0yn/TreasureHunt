@@ -16,7 +16,7 @@ public class TileManager {
     public TileManager(GamePanel gp) {
 
         this.gp = gp;
-        tile = new Tile[20];
+        tile = new Tile[21];
         getTileImage();
 
     }
@@ -86,6 +86,9 @@ public class TileManager {
             tile[19] = new Tile();
             tile[19].image = ImageIO.read(getClass().getResourceAsStream("/tiles/water2.png"));
 
+            tile[20] = new Tile();
+            tile[20].image = ImageIO.read(getClass().getResourceAsStream("/items/chestC.png"));
+
         } catch (IOException e) {
 
             e.printStackTrace();
@@ -98,12 +101,31 @@ public class TileManager {
 
         // Loop to draw tiles on screen.
         for ( xmultiplier = 0; xmultiplier <= 9; xmultiplier++) {
-            for ( ymultiplier = 0; ymultiplier <= 9; ymultiplier++) {
+            for ( ymultiplier = 1; ymultiplier <= 10; ymultiplier++) {
 
-                g2.drawImage(tile[0].image, (tSize*xmultiplier), (tSize*ymultiplier), tSize, tSize, null);
+                g2.drawImage(tile[5].image, (tSize*xmultiplier), (tSize*ymultiplier), tSize, tSize, null);
 
             }
         }
+
+        // Walls
+        g2.drawImage(tile[1].image, tSize, tSize, tSize, tSize, null);
+        g2.drawImage(tile[16].image, 0, tSize*4, tSize, tSize, null);
+        g2.drawImage(tile[17].image, 0, tSize*8, tSize, tSize, null);
+        g2.drawImage(tile[17].image, tSize*8, tSize, tSize, tSize, null);
+        g2.drawImage(tile[1].image, tSize*9, tSize*6, tSize, tSize, null);
+        g2.drawImage(tile[17].image, 0, tSize*8, tSize, tSize, null);
+
+        // Treasures
+        g2.drawImage(tile[20].image, tSize*2, tSize*2, tSize, tSize, null);
+        g2.drawImage(tile[20].image, tSize*7, tSize*2, tSize, tSize, null);
+        g2.drawImage(tile[20].image, tSize*5, tSize*4, tSize, tSize, null);
+        g2.drawImage(tile[20].image, tSize*8, tSize*5, tSize, tSize, null);
+        g2.drawImage(tile[20].image, tSize, tSize*6, tSize, tSize, null);
+        g2.drawImage(tile[20].image, tSize*5, tSize*7, tSize, tSize, null);
+        g2.drawImage(tile[20].image, tSize*2, tSize*9, tSize, tSize, null);
+        g2.drawImage(tile[20].image, tSize*8, tSize*9, tSize, tSize, null);
+
 
     }
 

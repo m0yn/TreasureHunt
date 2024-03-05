@@ -43,6 +43,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     }
 
+    // Function that repaints the screen 60 times a second.
     public void run() {
 
         double drawInterval = 1000000000/FPS;
@@ -53,6 +54,7 @@ public class GamePanel extends JPanel implements Runnable {
             repaint();
 
 
+            // Checks for an error then throws an exception.
             try {
 
                 double remainingTime = nextDrawTime - System.nanoTime();
@@ -80,6 +82,7 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
 
+    // Paint Function
     public void paintComponent(Graphics g) {
 
         super.paintComponent(g);

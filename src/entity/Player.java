@@ -7,7 +7,6 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.util.concurrent.ThreadLocalRandom;
 
 
 public class Player extends Entity {
@@ -38,14 +37,14 @@ public class Player extends Entity {
 
         try {
 
-            up1 = ImageIO.read(getClass().getResourceAsStream("/player/CarloU1.png"));
-            down1 = ImageIO.read(getClass().getResourceAsStream("/player/CarloD1.png"));
-            left1 = ImageIO.read(getClass().getResourceAsStream("/player/CarloL1.png"));
-            right1 = ImageIO.read(getClass().getResourceAsStream("/player/CarloR1.png"));
-            up2 = ImageIO.read(getClass().getResourceAsStream("/player/CarloU2.png"));
-            down2 = ImageIO.read(getClass().getResourceAsStream("/player/CarloD2.png"));
-            left2 = ImageIO.read(getClass().getResourceAsStream("/player/CarloL2.png"));
-            right2 = ImageIO.read(getClass().getResourceAsStream("/player/CarloR2.png"));
+            up1 = ImageIO.read(getClass().getResourceAsStream("/players/CarloU1.png"));
+            down1 = ImageIO.read(getClass().getResourceAsStream("/players/CarloD1.png"));
+            left1 = ImageIO.read(getClass().getResourceAsStream("/players/CarloL1.png"));
+            right1 = ImageIO.read(getClass().getResourceAsStream("/players/CarloR1.png"));
+            up2 = ImageIO.read(getClass().getResourceAsStream("/players/CarloU2.png"));
+            down2 = ImageIO.read(getClass().getResourceAsStream("/players/CarloD2.png"));
+            left2 = ImageIO.read(getClass().getResourceAsStream("/players/CarloL2.png"));
+            right2 = ImageIO.read(getClass().getResourceAsStream("/players/CarloR2.png"));
 
         } catch (IOException e) {
 
