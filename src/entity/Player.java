@@ -8,6 +8,8 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
+import static tile.TileManager.tSize;
+
 
 public class Player extends Entity {
 
@@ -95,7 +97,7 @@ public class Player extends Entity {
 
         }
 
-        g2.drawImage(image, x, y, gp.tileSize, gp.tileSize, null);
+        g2.drawImage(image, x, y, tSize, tSize, null);
 
     }
 
