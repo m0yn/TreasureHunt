@@ -10,18 +10,23 @@ public class TileManager {
 
     GamePanel gp;
     Tile[] tile; // Array for tile assets.
-    public static int tSize = 80; // Size of each tile on screen.
+    public static int bSize = 80; // Size of each block on screen.
+    public static int iSize = 70; // Size of each item on screen.
+    public static int tSize = 50; // Size of each trap and weapon on screen.
+    public static int iAdj = (bSize-iSize)/2; // Center each item on its block.
+    public static int twAdj = (bSize-tSize)/2; // Center each trap or weapon on its block.
     int xT, yT; // Multiplier to assign tile locations on screen.
 
+    // Constructor fot TileManager to get and assign object images to screen tiles.
     public TileManager(GamePanel gp) {
 
         this.gp = gp;
-        tile = new Tile[30];
+        tile = new Tile[50];
         getTileImage();
 
     }
 
-    // Assets for game tiles.
+    // Assets for game objects.
     public void getTileImage() {
 
         try {
@@ -42,7 +47,7 @@ public class TileManager {
             tile[4].image = ImageIO.read(getClass().getResourceAsStream("/tiles/dirt1.png"));
 
             tile[5] = new Tile();
-            tile[5].image = ImageIO.read(getClass().getResourceAsStream("/tiles/grass1.png"));
+            tile[5].image = ImageIO.read(getClass().getResourceAsStream("/tiles/grass2.png"));
 
             tile[6] = new Tile();
             tile[6].image = ImageIO.read(getClass().getResourceAsStream("/tiles/ground1.png"));
@@ -90,10 +95,67 @@ public class TileManager {
             tile[20].image = ImageIO.read(getClass().getResourceAsStream("/items/chestC.png"));
 
             tile[21] = new Tile();
-            tile[21].image = ImageIO.read(getClass().getResourceAsStream("/items/shop.png"));
+            tile[21].image = ImageIO.read(getClass().getResourceAsStream("/items/shop1.png"));
 
             tile[22] = new Tile();
             tile[22].image = ImageIO.read(getClass().getResourceAsStream("/items/castle3.png"));
+
+            tile[23] = new Tile();
+            tile[23].image = ImageIO.read(getClass().getResourceAsStream("/items/trap1.png"));
+
+            tile[24] = new Tile();
+            tile[24].image = ImageIO.read(getClass().getResourceAsStream("/items/trap2.png"));
+
+            tile[25] = new Tile();
+            tile[25].image = ImageIO.read(getClass().getResourceAsStream("/items/trap3.png"));
+
+            tile[26] = new Tile();
+            tile[26].image = ImageIO.read(getClass().getResourceAsStream("/items/shop2.png"));
+
+            tile[27] = new Tile();
+            tile[27].image = ImageIO.read(getClass().getResourceAsStream("/items/shop3.png"));
+
+            tile[28] = new Tile();
+            tile[28].image = ImageIO.read(getClass().getResourceAsStream("/items/castle2.png"));
+
+            tile[29] = new Tile();
+            tile[29].image = ImageIO.read(getClass().getResourceAsStream("/items/castle.png"));
+
+            tile[30] = new Tile();
+            tile[30].image = ImageIO.read(getClass().getResourceAsStream("/tiles/grass1.png"));
+
+            tile[31] = new Tile();
+            tile[31].image = ImageIO.read(getClass().getResourceAsStream("/tiles/grass3.png"));
+
+            tile[32] = new Tile();
+            tile[32].image = ImageIO.read(getClass().getResourceAsStream("/items/chestC2.png"));
+
+            tile[33] = new Tile();
+            tile[33].image = ImageIO.read(getClass().getResourceAsStream("/items/chestC3.png"));
+
+            tile[34] = new Tile();
+            tile[34].image = ImageIO.read(getClass().getResourceAsStream("/items/chestC4.png"));
+
+            tile[35] = new Tile();
+            tile[35].image = ImageIO.read(getClass().getResourceAsStream("/items/house1.png"));
+
+            tile[36] = new Tile();
+            tile[36].image = ImageIO.read(getClass().getResourceAsStream("/items/house2.png"));
+
+            tile[37] = new Tile();
+            tile[37].image = ImageIO.read(getClass().getResourceAsStream("/items/house3.png"));
+
+            tile[38] = new Tile();
+            tile[38].image = ImageIO.read(getClass().getResourceAsStream("/items/house4.png"));
+
+            tile[39] = new Tile();
+            tile[39].image = ImageIO.read(getClass().getResourceAsStream("/items/house5.png"));
+
+            tile[40] = new Tile();
+            tile[40].image = ImageIO.read(getClass().getResourceAsStream("/items/house6.png"));
+
+
+
 
         } catch (IOException e) {
 
@@ -103,23 +165,63 @@ public class TileManager {
 
     }
 
+    // Function to draw elements on the screen.
     public void draw(Graphics2D g2) {
+
+
+        // Four for loops to draw grass tiles in a checkerboard pattern.
+
+        for (xT = 1; xT <=9; xT += 2) {
+            for ( yT = 0; yT <= 10; yT += 2) {
+                // Grass tiles
+                g2.drawImage(tile[31].image, bSize*xT, bSize*yT, bSize, bSize, null);
+            }
+
+        }
+
+        for (xT = 0; xT <=10; xT += 2) {
+            for ( yT = 1; yT <= 9; yT += 2) {
+                // Grass tiles
+                g2.drawImage(tile[31].image, bSize*xT, bSize*yT, bSize, bSize, null);
+            }
+
+        }
+
+        for (xT = 0; xT <=10; xT += 2) {
+            for ( yT = 0; yT <= 10; yT += 2) {
+                // Grass tiles
+                g2.drawImage(tile[30].image, bSize*xT, bSize*yT, bSize, bSize, null);
+            }
+
+        }
+
+        for (xT = 1; xT <=11; xT += 2) {
+            for ( yT = 1; yT <= 11; yT += 2) {
+                // Grass tiles
+                g2.drawImage(tile[30].image, bSize*xT, bSize*yT, bSize, bSize, null);
+            }
+
+        }
+
+
+
+
+
+
 
         // Loop to draw tile elements on screen.
         for ( xT = 0; xT <= 11; xT++) {
             for ( yT = 0; yT <= 11; yT++) {
 
-                // Grass tiles
-                g2.drawImage(tile[5].image, (tSize*xT), (tSize*yT), tSize, tSize, null);
                 // Wall tiles
-                g2.drawImage(tile[16].image, (tSize*xT), 0, tSize, tSize, null);
-                g2.drawImage(tile[2].image, 0, (tSize*yT), tSize, tSize, null);
-                g2.drawImage(tile[16].image, tSize*11, (tSize*yT), tSize, tSize, null);
-                g2.drawImage(tile[2].image, (tSize*xT), tSize*11, tSize, tSize, null);
+                g2.drawImage(tile[16].image, (bSize*xT), 0, bSize, bSize, null);
+                g2.drawImage(tile[2].image, 0, (bSize*yT), bSize, bSize, null);
+                g2.drawImage(tile[16].image, bSize*11, (bSize*yT), bSize, bSize, null);
+                g2.drawImage(tile[2].image, (bSize*xT), bSize*11, bSize, bSize, null);
                 // Outside of bounds tiles
-                g2.drawImage(tile[7].image, tSize*(xT+11), tSize*yT, tSize, tSize, null);
-                g2.drawImage(tile[7].image, tSize*xT, tSize*(yT+11), tSize, tSize, null);
-                g2.drawImage(tile[7].image, tSize*(xT+11), tSize*(yT+11), tSize, tSize, null);
+                g2.drawImage(tile[7].image, bSize*(xT+11), bSize*yT, bSize, bSize, null);
+                g2.drawImage(tile[7].image, bSize*xT, bSize*(yT+11), bSize, bSize, null);
+                g2.drawImage(tile[7].image, bSize*(xT+11), bSize*(yT+11), bSize, bSize, null);
 
 
 
@@ -127,32 +229,61 @@ public class TileManager {
         }
 
         // Walls
-        g2.drawImage(tile[16].image, tSize*2, tSize, tSize, tSize, null);
-        g2.drawImage(tile[2].image, tSize, tSize*5, tSize, tSize, null);
-        g2.drawImage(tile[2].image, tSize, tSize*9, tSize, tSize, null);
-        g2.drawImage(tile[16].image, tSize*9, tSize, tSize, tSize, null);
-        g2.drawImage(tile[16].image, tSize*10, tSize*7, tSize, tSize, null);
+        g2.drawImage(tile[16].image, bSize*2, bSize, bSize, bSize, null);
+        g2.drawImage(tile[2].image, bSize, bSize*5, bSize, bSize, null);
+        g2.drawImage(tile[2].image, bSize, bSize*9, bSize, bSize, null);
+        g2.drawImage(tile[16].image, bSize*9, bSize, bSize, bSize, null);
+        g2.drawImage(tile[16].image, bSize*10, bSize*7, bSize, bSize, null);
 
 
         // Treasures
-        g2.drawImage(tile[20].image, tSize*3, tSize*2, tSize, tSize, null);
-        g2.drawImage(tile[20].image, tSize*8, tSize*2, tSize, tSize, null);
-        g2.drawImage(tile[20].image, tSize*6, tSize*4, tSize, tSize, null);
-        g2.drawImage(tile[20].image, tSize*9, tSize*5, tSize, tSize, null);
-        g2.drawImage(tile[20].image, tSize*2, tSize*6, tSize, tSize, null);
-        g2.drawImage(tile[20].image, tSize*6, tSize*7, tSize, tSize, null);
-        g2.drawImage(tile[20].image, tSize*3, tSize*9, tSize, tSize, null);
-        g2.drawImage(tile[20].image, tSize*9, tSize*9, tSize, tSize, null);
+        g2.drawImage(tile[32].image, bSize*3+iAdj, bSize*2+iAdj, iSize, iSize, null);
+        g2.drawImage(tile[33].image, bSize*8+iAdj, bSize*2+iAdj, iSize, iSize, null);
+        g2.drawImage(tile[34].image, bSize*6+iAdj, bSize*4+iAdj, iSize, iSize, null);
+        g2.drawImage(tile[20].image, bSize*9+iAdj, bSize*5+iAdj, iSize, iSize, null);
+        g2.drawImage(tile[20].image, bSize*2+iAdj, bSize*6+iAdj, iSize, iSize, null);
+        g2.drawImage(tile[34].image, bSize*6+iAdj, bSize*7+iAdj, iSize, iSize, null);
+        g2.drawImage(tile[33].image, bSize*3+iAdj, bSize*9+iAdj, iSize, iSize, null);
+        g2.drawImage(tile[32].image, bSize*9+iAdj, bSize*9+iAdj, iSize, iSize, null);
 
         // Markets
-        g2.drawImage(tile[21].image, tSize*4, tSize, tSize, tSize, null);
-        g2.drawImage(tile[21].image, tSize*6, tSize*3, tSize, tSize, null);
-        g2.drawImage(tile[21].image, tSize, tSize*7, tSize, tSize, null);
-        g2.drawImage(tile[21].image, tSize*8, tSize*8, tSize, tSize, null);
-        g2.drawImage(tile[21].image, tSize*4, tSize*10, tSize, tSize, null);
+        g2.drawImage(tile[26].image, bSize*4+iAdj, bSize+iAdj, iSize, iSize, null);
+        g2.drawImage(tile[27].image, bSize*6+iAdj, bSize*3+iAdj, iSize, iSize, null);
+        g2.drawImage(tile[21].image, bSize+iAdj, bSize*7+iAdj, iSize, iSize, null);
+        g2.drawImage(tile[27].image, bSize*8+iAdj, bSize*8+iAdj, iSize, iSize, null);
+        g2.drawImage(tile[26].image, bSize*4+iAdj, bSize*10+iAdj, iSize, iSize, null);
 
         // Castle
-        g2.drawImage(tile[22].image, tSize*6, tSize*5, tSize, tSize, null);
+        g2.drawImage(tile[29].image, bSize*6-20, bSize*5-20, bSize+20, bSize+30, null);
+
+        // Traps
+        g2.drawImage(tile[24].image, bSize*10+twAdj, bSize+twAdj, tSize, tSize, null);
+        g2.drawImage(tile[25].image, bSize+twAdj, bSize*3+twAdj, tSize, tSize, null);
+        g2.drawImage(tile[24].image, bSize*4+twAdj, bSize*5+twAdj, tSize, tSize, null);
+        g2.drawImage(tile[25].image, bSize*5+twAdj, bSize*8+twAdj, tSize, tSize, null);
+        g2.drawImage(tile[24].image, bSize*10+twAdj, bSize*10+twAdj, tSize, tSize, null);
+
+        // Starting House
+        g2.drawImage(tile[3].image, 0, bSize, bSize, bSize, null);
+        g2.drawImage(tile[3].image, bSize, bSize, bSize, bSize, null);
+        g2.drawImage(tile[28].image, 0, bSize-20, bSize, bSize+20, null);
+
+        // Lost Items
+        g2.drawImage(tile[38].image, bSize, bSize, bSize, bSize, null);
+        g2.drawImage(tile[36].image, bSize*7, bSize, bSize, bSize, null);
+        g2.drawImage(tile[37].image, bSize*9, bSize*2, bSize, bSize, null);
+        g2.drawImage(tile[35].image, bSize*3, bSize*3, bSize, bSize, null);
+        g2.drawImage(tile[39].image, bSize, bSize*4, bSize, bSize, null);
+        g2.drawImage(tile[40].image, bSize*8, bSize*4, bSize, bSize, null);
+        g2.drawImage(tile[39].image, bSize*5, bSize*6, bSize, bSize, null);
+        g2.drawImage(tile[40].image, bSize*10, bSize*6, bSize, bSize, null);
+        g2.drawImage(tile[39].image, bSize*8, bSize*7, bSize, bSize, null);
+        g2.drawImage(tile[35].image, bSize*2, bSize*8, bSize, bSize, null);
+        g2.drawImage(tile[37].image, bSize*2, bSize*9, bSize, bSize, null);
+        g2.drawImage(tile[36].image, bSize*7, bSize*9, bSize, bSize, null);
+        g2.drawImage(tile[38].image, bSize*5, bSize*10, bSize, bSize, null);
+
+
 
 
 

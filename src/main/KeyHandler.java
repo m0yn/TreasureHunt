@@ -12,14 +12,16 @@ public class KeyHandler implements KeyListener {
     // Boolean variables to check whether buttons are pressed.
     public boolean upPressed, downPressed, leftPressed, rightPressed;
 
+    // This method is called when a key is typed, but it is not used in this implementation.
     @Override
     public void keyTyped(KeyEvent e) {
     }
 
+    // This method is called when a key is pressed.
     @Override
     public void keyPressed(KeyEvent e) {
 
-        // If-statement to tell the character what to do depending on button pressed.
+        // If-statement used to shuffle between right and left leg animations.
         if (e.getKeyCode() == KeyEvent.VK_W) {
 
             upPressed = true;
@@ -76,10 +78,11 @@ public class KeyHandler implements KeyListener {
 
     }
 
+    // This method is called when a key is released.
     @Override
     public void keyReleased(KeyEvent e) {
 
-        // Switch-statement to suspends movement when the key is released.
+        // Switch-statement to suspend movement when the key is released.
         switch (e.getKeyCode()) {
 
             case KeyEvent.VK_W:

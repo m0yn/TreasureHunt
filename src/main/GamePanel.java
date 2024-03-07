@@ -17,7 +17,7 @@ public class GamePanel extends JPanel implements Runnable {
     final int screenWidth = tileSize * maxScreenCol;
     final int screenHeight = tileSize * maxScreenRow;
 
-    int FPS = 60;
+    int FPS = 60; // Game Framerate
 
     TileManager tileM = new TileManager(this);
     KeyHandler keyH = new KeyHandler();
@@ -26,6 +26,7 @@ public class GamePanel extends JPanel implements Runnable {
     Thread gameThread;
     Player player = new Player(this,keyH);
 
+    // Constructor for the GamePanel with default settings.
     public GamePanel() {
 
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
@@ -36,6 +37,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     }
 
+    // Start the game thread
     public void startGameThread() {
 
         gameThread = new Thread(this);
@@ -52,7 +54,6 @@ public class GamePanel extends JPanel implements Runnable {
         while (gameThread != null) {
 
             repaint();
-
 
             // Checks for an error then throws an exception.
             try {

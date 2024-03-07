@@ -8,7 +8,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
-import static tile.TileManager.tSize;
+import static tile.TileManager.bSize;
 
 
 public class Player extends Entity {
@@ -17,6 +17,7 @@ public class Player extends Entity {
     KeyHandler keyH;
 
 
+    // Constructor for the Player class.
     public Player(GamePanel gp, KeyHandler keyH) {
 
         this.gp = gp;
@@ -26,15 +27,17 @@ public class Player extends Entity {
 
     }
 
+    // Starting Values
     public void setDefaultValues() {
 
-        x = 100;
-        y = 100;
+        x = 0;
+        y = bSize-20;
         square = 16;
         direction = "right";
 
     }
 
+    // Load player images for different directions.
     public void getPlayerImage() {
 
         try {
@@ -56,6 +59,7 @@ public class Player extends Entity {
 
     }
 
+    // Draw the player on the screen based on the current direction and animation frame.
     public void draw(Graphics2D g2) {
 
         BufferedImage image = null;
@@ -97,7 +101,8 @@ public class Player extends Entity {
 
         }
 
-        g2.drawImage(image, x, y, tSize, tSize, null);
+        // Draw the player image on the screen
+        g2.drawImage(image, x, y, bSize, bSize+20, null);
 
     }
 
