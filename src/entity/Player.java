@@ -8,6 +8,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
+import static main.CollisionChecker.gp;
 import static tile.TileManager.bSize;
 
 
@@ -24,14 +25,15 @@ public class Player extends Entity {
         this.keyH = keyH;
         setDefaultValues();
         getPlayerImage();
+        solidArea = new Rectangle(8, 8, bSize, bSize);
 
     }
 
     // Starting Values
     public void setDefaultValues() {
 
-        x = 0;
-        y = bSize-20;
+        WorldX = 0;
+        WorldY = bSize-20;
         square = 16;
         direction = "right";
 
@@ -58,6 +60,7 @@ public class Player extends Entity {
         }
 
     }
+
 
     // Draw the player on the screen based on the current direction and animation frame.
     public void draw(Graphics2D g2) {
@@ -102,7 +105,7 @@ public class Player extends Entity {
         }
 
         // Draw the player image on the screen
-        g2.drawImage(image, x, y, bSize, bSize+20, null);
+        g2.drawImage(image, WorldX, WorldY, bSize, bSize+20, null);
 
     }
 

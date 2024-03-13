@@ -4,6 +4,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 import static entity.Entity.*;
+import static main.CollisionChecker.gp;
 
 
 // KeyListener interface to retrieve keyboard events.
@@ -25,7 +26,7 @@ public class KeyHandler implements KeyListener {
         if (e.getKeyCode() == KeyEvent.VK_W) {
 
             upPressed = true;
-            y -= square;
+            WorldY -= square;
             direction = "up";
             spriteCounter++;
 
@@ -34,7 +35,7 @@ public class KeyHandler implements KeyListener {
         else if (e.getKeyCode() == KeyEvent.VK_S) {
 
             downPressed = true;
-            y += square;
+            WorldY += square;
             direction = "down";
             spriteCounter++;
 
@@ -43,7 +44,7 @@ public class KeyHandler implements KeyListener {
         else if (e.getKeyCode() == KeyEvent.VK_A) {
 
             leftPressed = true;
-            x -= square;
+            WorldX -= square;
             direction = "left";
             spriteCounter++;
 
@@ -52,13 +53,13 @@ public class KeyHandler implements KeyListener {
         else if (e.getKeyCode() == KeyEvent.VK_D) {
 
             rightPressed = true;
-            x += square;
+            WorldX += square;
             direction = "right";
             spriteCounter++;
 
         }
 
-        // If-statement used to shuffle between right and left leg animations.
+
         if (spriteCounter > 0) {
 
             if (spriteNum ==1) {

@@ -9,13 +9,13 @@ import java.awt.*;
 public class GamePanel extends JPanel implements Runnable {
 
     // Screen settings
-    final int originalTileSize = 32;
-    final int scale = 3;
+    public final int originalTileSize = 32;
+    public final int scale = 3;
     public final int tileSize = originalTileSize * scale;
-    final int maxScreenCol = 16;
-    final int maxScreenRow = 12;
-    final int screenWidth = tileSize * maxScreenCol;
-    final int screenHeight = tileSize * maxScreenRow;
+    public final int maxScreenCol = 16;
+    public final int maxScreenRow = 12;
+    public final int screenWidth = tileSize * maxScreenCol;
+    public final int screenHeight = tileSize * maxScreenRow;
 
     int FPS = 60; // Game Framerate
 
@@ -24,6 +24,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     // In-game clock
     Thread gameThread;
+    public CollisionChecker cChecker = new CollisionChecker(this);
     Player player = new Player(this,keyH);
 
     // Constructor for the GamePanel with default settings.

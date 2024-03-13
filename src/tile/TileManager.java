@@ -4,17 +4,22 @@ import main.GamePanel;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
 public class TileManager {
 
+    public static final int GRID = 12;
     GamePanel gp;
-    Tile[] tile; // Array for tile assets.
+    public Tile[] tile; // Array for tile assets.
+    public int obsTileNum[][];
     public static int bSize = 80; // Size of each block on screen.
     public static int iSize = 70; // Size of each item on screen.
     public static int tSize = 50; // Size of each trap and weapon on screen.
-    public static int iAdj = (bSize-iSize)/2; // Center each item on its block.
-    public static int twAdj = (bSize-tSize)/2; // Center each trap or weapon on its block.
+    public static int iAdj = (bSize - iSize) / 2; // Center each item on its block.
+    public static int twAdj = (bSize - tSize) / 2; // Center each trap or weapon on its block.
     int xT, yT; // Multiplier to assign tile locations on screen.
 
     // Constructor fot TileManager to get and assign object images to screen tiles.
@@ -22,7 +27,9 @@ public class TileManager {
 
         this.gp = gp;
         tile = new Tile[50];
+        obsTileNum = new int[gp.maxScreenCol][gp.maxScreenRow];
         getTileImage();
+        loadObs();
 
     }
 
@@ -32,19 +39,22 @@ public class TileManager {
         try {
 
             tile[0] = new Tile();
-            tile[0].image = ImageIO.read(getClass().getResourceAsStream("/tiles/box1.png"));
+            tile[0].image = ImageIO.read(getClass().getResourceAsStream("/tiles/blank.png"));
 
             tile[1] = new Tile();
-            tile[1].image = ImageIO.read(getClass().getResourceAsStream("/tiles/brick1.png"));
+            tile[1].image = ImageIO.read(getClass().getResourceAsStream("/tiles/wall2.png"));
+
 
             tile[2] = new Tile();
             tile[2].image = ImageIO.read(getClass().getResourceAsStream("/tiles/brick2.png"));
+
 
             tile[3] = new Tile();
             tile[3].image = ImageIO.read(getClass().getResourceAsStream("/tiles/carpet1.png"));
 
             tile[4] = new Tile();
             tile[4].image = ImageIO.read(getClass().getResourceAsStream("/tiles/dirt1.png"));
+
 
             tile[5] = new Tile();
             tile[5].image = ImageIO.read(getClass().getResourceAsStream("/tiles/grass2.png"));
@@ -54,6 +64,7 @@ public class TileManager {
 
             tile[7] = new Tile();
             tile[7].image = ImageIO.read(getClass().getResourceAsStream("/tiles/ground2.png"));
+
 
             tile[8] = new Tile();
             tile[8].image = ImageIO.read(getClass().getResourceAsStream("/tiles/ice1.png"));
@@ -82,8 +93,9 @@ public class TileManager {
             tile[16] = new Tile();
             tile[16].image = ImageIO.read(getClass().getResourceAsStream("/tiles/wall1.png"));
 
+
             tile[17] = new Tile();
-            tile[17].image = ImageIO.read(getClass().getResourceAsStream("/tiles/wall2.png"));
+            tile[17].image = ImageIO.read(getClass().getResourceAsStream("/tiles/brick1.png"));
 
             tile[18] = new Tile();
             tile[18].image = ImageIO.read(getClass().getResourceAsStream("/tiles/water1.png"));
@@ -155,8 +167,6 @@ public class TileManager {
             tile[40].image = ImageIO.read(getClass().getResourceAsStream("/items/house6.png"));
 
 
-
-
         } catch (IOException e) {
 
             e.printStackTrace();
@@ -165,11 +175,55 @@ public class TileManager {
 
     }
 
+    public void loadObs() {
+
+        try {
+
+            InputStream is = getClass().getResourceAsStream("/maps/obstacles.txt");
+            BufferedReader br = new BufferedReader((new InputStreamReader(is)));
+
+            int col = 0;
+            int row = 0;
+
+            while (col < GRID && row < GRID) {
+
+                String line = br.readLine();
+
+                while(col < GRID) {
+
+                    String numbers[] = line.split(" ");
+
+                    int num = Integer.parseInt(numbers[col]);
+
+                    obsTileNum[col][row] = num;
+                    col++;
+
+                }
+
+                if (col == GRID) {
+
+                    col = 0;
+                    row++;
+
+                }
+
+            }
+
+            br.close();
+
+        } catch (Exception e) {
+
+        }
+
+    }
+
     // Function to draw elements on the screen.
     public void draw(Graphics2D g2) {
 
-
-        // Four for loops to draw grass tiles in a checkerboard pattern.
+        int col = 0;
+        int row = 0;
+        int x = 0;
+        int y = 0;
 
         for (xT = 1; xT <=9; xT += 2) {
             for ( yT = 0; yT <= 10; yT += 2) {
@@ -204,36 +258,17 @@ public class TileManager {
         }
 
 
-
-
-
-
-
         // Loop to draw tile elements on screen.
         for ( xT = 0; xT <= 11; xT++) {
             for ( yT = 0; yT <= 11; yT++) {
 
-                // Wall tiles
-                g2.drawImage(tile[16].image, (bSize*xT), 0, bSize, bSize, null);
-                g2.drawImage(tile[2].image, 0, (bSize*yT), bSize, bSize, null);
-                g2.drawImage(tile[16].image, bSize*11, (bSize*yT), bSize, bSize, null);
-                g2.drawImage(tile[2].image, (bSize*xT), bSize*11, bSize, bSize, null);
                 // Outside of bounds tiles
                 g2.drawImage(tile[7].image, bSize*(xT+11), bSize*yT, bSize, bSize, null);
                 g2.drawImage(tile[7].image, bSize*xT, bSize*(yT+11), bSize, bSize, null);
                 g2.drawImage(tile[7].image, bSize*(xT+11), bSize*(yT+11), bSize, bSize, null);
 
-
-
             }
         }
-
-        // Walls
-        g2.drawImage(tile[16].image, bSize*2, bSize, bSize, bSize, null);
-        g2.drawImage(tile[2].image, bSize, bSize*5, bSize, bSize, null);
-        g2.drawImage(tile[2].image, bSize, bSize*9, bSize, bSize, null);
-        g2.drawImage(tile[16].image, bSize*9, bSize, bSize, bSize, null);
-        g2.drawImage(tile[16].image, bSize*10, bSize*7, bSize, bSize, null);
 
 
         // Treasures
@@ -283,13 +318,25 @@ public class TileManager {
         g2.drawImage(tile[36].image, bSize*7, bSize*9, bSize, bSize, null);
         g2.drawImage(tile[38].image, bSize*5, bSize*10, bSize, bSize, null);
 
+        while (col < GRID && row < GRID) {
 
+            int obsNum = obsTileNum[col][row];
 
+            g2.drawImage(tile[obsNum].image, x, y, bSize, bSize, null);
 
+            col++;
+            x += bSize;
 
+            if (col == GRID) {
 
+                col = 0;
+                x = 0;
+                row++;
+                y += bSize;
 
+            }
 
+        }
 
     }
 
