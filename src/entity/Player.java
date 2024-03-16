@@ -25,7 +25,7 @@ public class Player extends Entity {
         this.keyH = keyH;
         setDefaultValues();
         getPlayerImage();
-        solidArea = new Rectangle(8, 8, bSize, bSize);
+        solidArea = new Rectangle(WorldX, WorldY, bSize-20, bSize);
 
     }
 
@@ -62,7 +62,20 @@ public class Player extends Entity {
     }
 
 
-    // Draw the player on the screen based on the current direction and animation frame.
+    public void update() {
+
+        collisionOn = false;
+        gp.cChecker.checkTile(this);
+
+        if (collisionOn == true) {
+            square = 0;
+        }
+        else if (collisionOn == false) {
+            square = 16;
+        }
+
+    }
+
     public void draw(Graphics2D g2) {
 
         BufferedImage image = null;

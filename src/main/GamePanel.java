@@ -54,6 +54,7 @@ public class GamePanel extends JPanel implements Runnable {
 
         while (gameThread != null) {
 
+            update();
             repaint();
 
             // Checks for an error then throws an exception.
@@ -80,6 +81,12 @@ public class GamePanel extends JPanel implements Runnable {
 
 
         }
+
+    }
+
+    public void update() {
+
+        player.update();
 
     }
 

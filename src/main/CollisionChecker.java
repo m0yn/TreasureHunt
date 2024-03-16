@@ -37,6 +37,7 @@ public class CollisionChecker {
 
                 if (gp.tileM.tile[tileNum1].collision == true || gp.tileM.tile[tileNum2].collision == true) {
 
+                    System.out.println("Upward collision detected!");
                     entity.collisionOn = true;
 
                 }
@@ -48,6 +49,7 @@ public class CollisionChecker {
 
                 if (gp.tileM.tile[tileNum1].collision == true || gp.tileM.tile[tileNum2].collision == true) {
 
+                    System.out.println("Downward collision detected!");
                     entity.collisionOn = true;
 
                 }
@@ -59,6 +61,7 @@ public class CollisionChecker {
 
                 if (gp.tileM.tile[tileNum1].collision == true || gp.tileM.tile[tileNum2].collision == true) {
 
+                    System.out.println("Leftward collision detected!");
                     entity.collisionOn = true;
 
                 }
@@ -70,6 +73,7 @@ public class CollisionChecker {
 
                 if (gp.tileM.tile[tileNum1].collision == true || gp.tileM.tile[tileNum2].collision == true) {
 
+                    System.out.println("Rightward collision detected!");
                     entity.collisionOn = true;
 
                 }
