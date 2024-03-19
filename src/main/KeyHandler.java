@@ -4,11 +4,14 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 import static entity.Entity.*;
+import static entity.Player.squares;
 import static main.CollisionChecker.gp;
+import entity.Player;
 
 
 // KeyListener interface to retrieve keyboard events.
 public class KeyHandler implements KeyListener {
+
 
     // Boolean variables to check whether buttons are pressed.
     public boolean upPressed, downPressed, leftPressed, rightPressed;
@@ -26,36 +29,42 @@ public class KeyHandler implements KeyListener {
         if (e.getKeyCode() == KeyEvent.VK_W) {
 
             upPressed = true;
-            WorldY -= square;
+            WorldY -= speed;
             direction = "up";
             spriteCounter++;
+            squares -= speed;
+
 
         }
 
         else if (e.getKeyCode() == KeyEvent.VK_S) {
 
             downPressed = true;
-            WorldY += square;
+            WorldY += speed;
             direction = "down";
             spriteCounter++;
+            squares -= speed;
+
 
         }
 
         else if (e.getKeyCode() == KeyEvent.VK_A) {
 
             leftPressed = true;
-            WorldX -= square;
+            WorldX -= speed;
             direction = "left";
             spriteCounter++;
+            squares -= speed;
 
         }
 
         else if (e.getKeyCode() == KeyEvent.VK_D) {
 
             rightPressed = true;
-            WorldX += square;
+            WorldX += speed;
             direction = "right";
             spriteCounter++;
+            squares -= speed;
 
         }
 
@@ -67,6 +76,7 @@ public class KeyHandler implements KeyListener {
                 spriteNum = 2;
 
             }
+
             else if (spriteNum == 2) {
 
                 spriteNum = 1;
@@ -100,5 +110,7 @@ public class KeyHandler implements KeyListener {
                 break;
 
         }
+
     }
+
 }

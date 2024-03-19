@@ -2,7 +2,9 @@ package main;
 
 import entity.Entity;
 
+import static entity.Entity.speed;
 import static tile.TileManager.bSize;
+import static entity.Player.squares;
 
 public class CollisionChecker {
 
@@ -16,10 +18,10 @@ public class CollisionChecker {
 
     public static void checkTile(Entity entity) {
 
-        int entityLeftWorldX = entity.WorldX + entity.solidArea.x;
-        int entityRightWorldX = entity.WorldX + entity.solidArea.x + entity.solidArea.width;
-        int entityTopWorldY = entity.WorldY + entity.solidArea.y;
-        int entityBottomWorldY = entity.WorldY + entity.solidArea.y + entity.solidArea.height;
+        int entityLeftWorldX = entity.WorldX + entity.solidArea.x + 10;
+        int entityRightWorldX = entity.WorldX + entity.solidArea.x + entity.solidArea.width - 10;
+        int entityTopWorldY = entity.WorldY + entity.solidArea.y + 10;
+        int entityBottomWorldY = entity.WorldY + entity.solidArea.y + entity.solidArea.height - 10;
 
         int entityLeftCol = entityLeftWorldX/bSize;
         int entityRightCol = entityRightWorldX/bSize;
@@ -31,7 +33,7 @@ public class CollisionChecker {
         switch (entity.direction) {
 
             case "up":
-                entityTopRow = (entityTopWorldY - entity.square)/bSize;
+                entityTopRow = (entityTopWorldY - speed)/bSize;
                 tileNum1 = gp.tileM.obsTileNum[entityLeftCol][entityTopRow];
                 tileNum2 = gp.tileM.obsTileNum[entityRightCol][entityTopRow];
 
@@ -43,7 +45,7 @@ public class CollisionChecker {
                 }
                 break;
             case "down":
-                entityBottomRow = (entityBottomWorldY + entity.square)/bSize;
+                entityBottomRow = (entityBottomWorldY + speed)/bSize;
                 tileNum1 = gp.tileM.obsTileNum[entityLeftCol][entityBottomRow];
                 tileNum2 = gp.tileM.obsTileNum[entityRightCol][entityBottomRow];
 
@@ -55,7 +57,7 @@ public class CollisionChecker {
                 }
                 break;
             case "left":
-                entityLeftCol = (entityLeftWorldX - entity.square)/bSize;
+                entityLeftCol = (entityLeftWorldX - speed)/bSize;
                 tileNum1 = gp.tileM.obsTileNum[entityLeftCol][entityTopRow];
                 tileNum2 = gp.tileM.obsTileNum[entityLeftCol][entityBottomRow];
 
@@ -67,7 +69,7 @@ public class CollisionChecker {
                 }
                 break;
             case "right":
-                entityRightCol = (entityRightWorldX + entity.square)/bSize;
+                entityRightCol = (entityRightWorldX + speed)/bSize;
                 tileNum1 = gp.tileM.obsTileNum[entityRightCol][entityTopRow];
                 tileNum2 = gp.tileM.obsTileNum[entityRightCol][entityBottomRow];
 

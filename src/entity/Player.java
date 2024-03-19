@@ -16,6 +16,9 @@ public class Player extends Entity {
 
     GamePanel gp;
     KeyHandler keyH;
+    static Dice dice = new Dice();
+    static int diceResult = dice.roll();
+    public static int squares = diceResult * 80;
 
 
     // Constructor for the Player class.
@@ -25,7 +28,7 @@ public class Player extends Entity {
         this.keyH = keyH;
         setDefaultValues();
         getPlayerImage();
-        solidArea = new Rectangle(WorldX, WorldY, bSize-20, bSize);
+        solidArea = new Rectangle(0, 20, bSize, bSize);
 
     }
 
@@ -34,7 +37,6 @@ public class Player extends Entity {
 
         WorldX = 0;
         WorldY = bSize-20;
-        square = 16;
         direction = "right";
 
     }
@@ -60,18 +62,20 @@ public class Player extends Entity {
         }
 
     }
-
-
     public void update() {
 
         collisionOn = false;
         gp.cChecker.checkTile(this);
 
-        if (collisionOn == true) {
-            square = 0;
+        if (collisionOn == true || squares == 0) {
+
+            speed = 0;
+
         }
-        else if (collisionOn == false) {
-            square = 16;
+        else {
+
+            speed = 16;
+
         }
 
     }
