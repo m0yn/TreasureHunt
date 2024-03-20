@@ -5,8 +5,6 @@ import java.awt.event.KeyListener;
 
 import static entity.Entity.*;
 import static entity.Player.squares;
-import static main.CollisionChecker.gp;
-import entity.Player;
 
 
 // KeyListener interface to retrieve keyboard events.
@@ -33,7 +31,6 @@ public class KeyHandler implements KeyListener {
             direction = "up";
             spriteCounter++;
             squares -= speed;
-
 
         }
 
@@ -65,6 +62,7 @@ public class KeyHandler implements KeyListener {
             direction = "right";
             spriteCounter++;
             squares -= speed;
+
 
         }
 

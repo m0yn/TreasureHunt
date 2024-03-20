@@ -21,27 +21,24 @@ public class Player extends Entity {
     public static int squares = diceResult * 80;
 
 
-    // Constructor for the Player class.
     public Player(GamePanel gp, KeyHandler keyH) {
 
         this.gp = gp;
         this.keyH = keyH;
         setDefaultValues();
         getPlayerImage();
-        solidArea = new Rectangle(0, 20, bSize, bSize);
+        solidArea = new Rectangle(0, 0, bSize, bSize);
 
     }
 
-    // Starting Values
     public void setDefaultValues() {
 
         WorldX = 0;
-        WorldY = bSize-20;
+        WorldY = bSize;
         direction = "right";
 
     }
 
-    // Load player images for different directions.
     public void getPlayerImage() {
 
         try {
@@ -63,18 +60,65 @@ public class Player extends Entity {
 
     }
     public void update() {
-
         collisionOn = false;
         gp.cChecker.checkTile(this);
 
-        if (collisionOn == true || squares == 0) {
+        if (collisionOn) {
 
             speed = 0;
 
+            if (WorldX % 80 != 0 && WorldY % 80 == 0 && direction == "left") {
+                WorldX = ((WorldX / 80) + 1) * 80;
+                squares += 16;
+            }
+            else if (WorldX % 80 != 0 && WorldY % 80 == 0 && direction == "right") {
+                WorldX = (WorldX / 80) * 80;
+                squares += 16;
+            }
+
+            if (WorldY % 80 != 0 && WorldX % 80 == 0 && direction == "up") {
+                // Round up WorldY to the nearest multiple of 80
+                WorldY = ((WorldY / 80) + 1) * 80;
+                squares += 16;
+            }
+            else if (WorldY % 80 != 0 && WorldX % 80 == 0 && direction == "down") {
+                WorldY = (WorldY / 80) * 80;
+                squares += 16;
+            }
+
+            if (WorldY % 80 != 0 && WorldX % 80 != 0 && direction == "up") {
+                WorldY = ((WorldY / 80) + 1) * 80;
+                squares += 16;
+            }
+            else if (WorldY % 80 != 0 && WorldX % 80 != 0 && direction == "down") {
+                WorldY = (WorldY / 80) * 80;
+                squares += 16;
+            }
+            else if (WorldY % 80 != 0 && WorldX % 80 != 0 && direction == "right") {
+                WorldX = (WorldX / 80) * 80;
+                squares += 16;
+            }
+            else if (WorldY % 80 != 0 && WorldX % 80 != 0 && direction == "left") {
+                WorldX = ((WorldX / 80) + 1) * 80;
+                squares += 16;
+
+            }
+
+
+
         }
         else {
-
             speed = 16;
+        }
+
+        if (squares == 0) {
+            speed = 0;
+
+            int tileX = (WorldX + bSize / 2) / bSize;
+            int tileY = (WorldY + bSize / 2) / bSize;
+
+            WorldX = tileX * bSize;
+            WorldY = tileY * bSize;
 
         }
 
@@ -121,8 +165,7 @@ public class Player extends Entity {
 
         }
 
-        // Draw the player image on the screen
-        g2.drawImage(image, WorldX, WorldY, bSize, bSize+20, null);
+        g2.drawImage(image, WorldX, WorldY, bSize, bSize, null);
 
     }
 
