@@ -221,7 +221,7 @@ public class TileManager {
 
                 String line = br.readLine();
 
-                while(col < GRID) {
+                while (col < GRID) {
 
                     String numbers[] = line.split(" ");
 
@@ -352,33 +352,30 @@ public class TileManager {
 
         if (dice.result == 1) {
             g2.drawImage(tile[45].image, bSize * 13, 0, bSize, bSize, null);
-        }
-        else if (dice.result == 2) {
+        } else if (dice.result == 2) {
             g2.drawImage(tile[46].image, bSize * 13, 0, bSize, bSize, null);
-        }
-        else if (dice.result == 3) {
+        } else if (dice.result == 3) {
             g2.drawImage(tile[47].image, bSize * 13, 0, bSize, bSize, null);
-        }
-        else if (dice.result == 4) {
+        } else if (dice.result == 4) {
             g2.drawImage(tile[48].image, bSize * 13, 0, bSize, bSize, null);
-        }
-        else if (dice.result == 5) {
+        } else if (dice.result == 5) {
             g2.drawImage(tile[49].image, bSize * 13, 0, bSize, bSize, null);
-        }
-        else if (dice.result == 6) {
+        } else if (dice.result == 6) {
             g2.drawImage(tile[50].image, bSize * 13, 0, bSize, bSize, null);
         }
 
-        while (col < GRID && row < GRID) {
+        while (col < GRID && row < GRID) {// Looping through the obstacle tile numbers array
 
-            int obsNum = obsTileNum[col][row];
+
+            int obsNum = obsTileNum[col][row];// Getting the obstacle tile number
 
             g2.drawImage(tile[obsNum].image, x, y, bSize, bSize, null);
 
             col++;
             x += bSize;
 
-            if (col == GRID) {
+            if (col == GRID) {    // Checking if the end of the row is reached
+
 
                 col = 0;
                 x = 0;
@@ -390,5 +387,4 @@ public class TileManager {
         }
 
     }
-
 }
