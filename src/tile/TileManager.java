@@ -9,6 +9,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
+import static entity.Player.dice;
+
 public class TileManager {
 
     public static final int GRID = 12;
@@ -26,7 +28,7 @@ public class TileManager {
     public TileManager(GamePanel gp) {
 
         this.gp = gp;
-        tile = new Tile[50];
+        tile = new Tile[60];
         obsTileNum = new int[gp.maxScreenCol][gp.maxScreenRow];
         getTileImage();
         loadObs();
@@ -178,6 +180,24 @@ public class TileManager {
             tile[44] = new Tile();
             tile[44].image = ImageIO.read(getClass().getResourceAsStream("/bars/healthBar.png"));
 
+            tile[45] = new Tile();
+            tile[45].image = ImageIO.read(getClass().getResourceAsStream("/objects/Dice1.png"));
+
+            tile[46] = new Tile();
+            tile[46].image = ImageIO.read(getClass().getResourceAsStream("/objects/Dice2.png"));
+
+            tile[47] = new Tile();
+            tile[47].image = ImageIO.read(getClass().getResourceAsStream("/objects/Dice3.png"));
+
+            tile[48] = new Tile();
+            tile[48].image = ImageIO.read(getClass().getResourceAsStream("/objects/Dice4.png"));
+
+            tile[49] = new Tile();
+            tile[49].image = ImageIO.read(getClass().getResourceAsStream("/objects/Dice5.png"));
+
+            tile[50] = new Tile();
+            tile[50].image = ImageIO.read(getClass().getResourceAsStream("/objects/Dice6.png"));
+
 
         } catch (IOException e) {
 
@@ -237,98 +257,115 @@ public class TileManager {
         int x = 0;
         int y = 0;
 
-        for (xT = 1; xT <=9; xT += 2) {
-            for ( yT = 0; yT <= 10; yT += 2) {
+        for (xT = 1; xT <= 9; xT += 2) {
+            for (yT = 0; yT <= 10; yT += 2) {
                 // Grass tiles
-                g2.drawImage(tile[31].image, bSize*xT, bSize*yT, bSize, bSize, null);
+                g2.drawImage(tile[31].image, bSize * xT, bSize * yT, bSize, bSize, null);
             }
 
         }
 
-        for (xT = 0; xT <=10; xT += 2) {
-            for ( yT = 1; yT <= 9; yT += 2) {
+        for (xT = 0; xT <= 10; xT += 2) {
+            for (yT = 1; yT <= 9; yT += 2) {
                 // Grass tiles
-                g2.drawImage(tile[31].image, bSize*xT, bSize*yT, bSize, bSize, null);
+                g2.drawImage(tile[31].image, bSize * xT, bSize * yT, bSize, bSize, null);
             }
 
         }
 
-        for (xT = 0; xT <=10; xT += 2) {
-            for ( yT = 0; yT <= 10; yT += 2) {
+        for (xT = 0; xT <= 10; xT += 2) {
+            for (yT = 0; yT <= 10; yT += 2) {
                 // Grass tiles
-                g2.drawImage(tile[30].image, bSize*xT, bSize*yT, bSize, bSize, null);
+                g2.drawImage(tile[30].image, bSize * xT, bSize * yT, bSize, bSize, null);
             }
 
         }
 
-        for (xT = 1; xT <=11; xT += 2) {
-            for ( yT = 1; yT <= 11; yT += 2) {
+        for (xT = 1; xT <= 11; xT += 2) {
+            for (yT = 1; yT <= 11; yT += 2) {
                 // Grass tiles
-                g2.drawImage(tile[30].image, bSize*xT, bSize*yT, bSize, bSize, null);
+                g2.drawImage(tile[30].image, bSize * xT, bSize * yT, bSize, bSize, null);
             }
 
         }
 
 
         // Loop to draw tile elements on screen.
-        for ( xT = 0; xT <= 11; xT++) {
-            for ( yT = 0; yT <= 11; yT++) {
+        for (xT = 0; xT <= 11; xT++) {
+            for (yT = 0; yT <= 11; yT++) {
 
                 // Outside of bounds tiles
-                g2.drawImage(tile[7].image, bSize*(xT+11), bSize*yT, bSize, bSize, null);
-                g2.drawImage(tile[7].image, bSize*xT, bSize*(yT+11), bSize, bSize, null);
-                g2.drawImage(tile[7].image, bSize*(xT+11), bSize*(yT+11), bSize, bSize, null);
+                g2.drawImage(tile[7].image, bSize * (xT + 11), bSize * yT, bSize, bSize, null);
+                g2.drawImage(tile[7].image, bSize * xT, bSize * (yT + 11), bSize, bSize, null);
+                g2.drawImage(tile[7].image, bSize * (xT + 11), bSize * (yT + 11), bSize, bSize, null);
 
             }
         }
 
 
         // Treasures
-        g2.drawImage(tile[32].image, bSize*3+iAdj, bSize*2+iAdj, iSize, iSize, null);
-        g2.drawImage(tile[33].image, bSize*8+iAdj, bSize*2+iAdj, iSize, iSize, null);
-        g2.drawImage(tile[34].image, bSize*6+iAdj, bSize*4+iAdj, iSize, iSize, null);
-        g2.drawImage(tile[20].image, bSize*9+iAdj, bSize*5+iAdj, iSize, iSize, null);
-        g2.drawImage(tile[20].image, bSize*2+iAdj, bSize*6+iAdj, iSize, iSize, null);
-        g2.drawImage(tile[34].image, bSize*6+iAdj, bSize*7+iAdj, iSize, iSize, null);
-        g2.drawImage(tile[33].image, bSize*3+iAdj, bSize*9+iAdj, iSize, iSize, null);
-        g2.drawImage(tile[32].image, bSize*9+iAdj, bSize*9+iAdj, iSize, iSize, null);
+        g2.drawImage(tile[32].image, bSize * 3 + iAdj, bSize * 2 + iAdj, iSize, iSize, null);
+        g2.drawImage(tile[33].image, bSize * 8 + iAdj, bSize * 2 + iAdj, iSize, iSize, null);
+        g2.drawImage(tile[34].image, bSize * 6 + iAdj, bSize * 4 + iAdj, iSize, iSize, null);
+        g2.drawImage(tile[20].image, bSize * 9 + iAdj, bSize * 5 + iAdj, iSize, iSize, null);
+        g2.drawImage(tile[20].image, bSize * 2 + iAdj, bSize * 6 + iAdj, iSize, iSize, null);
+        g2.drawImage(tile[34].image, bSize * 6 + iAdj, bSize * 7 + iAdj, iSize, iSize, null);
+        g2.drawImage(tile[33].image, bSize * 3 + iAdj, bSize * 9 + iAdj, iSize, iSize, null);
+        g2.drawImage(tile[32].image, bSize * 9 + iAdj, bSize * 9 + iAdj, iSize, iSize, null);
 
         // Markets
-        g2.drawImage(tile[26].image, bSize*4+iAdj, bSize+iAdj, iSize, iSize, null);
-        g2.drawImage(tile[27].image, bSize*6+iAdj, bSize*3+iAdj, iSize, iSize, null);
-        g2.drawImage(tile[21].image, bSize+iAdj, bSize*7+iAdj, iSize, iSize, null);
-        g2.drawImage(tile[27].image, bSize*8+iAdj, bSize*8+iAdj, iSize, iSize, null);
-        g2.drawImage(tile[26].image, bSize*4+iAdj, bSize*10+iAdj, iSize, iSize, null);
+        g2.drawImage(tile[26].image, bSize * 4 + iAdj, bSize + iAdj, iSize, iSize, null);
+        g2.drawImage(tile[27].image, bSize * 6 + iAdj, bSize * 3 + iAdj, iSize, iSize, null);
+        g2.drawImage(tile[21].image, bSize + iAdj, bSize * 7 + iAdj, iSize, iSize, null);
+        g2.drawImage(tile[27].image, bSize * 8 + iAdj, bSize * 8 + iAdj, iSize, iSize, null);
+        g2.drawImage(tile[26].image, bSize * 4 + iAdj, bSize * 10 + iAdj, iSize, iSize, null);
 
         // Castle
-        g2.drawImage(tile[29].image, bSize*6-20, bSize*5-20, bSize+20, bSize+30, null);
+        g2.drawImage(tile[29].image, bSize * 6 - 20, bSize * 5 - 20, bSize + 20, bSize + 30, null);
 
         // Traps
-        g2.drawImage(tile[24].image, bSize*10+twAdj, bSize+twAdj, tSize, tSize, null);
-        g2.drawImage(tile[25].image, bSize+twAdj, bSize*3+twAdj, tSize, tSize, null);
-        g2.drawImage(tile[24].image, bSize*4+twAdj, bSize*5+twAdj, tSize, tSize, null);
-        g2.drawImage(tile[25].image, bSize*5+twAdj, bSize*8+twAdj, tSize, tSize, null);
-        g2.drawImage(tile[24].image, bSize*10+twAdj, bSize*10+twAdj, tSize, tSize, null);
+        g2.drawImage(tile[24].image, bSize * 10 + twAdj, bSize + twAdj, tSize, tSize, null);
+        g2.drawImage(tile[25].image, bSize + twAdj, bSize * 3 + twAdj, tSize, tSize, null);
+        g2.drawImage(tile[24].image, bSize * 4 + twAdj, bSize * 5 + twAdj, tSize, tSize, null);
+        g2.drawImage(tile[25].image, bSize * 5 + twAdj, bSize * 8 + twAdj, tSize, tSize, null);
+        g2.drawImage(tile[24].image, bSize * 10 + twAdj, bSize * 10 + twAdj, tSize, tSize, null);
 
         // Starting House
         g2.drawImage(tile[3].image, 0, bSize, bSize, bSize, null);
         g2.drawImage(tile[3].image, bSize, bSize, bSize, bSize, null);
-        g2.drawImage(tile[28].image, 0, bSize-20, bSize, bSize+20, null);
+        g2.drawImage(tile[28].image, 0, bSize - 20, bSize, bSize + 20, null);
 
         // Lost Items
         g2.drawImage(tile[38].image, bSize, bSize, bSize, bSize, null);
-        g2.drawImage(tile[36].image, bSize*7, bSize, bSize, bSize, null);
-        g2.drawImage(tile[37].image, bSize*9, bSize*2, bSize, bSize, null);
-        g2.drawImage(tile[35].image, bSize*3, bSize*3, bSize, bSize, null);
-        g2.drawImage(tile[39].image, bSize, bSize*4, bSize, bSize, null);
-        g2.drawImage(tile[40].image, bSize*8, bSize*4, bSize, bSize, null);
-        g2.drawImage(tile[39].image, bSize*5, bSize*6, bSize, bSize, null);
-        g2.drawImage(tile[40].image, bSize*10, bSize*6, bSize, bSize, null);
-        g2.drawImage(tile[39].image, bSize*8, bSize*7, bSize, bSize, null);
-        g2.drawImage(tile[35].image, bSize*2, bSize*8, bSize, bSize, null);
-        g2.drawImage(tile[37].image, bSize*2, bSize*9, bSize, bSize, null);
-        g2.drawImage(tile[36].image, bSize*7, bSize*9, bSize, bSize, null);
-        g2.drawImage(tile[38].image, bSize*5, bSize*10, bSize, bSize, null);
+        g2.drawImage(tile[36].image, bSize * 7, bSize, bSize, bSize, null);
+        g2.drawImage(tile[37].image, bSize * 9, bSize * 2, bSize, bSize, null);
+        g2.drawImage(tile[35].image, bSize * 3, bSize * 3, bSize, bSize, null);
+        g2.drawImage(tile[39].image, bSize, bSize * 4, bSize, bSize, null);
+        g2.drawImage(tile[40].image, bSize * 8, bSize * 4, bSize, bSize, null);
+        g2.drawImage(tile[39].image, bSize * 5, bSize * 6, bSize, bSize, null);
+        g2.drawImage(tile[40].image, bSize * 10, bSize * 6, bSize, bSize, null);
+        g2.drawImage(tile[39].image, bSize * 8, bSize * 7, bSize, bSize, null);
+        g2.drawImage(tile[35].image, bSize * 2, bSize * 8, bSize, bSize, null);
+        g2.drawImage(tile[37].image, bSize * 2, bSize * 9, bSize, bSize, null);
+        g2.drawImage(tile[36].image, bSize * 7, bSize * 9, bSize, bSize, null);
+        g2.drawImage(tile[38].image, bSize * 5, bSize * 10, bSize, bSize, null);
+
+        switch (dice.result) {
+
+            case 1:
+                g2.drawImage(tile[45].image, bSize*13, 0, bSize, bSize, null);
+            case 2:
+                g2.drawImage(tile[46].image, bSize*13, 0, bSize, bSize, null);
+            case 3:
+                g2.drawImage(tile[47].image, bSize*13, 0, bSize, bSize, null);
+            case 4:
+                g2.drawImage(tile[48].image, bSize*13, 0, bSize, bSize, null);
+            case 5:
+                g2.drawImage(tile[49].image, bSize*13, 0, bSize, bSize, null);
+            case 6:
+                g2.drawImage(tile[50].image, bSize*13, 0, bSize, bSize, null);
+
+        }
 
         while (col < GRID && row < GRID) {
 
