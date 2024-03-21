@@ -7,7 +7,6 @@ import static entity.Entity.*;
 import static entity.Player.squares;
 import static entity.Player2.squares2;
 
-
 // KeyListener interface to retrieve keyboard events.
 public class KeyHandler implements KeyListener {
 
@@ -26,127 +25,76 @@ public class KeyHandler implements KeyListener {
 
         // If-statement used to shuffle between right and left leg animations.
         if (e.getKeyCode() == KeyEvent.VK_W) {
-
             upPressed = true;
             WorldY -= speed;
             direction = "up";
             spriteCounter++;
             squares -= speed;
-
-        }
-
-        else if (e.getKeyCode() == KeyEvent.VK_S) {
-
+        } else if (e.getKeyCode() == KeyEvent.VK_S) {
             downPressed = true;
             WorldY += speed;
             direction = "down";
             spriteCounter++;
             squares -= speed;
-
-
-        }
-
-        else if (e.getKeyCode() == KeyEvent.VK_A) {
-
+        } else if (e.getKeyCode() == KeyEvent.VK_A) {
             leftPressed = true;
             WorldX -= speed;
             direction = "left";
             spriteCounter++;
             squares -= speed;
-
-        }
-
-        else if (e.getKeyCode() == KeyEvent.VK_D) {
-
+        } else if (e.getKeyCode() == KeyEvent.VK_D) {
             rightPressed = true;
             WorldX += speed;
             direction = "right";
             spriteCounter++;
             squares -= speed;
-
-
         }
 
         // If-statement used to shuffle between right and left leg animations.
         if (e.getKeyCode() == KeyEvent.VK_UP) {
-
             upPressed2 = true;
             WorldY2 -= speed2;
             direction2 = "up";
             spriteCounter2++;
             squares2 -= speed2;
-
-        }
-
-        else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-
+        } else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
             downPressed2 = true;
             WorldY2 += speed2;
             direction2 = "down";
             spriteCounter2++;
             squares2 -= speed2;
-
-
-        }
-
-        else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-
+        } else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
             leftPressed2 = true;
             WorldX2 -= speed2;
             direction2 = "left";
             spriteCounter2++;
             squares2 -= speed2;
-
-        }
-
-        else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-
+        } else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
             rightPressed2 = true;
             WorldX2 += speed2;
             direction2 = "right";
             spriteCounter2++;
             squares2 -= speed2;
-
-
         }
 
-
+        // Change sprite numbers based on counter
         if (spriteCounter > 0) {
-
             if (spriteNum == 1) {
-
                 spriteNum = 2;
-
-            }
-
-            else if (spriteNum == 2) {
-
+            } else if (spriteNum == 2) {
                 spriteNum = 1;
-
             }
-
             spriteCounter = 0;
-
         }
 
         if (spriteCounter2 > 0) {
-
-            if (spriteNum2 ==1) {
-
+            if (spriteNum2 == 1) {
                 spriteNum2 = 2;
-
-            }
-
-            else if (spriteNum2 == 2) {
-
+            } else if (spriteNum2 == 2) {
                 spriteNum2 = 1;
-
             }
-
             spriteCounter2 = 0;
-
         }
-
     }
 
     // This method is called when a key is released.
@@ -155,7 +103,6 @@ public class KeyHandler implements KeyListener {
 
         // Switch-statement to suspend movement when the key is released.
         switch (e.getKeyCode()) {
-
             case KeyEvent.VK_W:
                 upPressed = false;
                 break;
@@ -168,9 +115,6 @@ public class KeyHandler implements KeyListener {
             case KeyEvent.VK_D:
                 rightPressed = false;
                 break;
-
         }
-
     }
-
 }
