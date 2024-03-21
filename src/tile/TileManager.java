@@ -13,14 +13,14 @@ public class TileManager {
 
     public static final int GRID = 12;
     GamePanel gp;
-    public Tile[] tile; // Array for tile assets.
+    public static Tile[] tile; // Array for tile assets.
     public int obsTileNum[][];
     public static int bSize = 80; // Size of each block on screen.
     public static int iSize = 70; // Size of each item on screen.
     public static int tSize = 50; // Size of each trap and weapon on screen.
     public static int iAdj = (bSize - iSize) / 2; // Center each item on its block.
     public static int twAdj = (bSize - tSize) / 2; // Center each trap or weapon on its block.
-    int xT, yT; // Multiplier to assign tile locations on screen.
+    public static int xT, yT; // Multiplier to assign tile locations on screen.
 
     // Constructor fot TileManager to get and assign object images to screen tiles.
     public TileManager(GamePanel gp) {
@@ -165,6 +165,18 @@ public class TileManager {
 
             tile[40] = new Tile();
             tile[40].image = ImageIO.read(getClass().getResourceAsStream("/items/house6.png"));
+
+            tile[41] = new Tile();
+            tile[41].image = ImageIO.read(getClass().getResourceAsStream("/players/CarloR1.png"));
+
+            tile[42] = new Tile();
+            tile[42].image = ImageIO.read(getClass().getResourceAsStream("/players/CarlosL1.png"));
+
+            tile[43] = new Tile();
+            tile[43].image = ImageIO.read(getClass().getResourceAsStream("/bars/powerBar.png"));
+
+            tile[44] = new Tile();
+            tile[44].image = ImageIO.read(getClass().getResourceAsStream("/bars/healthBar.png"));
 
 
         } catch (IOException e) {

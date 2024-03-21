@@ -5,14 +5,15 @@ import java.awt.event.KeyListener;
 
 import static entity.Entity.*;
 import static entity.Player.squares;
+import static entity.Player2.squares2;
 
 
 // KeyListener interface to retrieve keyboard events.
 public class KeyHandler implements KeyListener {
 
-
     // Boolean variables to check whether buttons are pressed.
     public boolean upPressed, downPressed, leftPressed, rightPressed;
+    public boolean upPressed2, downPressed2, leftPressed2, rightPressed2;
 
     // This method is called when a key is typed, but it is not used in this implementation.
     @Override
@@ -66,10 +67,53 @@ public class KeyHandler implements KeyListener {
 
         }
 
+        // If-statement used to shuffle between right and left leg animations.
+        if (e.getKeyCode() == KeyEvent.VK_UP) {
+
+            upPressed2 = true;
+            WorldY2 -= speed2;
+            direction2 = "up";
+            spriteCounter2++;
+            squares2 -= speed2;
+
+        }
+
+        else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
+
+            downPressed2 = true;
+            WorldY2 += speed2;
+            direction2 = "down";
+            spriteCounter2++;
+            squares2 -= speed2;
+
+
+        }
+
+        else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+
+            leftPressed2 = true;
+            WorldX2 -= speed2;
+            direction2 = "left";
+            spriteCounter2++;
+            squares2 -= speed2;
+
+        }
+
+        else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+
+            rightPressed2 = true;
+            WorldX2 += speed2;
+            direction2 = "right";
+            spriteCounter2++;
+            squares2 -= speed2;
+
+
+        }
+
 
         if (spriteCounter > 0) {
 
-            if (spriteNum ==1) {
+            if (spriteNum == 1) {
 
                 spriteNum = 2;
 
@@ -82,6 +126,24 @@ public class KeyHandler implements KeyListener {
             }
 
             spriteCounter = 0;
+
+        }
+
+        if (spriteCounter2 > 0) {
+
+            if (spriteNum2 ==1) {
+
+                spriteNum2 = 2;
+
+            }
+
+            else if (spriteNum2 == 2) {
+
+                spriteNum2 = 1;
+
+            }
+
+            spriteCounter2 = 0;
 
         }
 
