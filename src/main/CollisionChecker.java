@@ -4,7 +4,6 @@ import entity.Entity;
 
 import static entity.Entity.speed;
 import static tile.TileManager.bSize;
-import static entity.Player.squares;
 
 public class CollisionChecker {
 
