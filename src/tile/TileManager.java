@@ -350,21 +350,23 @@ public class TileManager {
         g2.drawImage(tile[36].image, bSize * 7, bSize * 9, bSize, bSize, null);
         g2.drawImage(tile[38].image, bSize * 5, bSize * 10, bSize, bSize, null);
 
-        switch (dice.result) {
-
-            case 1:
-                g2.drawImage(tile[45].image, bSize*13, 0, bSize, bSize, null);
-            case 2:
-                g2.drawImage(tile[46].image, bSize*13, 0, bSize, bSize, null);
-            case 3:
-                g2.drawImage(tile[47].image, bSize*13, 0, bSize, bSize, null);
-            case 4:
-                g2.drawImage(tile[48].image, bSize*13, 0, bSize, bSize, null);
-            case 5:
-                g2.drawImage(tile[49].image, bSize*13, 0, bSize, bSize, null);
-            case 6:
-                g2.drawImage(tile[50].image, bSize*13, 0, bSize, bSize, null);
-
+        if (dice.result == 1) {
+            g2.drawImage(tile[45].image, bSize * 13, 0, bSize, bSize, null);
+        }
+        else if (dice.result == 2) {
+            g2.drawImage(tile[46].image, bSize * 13, 0, bSize, bSize, null);
+        }
+        else if (dice.result == 3) {
+            g2.drawImage(tile[47].image, bSize * 13, 0, bSize, bSize, null);
+        }
+        else if (dice.result == 4) {
+            g2.drawImage(tile[48].image, bSize * 13, 0, bSize, bSize, null);
+        }
+        else if (dice.result == 5) {
+            g2.drawImage(tile[49].image, bSize * 13, 0, bSize, bSize, null);
+        }
+        else if (dice.result == 6) {
+            g2.drawImage(tile[50].image, bSize * 13, 0, bSize, bSize, null);
         }
 
         while (col < GRID && row < GRID) {
