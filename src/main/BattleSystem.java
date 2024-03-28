@@ -6,6 +6,7 @@ import static entity.Entity.turn1;
 import static entity.Entity.turn2;
 import static main.GamePanel.battleState;
 import static main.UI.text2;
+import static tile.TileManager.bSize;
 
 public class BattleSystem {
 
@@ -13,9 +14,12 @@ public class BattleSystem {
 
     public static String winner;  // Winner of the battle
     static int i; // To only do the action once.
+    public static boolean battleStarted;
 
     // Method for handling battles between two entities
     public static void battle(Entity player, Entity player2) {
+
+        battleStarted = true;
 
         // If both players have equal power
         if (player.power == player2.power) {
@@ -33,16 +37,15 @@ public class BattleSystem {
         // If player 1 has higher power
         else if (player.power > player2.power) {
 
-            while(i == 0) {
                 text2 = "Carlo wins!";  // Set battle result text
-                System.out.println("Carlo wins!!");  // Print winner
+                //System.out.println("Carlo wins!!");  // Print winner
                 // Calculate money transfer based on power difference
-                player.money += ((player.power - player2.power) / (player.power + player2.power)) * player2.money;
-                player2.money -= ((player.power - player2.power) / (player.power + player2.power)) * player2.money;
-                System.out.println(player.money);  // Print player 1 money
-                System.out.println(player2.money);  // Print player 2 money
-                i++;
-            }
+                //player.money += ((player.power - player2.power) / (player.power + player2.power)) * player2.money;
+                //player2.money -= ((player.power - player2.power) / (player.power + player2.power)) * player2.money;
+                //System.out.println(player.money);  // Print player 1 money
+                //System.out.println(player2.money);  // Print player 2 money
+                player2.WorldX2 = 0;
+                player2.WorldY2 = bSize;
         }
 
         // If player 2 has higher power
