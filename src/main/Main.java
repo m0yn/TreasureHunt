@@ -2,7 +2,7 @@ package main;
 
 import javax.swing.*;
 
-public class Main {
+public class   Main {
 
 
 
@@ -36,6 +36,7 @@ public class Main {
         gamePanel.startGameThread();
 
     }
+
 }
 
 
