@@ -12,13 +12,14 @@ import static entity.Carlo.dice;
 import static entity.Pablo.dice2;
 import static entity.Carlo.squares;
 import static entity.Entity.*;
+
 import static entity.Pablo.squares2;
 import static main.BattleSystem.*;
 import static tile.TileManager.bSize;
+import static main.BattleSystem.battle;
+
 
 public class GamePanel extends JPanel implements Runnable {
-    // GamePanel class, extending JPanel and implementing Runnable for game loop execution
-    // Screen settings
     public final int originalTileSize = 32;
     public final int scale = 3;
     public final int tileSize = originalTileSize * scale;
@@ -34,18 +35,17 @@ public class GamePanel extends JPanel implements Runnable {
     public static final int playState = 1;
     public static final int battleState = 2;
     public static final int boardState = 3;
+
     public static final int startState = 4;
     public static final int marketState = 5;
     public static final int castleState = 6;
     //
     public boolean carloMarket, pabloMarket, carloCastle, pabloCastle, endState;
 
-
-
     TileManager tileM = new TileManager(this); // Manager for tiles and map drawing
     KeyHandler keyH = new KeyHandler(); // Handler for keyboard input
 
-   // Game thread for the main game loop
+    // Game thread for the main game loop
     Thread gameThread;
     public CollisionChecker cChecker = new CollisionChecker(this); // Collision checker for the main player
     public CollisionChecker2 cChecker2 = new CollisionChecker2(this); // Collision checker for the second player
@@ -62,11 +62,16 @@ public class GamePanel extends JPanel implements Runnable {
     // Constructor initializes the game panel and player objects
     public GamePanel() {
         // Initialization of player objects with their starting values
-        carlo = new Carlo(this, keyH,0,500,0);
+        carlo = new Carlo(this, keyH, 0, 500, 0);
         carlo.setDefaultValues();
         carlo.getPlayerImage();
 
-        pablo = new Pablo(this,keyH,0,500,0);
+        pablo = new Pablo(this, keyH, 0, 500, 0);
+        carlo = new Carlo(this, keyH, 100, 500, 30);
+        carlo.setDefaultValues();
+        carlo.getPlayerImage();
+
+        pablo = new Pablo(this, keyH, 100, 500, 10);
         pablo.setDefaultValues2();
         pablo.getPlayerImage2();
 
@@ -122,16 +127,8 @@ public class GamePanel extends JPanel implements Runnable {
 
     }
 
-    public void performTimedEvent() {
-        // Your code to execute after the timed event occurs
-        // For example, you might spawn an enemy, display a message, etc.
-        System.out.println("Timed event occurred!");
-    }
-
-    // Updates the game state: checks for collisions and changes game states
     public void update() {
         // Checks for player collision to trigger battle state
-
         if (keyH.startGame) {
             gameState = playState;
         }
@@ -177,22 +174,25 @@ public class GamePanel extends JPanel implements Runnable {
             carloCastle = true; // sets "carloCastle" as to not repeat the action.
         }
 
+        if (WorldX == WorldX2 && WorldY == WorldY2 && WorldX != 0) {
+            gameState = battleState;
+            keyH.startGame = false;
+        }
 
-
-
-        //
         if (gameState == playState) {
             // Update players and game state based on the current game state
             carlo.update();
             pablo.update2();
         }
 
-       if (gameState == battleState) {
-           // Engage battle mode
+        if (gameState == battleState) {
+            // Engage battle mode
             battle(carlo, pablo);
         }
-
     }
+
+
+
 
 
     // Paint Function
