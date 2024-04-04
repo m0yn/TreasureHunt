@@ -42,6 +42,7 @@ public class Entity {
     public static boolean turn1 = true; // Initialized to true for primary entity readiness
 
     // Fields for entity attributes
-    public double points, power, money; // Entity's health, attack power, and money or points
+    public double power, money; // Entity's health, attack power, and money or points
+    public int points;
 
 }

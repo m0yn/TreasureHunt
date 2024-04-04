@@ -23,7 +23,7 @@ public class Pablo extends Entity {
     public static int squares2 = 0;
 
     // Constructor for Player2 with game panel, key handler, and initial stats
-    public Pablo(GamePanel gp, KeyHandler KeyH, double points, double money, double power) {
+    public Pablo(GamePanel gp, KeyHandler KeyH, int points, double money, double power) {
         this.gp = gp;
         this.KeyH = KeyH;
         this.points = points;
@@ -36,9 +36,9 @@ public class Pablo extends Entity {
 
     // Sets default starting values for player 2
     public void setDefaultValues2() {
-        WorldX2 = 0;
-        WorldY2 = bSize;
-        direction2 = "right";
+        WorldX2 = bSize*11;
+        WorldY2 = bSize*10;
+        direction2 = "left";
     }
 
     // Loads the image assets for player 2's animations
@@ -59,10 +59,11 @@ public class Pablo extends Entity {
 
     // Updates player 2's state for each game tick
     public void update2() {
-        if (turn2 == true) {
 
-            collisionOn2 = false;
-            gp.cChecker2.checkTile2(this);
+        collisionOn2 = false;
+        gp.cChecker2.checkTile2(this);
+
+        if (turn2 == true) {
 
             // Adjusts player 2's position and speed after collision detection
             if (collisionOn2) {  // If collision detected
@@ -118,7 +119,30 @@ public class Pablo extends Entity {
                 WorldY2 = tileY * bSize;
                 turn1 = true;
                 squares = dice.roll() * 80;
+
+            } else if (squares2 == (dice2.result*80)-16) {
+                System.out.println("works!!");
+                gp.pabloCastle = false;
                 gp.pabloMarket = false;
+
+                if (gp.ptre1 && !gp.tre1c) {
+                    gp.ptre1 = false;
+                } else if (gp.ptre2 && !gp.tre2c) {
+                    gp.ptre2 = false;
+                } else if (gp.ptre3 && !gp.tre3c) {
+                    gp.ptre3 = false;
+                } else if (gp.ptre4 && !gp.tre4c) {
+                    gp.ptre4 = false;
+                } else if (gp.ptre5 && !gp.tre5c) {
+                    gp.ptre5 = false;
+                } else if (gp.ptre6 && !gp.tre6c) {
+                    gp.ptre6 = false;
+                } else if (gp.ptre7 && !gp.tre7c) {
+                    gp.ptre7 = false;
+                } else if (gp.ptre8 && !gp.tre8c) {
+                    gp.ptre8 = false;
+                }
+
             }
         }
     }

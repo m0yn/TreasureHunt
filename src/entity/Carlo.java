@@ -10,6 +10,7 @@ import java.io.IOException;
 
 import static entity.Pablo.dice2;
 import static entity.Pablo.squares2;
+import static main.UI.randT;
 import static tile.TileManager.bSize;
 
 public class Carlo extends Entity {
@@ -22,7 +23,7 @@ public class Carlo extends Entity {
     public static int squares = dice.roll() * 80;  // Squares for player movement
 
     // Player constructor
-    public Carlo(GamePanel gp, KeyHandler keyH, double points, double money, double power) {
+    public Carlo(GamePanel gp, KeyHandler keyH, int points, double money, double power) {
         this.gp = gp;
         this.keyH = keyH;
         this.points = points;
@@ -118,7 +119,30 @@ public class Carlo extends Entity {
 
                 turn2 = true;  // Set next player's turn
                 squares2 = dice2.roll() * 80;  // Roll dice for next player movement
+
+            } else if (squares == (dice.result*80)-16) {
+                System.out.println("works!!");
+                gp.carloCastle = false;
                 gp.carloMarket = false;
+
+                if (gp.tre1 && !gp.tre1c) {
+                    gp.tre1 = false;
+                } else if (gp.tre2 && !gp.tre2c) {
+                    gp.tre2 = false;
+                } else if (gp.tre3 && !gp.tre3c) {
+                    gp.tre3 = false;
+                } else if (gp.tre4 && !gp.tre4c) {
+                    gp.tre4 = false;
+                } else if (gp.tre5 && !gp.tre5c) {
+                    gp.tre5 = false;
+                } else if (gp.tre6 && !gp.tre6c) {
+                    gp.tre6 = false;
+                } else if (gp.tre7 && !gp.tre7c) {
+                    gp.tre7 = false;
+                } else if (gp.tre8 && !gp.tre8c) {
+                    gp.tre8 = false;
+                }
+
             }
         }
 

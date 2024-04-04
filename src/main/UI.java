@@ -1,24 +1,14 @@
 package main;
 
-import javax.swing.ImageIcon;
-
-import entity.Dice;
-import entity.Entity;
-import entity.Pablo;
-import tile.Tile;
-import tile.TileManager;
-
 import java.awt.*;
 import java.awt.Color;
 import java.awt.image.BufferedImage;
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.text.DecimalFormat;
 
-import static entity.Carlo.dice;
+import static entity.Entity.*;
 import static main.BattleSystem.*;
 
+import static main.KeyHandler.*;
 import static main.TimedEventManager.*;
 import static tile.TileManager.*;
 
@@ -39,11 +29,16 @@ public class UI {
     public static String text2; // Secondary text to be displayed
     String text = "IT'S ON!"; // Primary text to be displayed
     int n;
-    private boolean playSong, fightSong, boardSong, marketSong, castleSong;
+    private boolean playSong, fightSong, boardSong, marketSong, castleSong, endSong;
     public static Randomizer randomizer = new Randomizer();
     int yD = 51;
-    public static int yX = 0;
-    private boolean treasureMap;
+    public static int yX = 1;
+    public static int yS = bSize*2-25;
+    public static int ySX = 0;
+    public boolean treasureMap, treasureSought, lostSought;
+    public static int tt, qq, randT, randP;
+    public int li;
+    public int q = 0;
 
 
 
@@ -94,6 +89,13 @@ public class UI {
         }
 
         else if (gp.gameState == gp.playState) {
+
+            if (!treasureSought) {
+                randT = Randomizer.treasureSelect();
+                treasureSought = true;
+            }
+
+            wait = true;
             battleOccurred = false;
             tenSecsPassed = false;
             bTimeSet = false;
@@ -151,6 +153,55 @@ public class UI {
 
         }
 
+        else if (gp.gameState == gp.trapState) {
+
+                g2.drawImage(tile[109].image, bSize * 13, gp.screenHeight/8, bSize * 5, bSize * 5, null);
+
+
+                //g2.drawImage(tile[66].image, bSize * 12 + 10, gp.screenHeight / 2 - 10, bSize / 2, bSize / 3, null);
+                if (ySX > 1)
+                    ySX = 1;
+                else if (ySX < 0)
+                    ySX = 0;
+
+                g2.drawImage(tile[66].image, bSize*12+10, (gp.screenHeight/2-80)-(yS*ySX), bSize/2, bSize/3, null);
+
+
+        }
+
+        else if (gp.gameState == gp.lostState) {
+
+
+            if (!lostSought) {
+                li = Randomizer.lostSelect();
+                lostSought = true;
+            }
+
+            g2.drawImage(tile[q].image, bSize * 13, gp.screenHeight/8, bSize * 5, bSize * 4, null);
+
+        }
+
+        else if (gp.gameState == gp.treasureState) {
+
+            g2.drawImage(tile[qq].image, bSize * 13, gp.screenHeight/8, bSize * 5, bSize * 4, null);
+
+        }
+
+        else if (gp.gameState == gp.endState) {
+
+            drawEndScreen();
+            if (!endSong) {
+                gp.stopMusic();
+                gp.playMusic(9);
+                endSong = true;
+                castleSong = false;
+                marketSong = false;
+                boardSong = false;
+                fightSong = false;
+                playSong = false;
+            }
+
+        }
 
 
     }
@@ -197,20 +248,598 @@ public class UI {
 
 
         // Draw UI elements
-        g2.drawImage(tile[41].image, 0, gp.screenHeight / 2, bSize * 8, bSize * 12, null);
         g2.drawImage(tile[42].image, bSize * 12, gp.screenHeight / 2, bSize * 8, bSize * 12, null);
-        g2.drawImage(tile[43].image, bSize, gp.screenHeight / 4, bSize * 6, bSize, null);
-        g2.drawImage(tile[44].image, bSize, gp.screenHeight / 6, bSize * 6, bSize, null);
-        g2.drawImage(tile[43].image, bSize * 12, gp.screenHeight / 4, bSize * 6, bSize, null);
-        g2.drawImage(tile[44].image, bSize * 12, gp.screenHeight / 6, bSize * 6, bSize, null);
+        g2.drawImage(tile[41].image, 0, gp.screenHeight / 2, bSize * 8, bSize * 12, null);
+        g2.drawImage(tile[79].image, 0, bSize*2, bSize*2, bSize*2, null);
+        g2.drawImage(tile[79].image, gp.screenWidth-140, bSize*2, bSize*2, bSize*2, null);
+        g2.drawImage(tile[80].image, bSize/8, bSize*5, bSize*3/2, bSize*3/2, null);
+        g2.drawImage(tile[80].image, gp.screenWidth-bSize*3/2, bSize*5, bSize*3/2, bSize*3/2, null);
 
-        g2.drawImage(tile[56].image, gp.screenWidth/2-bSize*2, bSize, bSize * 4, bSize, null);
-
-        if (tenSecsPassed) {
-            if (CarloWon && !PabloWon)
-                g2.drawImage(tile[57].image, gp.screenWidth/2-bSize*4, bSize*4, bSize * 8, bSize*2, null);
+        // Pablo's Power
+        if (!startBattle && wait) {
+            switch (pabloPowerB) {
+                case 1:
+                    g2.drawImage(tile[81].image, (gp.screenWidth - bSize * 3 / 2) - bSize * 3 / 2, bSize * 5 - 20, bSize, bSize * 2, null);
+                    break;
+                case 2:
+                    g2.drawImage(tile[82].image, (gp.screenWidth - bSize * 3 / 2) - bSize * 3 / 2, bSize * 5 - 20, bSize, bSize * 2, null);
+                    break;
+                case 3:
+                    g2.drawImage(tile[83].image, (gp.screenWidth - bSize * 3 / 2) - bSize * 3 / 2, bSize * 5 - 20, bSize, bSize * 2, null);
+                    break;
+                case 4:
+                    g2.drawImage(tile[84].image, (gp.screenWidth - bSize * 3 / 2) - bSize * 3 / 2, bSize * 5 - 20, bSize, bSize * 2, null);
+                    break;
+                case 5:
+                    g2.drawImage(tile[85].image, (gp.screenWidth - bSize * 3 / 2) - bSize * 3 / 2, bSize * 5 - 20, bSize, bSize * 2, null);
+                    break;
+                case 6:
+                    g2.drawImage(tile[86].image, (gp.screenWidth - bSize * 3 / 2) - bSize * 3 / 2, bSize * 5 - 20, bSize, bSize * 2, null);
+                    break;
+                case 7:
+                    g2.drawImage(tile[87].image, (gp.screenWidth - bSize * 3 / 2) - bSize * 3 / 2, bSize * 5 - 20, bSize, bSize * 2, null);
+                    break;
+                case 8:
+                    g2.drawImage(tile[88].image, (gp.screenWidth - bSize * 3 / 2) - bSize * 3 / 2, bSize * 5 - 20, bSize, bSize * 2, null);
+                    break;
+                case 9:
+                    g2.drawImage(tile[89].image, (gp.screenWidth - bSize * 3 / 2) - bSize * 3 / 2, bSize * 5 - 20, bSize, bSize * 2, null);
+                    break;
+                case 0:
+                    g2.drawImage(tile[90].image, (gp.screenWidth - bSize * 3 / 2) - bSize * 3 / 2, bSize * 5 - 20, bSize, bSize * 2, null);
+                    break;
+            }
+        } else if (startBattle || !wait) {
+            switch (pabloPowerA) {
+                case 1:
+                    g2.drawImage(tile[81].image, (gp.screenWidth - bSize * 3 / 2) - bSize * 3 / 2, bSize * 5 - 20, bSize, bSize * 2, null);
+                    break;
+                case 2:
+                    g2.drawImage(tile[82].image, (gp.screenWidth - bSize * 3 / 2) - bSize * 3 / 2, bSize * 5 - 20, bSize, bSize * 2, null);
+                    break;
+                case 3:
+                    g2.drawImage(tile[83].image, (gp.screenWidth - bSize * 3 / 2) - bSize * 3 / 2, bSize * 5 - 20, bSize, bSize * 2, null);
+                    break;
+                case 4:
+                    g2.drawImage(tile[84].image, (gp.screenWidth - bSize * 3 / 2) - bSize * 3 / 2, bSize * 5 - 20, bSize, bSize * 2, null);
+                    break;
+                case 5:
+                    g2.drawImage(tile[85].image, (gp.screenWidth - bSize * 3 / 2) - bSize * 3 / 2, bSize * 5 - 20, bSize, bSize * 2, null);
+                    break;
+                case 6:
+                    g2.drawImage(tile[86].image, (gp.screenWidth - bSize * 3 / 2) - bSize * 3 / 2, bSize * 5 - 20, bSize, bSize * 2, null);
+                    break;
+                case 7:
+                    g2.drawImage(tile[87].image, (gp.screenWidth - bSize * 3 / 2) - bSize * 3 / 2, bSize * 5 - 20, bSize, bSize * 2, null);
+                    break;
+                case 8:
+                    g2.drawImage(tile[88].image, (gp.screenWidth - bSize * 3 / 2) - bSize * 3 / 2, bSize * 5 - 20, bSize, bSize * 2, null);
+                    break;
+                case 9:
+                    g2.drawImage(tile[89].image, (gp.screenWidth - bSize * 3 / 2) - bSize * 3 / 2, bSize * 5 - 20, bSize, bSize * 2, null);
+                    break;
+                case 0:
+                    g2.drawImage(tile[90].image, (gp.screenWidth - bSize * 3 / 2) - bSize * 3 / 2, bSize * 5 - 20, bSize, bSize * 2, null);
+                    break;
+            }
         }
 
+        // Carlo's Power
+        if (!startBattle && wait) {
+            switch (carloPowerB) {
+                case 1:
+                    g2.drawImage(tile[81].image, bSize * 2 + bSize / 8, bSize * 5 - 20, bSize, bSize * 2, null);
+                    break;
+                case 2:
+                    g2.drawImage(tile[82].image, bSize * 2 + bSize / 8, bSize * 5 - 20, bSize, bSize * 2, null);
+                    break;
+                case 3:
+                    g2.drawImage(tile[83].image, bSize * 2 + bSize / 8, bSize * 5 - 20, bSize, bSize * 2, null);
+                    break;
+                case 4:
+                    g2.drawImage(tile[84].image, bSize * 2 + bSize / 8, bSize * 5 - 20, bSize, bSize * 2, null);
+                    break;
+                case 5:
+                    g2.drawImage(tile[85].image, bSize * 2 + bSize / 8, bSize * 5 - 20, bSize, bSize * 2, null);
+                    break;
+                case 6:
+                    g2.drawImage(tile[86].image, bSize * 2 + bSize / 8, bSize * 5 - 20, bSize, bSize * 2, null);
+                    break;
+                case 7:
+                    g2.drawImage(tile[87].image, bSize * 2 + bSize / 8, bSize * 5 - 20, bSize, bSize * 2, null);
+                    break;
+                case 8:
+                    g2.drawImage(tile[88].image, bSize * 2 + bSize / 8, bSize * 5 - 20, bSize, bSize * 2, null);
+                    break;
+                case 9:
+                    g2.drawImage(tile[89].image, bSize * 2 + bSize / 8, bSize * 5 - 20, bSize, bSize * 2, null);
+                    break;
+                case 0:
+                    g2.drawImage(tile[90].image, bSize * 2 + bSize / 8, bSize * 5 - 20, bSize, bSize * 2, null);
+                    break;
+            }
+        } else if (startBattle || !wait) {
+            switch (carloPowerA) {
+                case 1:
+                    g2.drawImage(tile[81].image, bSize * 2 + bSize / 8, bSize * 5 - 20, bSize, bSize * 2, null);
+                    break;
+                case 2:
+                    g2.drawImage(tile[82].image, bSize * 2 + bSize / 8, bSize * 5 - 20, bSize, bSize * 2, null);
+                    break;
+                case 3:
+                    g2.drawImage(tile[83].image, bSize * 2 + bSize / 8, bSize * 5 - 20, bSize, bSize * 2, null);
+                    break;
+                case 4:
+                    g2.drawImage(tile[84].image, bSize * 2 + bSize / 8, bSize * 5 - 20, bSize, bSize * 2, null);
+                    break;
+                case 5:
+                    g2.drawImage(tile[85].image, bSize * 2 + bSize / 8, bSize * 5 - 20, bSize, bSize * 2, null);
+                    break;
+                case 6:
+                    g2.drawImage(tile[86].image, bSize * 2 + bSize / 8, bSize * 5 - 20, bSize, bSize * 2, null);
+                    break;
+                case 7:
+                    g2.drawImage(tile[87].image, bSize * 2 + bSize / 8, bSize * 5 - 20, bSize, bSize * 2, null);
+                    break;
+                case 8:
+                    g2.drawImage(tile[88].image, bSize * 2 + bSize / 8, bSize * 5 - 20, bSize, bSize * 2, null);
+                    break;
+                case 9:
+                    g2.drawImage(tile[89].image, bSize * 2 + bSize / 8, bSize * 5 - 20, bSize, bSize * 2, null);
+                    break;
+                case 0:
+                    g2.drawImage(tile[90].image, bSize * 2 + bSize / 8, bSize * 5 - 20, bSize, bSize * 2, null);
+                    break;
+            }
+        }
+
+        // Pablo's Money
+
+        if (!startBattle && wait) {
+
+            switch (pabloMoneyB/100) {
+                case 1:
+                    g2.drawImage(tile[81].image, (gp.screenWidth-140)-bSize*3, bSize*2, bSize, bSize*2, null);
+                    break;
+                case 2:
+                    g2.drawImage(tile[82].image, (gp.screenWidth-140)-bSize*3, bSize*2, bSize, bSize*2, null);
+                    break;
+                case 3:
+                    g2.drawImage(tile[83].image, (gp.screenWidth-140)-bSize*3, bSize*2, bSize, bSize*2, null);
+                    break;
+                case 4:
+                    g2.drawImage(tile[84].image, (gp.screenWidth-140)-bSize*3, bSize*2, bSize, bSize*2, null);
+                    break;
+                case 5:
+                    g2.drawImage(tile[85].image, (gp.screenWidth-140)-bSize*3, bSize*2, bSize, bSize*2, null);
+                    break;
+                case 6:
+                    g2.drawImage(tile[86].image, (gp.screenWidth-140)-bSize*3, bSize*2, bSize, bSize*2, null);
+                    break;
+                case 7:
+                    g2.drawImage(tile[87].image, (gp.screenWidth-140)-bSize*3, bSize*2, bSize, bSize*2, null);
+                    break;
+                case 8:
+                    g2.drawImage(tile[88].image, (gp.screenWidth-140)-bSize*3, bSize*2, bSize, bSize*2, null);
+                    break;
+                case 9:
+                    g2.drawImage(tile[89].image, (gp.screenWidth-140)-bSize*3, bSize*2, bSize, bSize*2, null);
+                    break;
+                case 0:
+                    g2.drawImage(tile[90].image, (gp.screenWidth-140)-bSize*3, bSize*2, bSize, bSize*2, null);
+                    break;
+            }
+
+            switch ((pabloMoneyB/10)%10) {
+
+                case 1:
+                    g2.drawImage(tile[81].image, (gp.screenWidth-140)-bSize*2, bSize*2, bSize, bSize*2, null);
+                    break;
+                case 2:
+                    g2.drawImage(tile[82].image, (gp.screenWidth-140)-bSize*2, bSize*2, bSize, bSize*2, null);
+                    break;
+                case 3:
+                    g2.drawImage(tile[83].image, (gp.screenWidth-140)-bSize*2, bSize*2, bSize, bSize*2, null);
+                    break;
+                case 4:
+                    g2.drawImage(tile[84].image, (gp.screenWidth-140)-bSize*2, bSize*2, bSize, bSize*2, null);
+                    break;
+                case 5:
+                    g2.drawImage(tile[85].image, (gp.screenWidth-140)-bSize*2, bSize*2, bSize, bSize*2, null);
+                    break;
+                case 6:
+                    g2.drawImage(tile[86].image, (gp.screenWidth-140)-bSize*2, bSize*2, bSize, bSize*2, null);
+                    break;
+                case 7:
+                    g2.drawImage(tile[87].image, (gp.screenWidth-140)-bSize*2, bSize*2, bSize, bSize*2, null);
+                    break;
+                case 8:
+                    g2.drawImage(tile[88].image, (gp.screenWidth-140)-bSize*2, bSize*2, bSize, bSize*2, null);
+                    break;
+                case 9:
+                    g2.drawImage(tile[89].image, (gp.screenWidth-140)-bSize*2, bSize*2, bSize, bSize*2, null);
+                    break;
+                case 0:
+                    g2.drawImage(tile[90].image, (gp.screenWidth-140)-bSize*2, bSize*2, bSize, bSize*2, null);
+                    break;
+
+            }
+
+            switch (pabloMoneyB%10) {
+
+                case 1:
+                    g2.drawImage(tile[81].image, (gp.screenWidth-140)-bSize, bSize*2, bSize, bSize*2, null);
+                    break;
+                case 2:
+                    g2.drawImage(tile[82].image, (gp.screenWidth-140)-bSize, bSize*2, bSize, bSize*2, null);
+                    break;
+                case 3:
+                    g2.drawImage(tile[83].image, (gp.screenWidth-140)-bSize, bSize*2, bSize, bSize*2, null);
+                    break;
+                case 4:
+                    g2.drawImage(tile[84].image, (gp.screenWidth-140)-bSize, bSize*2, bSize, bSize*2, null);
+                    break;
+                case 5:
+                    g2.drawImage(tile[85].image, (gp.screenWidth-140)-bSize, bSize*2, bSize, bSize*2, null);
+                    break;
+                case 6:
+                    g2.drawImage(tile[86].image, (gp.screenWidth-140)-bSize, bSize*2, bSize, bSize*2, null);
+                    break;
+                case 7:
+                    g2.drawImage(tile[87].image, (gp.screenWidth-140)-bSize, bSize*2, bSize, bSize*2, null);
+                    break;
+                case 8:
+                    g2.drawImage(tile[88].image, (gp.screenWidth-140)-bSize, bSize*2, bSize, bSize*2, null);
+                    break;
+                case 9:
+                    g2.drawImage(tile[89].image, (gp.screenWidth-140)-bSize, bSize*2, bSize, bSize*2, null);
+                    break;
+                case 0:
+                    g2.drawImage(tile[90].image, (gp.screenWidth-140)-bSize, bSize*2, bSize, bSize*2, null);
+                    break;
+
+            }
+
+        } else if (startBattle || !wait) {
+
+            switch (pabloMoneyA/100) {
+                case 1:
+                    g2.drawImage(tile[81].image, (gp.screenWidth-140)-bSize*3, bSize*2, bSize, bSize*2, null);
+                    break;
+                case 2:
+                    g2.drawImage(tile[82].image, (gp.screenWidth-140)-bSize*3, bSize*2, bSize, bSize*2, null);
+                    break;
+                case 3:
+                    g2.drawImage(tile[83].image, (gp.screenWidth-140)-bSize*3, bSize*2, bSize, bSize*2, null);
+                    break;
+                case 4:
+                    g2.drawImage(tile[84].image, (gp.screenWidth-140)-bSize*3, bSize*2, bSize, bSize*2, null);
+                    break;
+                case 5:
+                    g2.drawImage(tile[85].image, (gp.screenWidth-140)-bSize*3, bSize*2, bSize, bSize*2, null);
+                    break;
+                case 6:
+                    g2.drawImage(tile[86].image, (gp.screenWidth-140)-bSize*3, bSize*2, bSize, bSize*2, null);
+                    break;
+                case 7:
+                    g2.drawImage(tile[87].image, (gp.screenWidth-140)-bSize*3, bSize*2, bSize, bSize*2, null);
+                    break;
+                case 8:
+                    g2.drawImage(tile[88].image, (gp.screenWidth-140)-bSize*3, bSize*2, bSize, bSize*2, null);
+                    break;
+                case 9:
+                    g2.drawImage(tile[89].image, (gp.screenWidth-140)-bSize*3, bSize*2, bSize, bSize*2, null);
+                    break;
+                case 0:
+                    g2.drawImage(tile[90].image, (gp.screenWidth-140)-bSize*3, bSize*2, bSize, bSize*2, null);
+                    break;
+            }
+
+            switch ((pabloMoneyA/10)%10) {
+
+                case 1:
+                    g2.drawImage(tile[81].image, (gp.screenWidth-140)-bSize*2, bSize*2, bSize, bSize*2, null);
+                    break;
+                case 2:
+                    g2.drawImage(tile[82].image, (gp.screenWidth-140)-bSize*2, bSize*2, bSize, bSize*2, null);
+                    break;
+                case 3:
+                    g2.drawImage(tile[83].image, (gp.screenWidth-140)-bSize*2, bSize*2, bSize, bSize*2, null);
+                    break;
+                case 4:
+                    g2.drawImage(tile[84].image, (gp.screenWidth-140)-bSize*2, bSize*2, bSize, bSize*2, null);
+                    break;
+                case 5:
+                    g2.drawImage(tile[85].image, (gp.screenWidth-140)-bSize*2, bSize*2, bSize, bSize*2, null);
+                    break;
+                case 6:
+                    g2.drawImage(tile[86].image, (gp.screenWidth-140)-bSize*2, bSize*2, bSize, bSize*2, null);
+                    break;
+                case 7:
+                    g2.drawImage(tile[87].image, (gp.screenWidth-140)-bSize*2, bSize*2, bSize, bSize*2, null);
+                    break;
+                case 8:
+                    g2.drawImage(tile[88].image, (gp.screenWidth-140)-bSize*2, bSize*2, bSize, bSize*2, null);
+                    break;
+                case 9:
+                    g2.drawImage(tile[89].image, (gp.screenWidth-140)-bSize*2, bSize*2, bSize, bSize*2, null);
+                    break;
+                case 0:
+                    g2.drawImage(tile[90].image, (gp.screenWidth-140)-bSize*2, bSize*2, bSize, bSize*2, null);
+                    break;
+
+            }
+
+            switch (pabloMoneyA%10) {
+
+                case 1:
+                    g2.drawImage(tile[81].image, (gp.screenWidth-140)-bSize, bSize*2, bSize, bSize*2, null);
+                    break;
+                case 2:
+                    g2.drawImage(tile[82].image, (gp.screenWidth-140)-bSize, bSize*2, bSize, bSize*2, null);
+                    break;
+                case 3:
+                    g2.drawImage(tile[83].image, (gp.screenWidth-140)-bSize, bSize*2, bSize, bSize*2, null);
+                    break;
+                case 4:
+                    g2.drawImage(tile[84].image, (gp.screenWidth-140)-bSize, bSize*2, bSize, bSize*2, null);
+                    break;
+                case 5:
+                    g2.drawImage(tile[85].image, (gp.screenWidth-140)-bSize, bSize*2, bSize, bSize*2, null);
+                    break;
+                case 6:
+                    g2.drawImage(tile[86].image, (gp.screenWidth-140)-bSize, bSize*2, bSize, bSize*2, null);
+                    break;
+                case 7:
+                    g2.drawImage(tile[87].image, (gp.screenWidth-140)-bSize, bSize*2, bSize, bSize*2, null);
+                    break;
+                case 8:
+                    g2.drawImage(tile[88].image, (gp.screenWidth-140)-bSize, bSize*2, bSize, bSize*2, null);
+                    break;
+                case 9:
+                    g2.drawImage(tile[89].image, (gp.screenWidth-140)-bSize, bSize*2, bSize, bSize*2, null);
+                    break;
+                case 0:
+                    g2.drawImage(tile[90].image, (gp.screenWidth-140)-bSize, bSize*2, bSize, bSize*2, null);
+                    break;
+
+            }
+
+        }
+
+
+        // Carlo's Money
+
+        if (!startBattle && wait) {
+
+            switch (carloMoneyB/100) {
+
+                case 1:
+                    g2.drawImage(tile[81].image, bSize*2, bSize*2, bSize, bSize*2, null);
+                    break;
+                case 2:
+                    g2.drawImage(tile[82].image, bSize*2, bSize*2, bSize, bSize*2, null);
+                    break;
+                case 3:
+                    g2.drawImage(tile[83].image, bSize*2, bSize*2, bSize, bSize*2, null);
+                    break;
+                case 4:
+                    g2.drawImage(tile[84].image, bSize*2, bSize*2, bSize, bSize*2, null);
+                    break;
+                case 5:
+                    g2.drawImage(tile[85].image, bSize*2, bSize*2, bSize, bSize*2, null);
+                    break;
+                case 6:
+                    g2.drawImage(tile[86].image, bSize*2, bSize*2, bSize, bSize*2, null);
+                    break;
+                case 7:
+                    g2.drawImage(tile[87].image, bSize*2, bSize*2, bSize, bSize*2, null);
+                    break;
+                case 8:
+                    g2.drawImage(tile[88].image, bSize*2, bSize*2, bSize, bSize*2, null);
+                    break;
+                case 9:
+                    g2.drawImage(tile[89].image, bSize*2, bSize*2, bSize, bSize*2, null);
+                    break;
+                case 0:
+                    g2.drawImage(tile[90].image, bSize*2, bSize*2, bSize, bSize*2, null);
+                    break;
+
+            }
+
+            switch ((carloMoneyB/10)%10) {
+
+                case 1:
+                    g2.drawImage(tile[81].image, bSize*3, bSize*2, bSize, bSize*2, null);
+                    break;
+                case 2:
+                    g2.drawImage(tile[82].image, bSize*3, bSize*2, bSize, bSize*2, null);
+                    break;
+                case 3:
+                    g2.drawImage(tile[83].image, bSize*3, bSize*2, bSize, bSize*2, null);
+                    break;
+                case 4:
+                    g2.drawImage(tile[84].image, bSize*3, bSize*2, bSize, bSize*2, null);
+                    break;
+                case 5:
+                    g2.drawImage(tile[85].image, bSize*3, bSize*2, bSize, bSize*2, null);
+                    break;
+                case 6:
+                    g2.drawImage(tile[86].image, bSize*3, bSize*2, bSize, bSize*2, null);
+                    break;
+                case 7:
+                    g2.drawImage(tile[87].image, bSize*3, bSize*2, bSize, bSize*2, null);
+                    break;
+                case 8:
+                    g2.drawImage(tile[88].image, bSize*3, bSize*2, bSize, bSize*2, null);
+                    break;
+                case 9:
+                    g2.drawImage(tile[89].image, bSize*3, bSize*2, bSize, bSize*2, null);
+                    break;
+                case 0:
+                    g2.drawImage(tile[90].image, bSize*3, bSize*2, bSize, bSize*2, null);
+                    break;
+
+            }
+
+            switch (carloMoneyB%10) {
+
+                case 1:
+                    g2.drawImage(tile[81].image, bSize*4, bSize*2, bSize, bSize*2, null);
+                    break;
+                case 2:
+                    g2.drawImage(tile[82].image, bSize*4, bSize*2, bSize, bSize*2, null);
+                    break;
+                case 3:
+                    g2.drawImage(tile[83].image, bSize*4, bSize*2, bSize, bSize*2, null);
+                    break;
+                case 4:
+                    g2.drawImage(tile[84].image, bSize*4, bSize*2, bSize, bSize*2, null);
+                    break;
+                case 5:
+                    g2.drawImage(tile[85].image, bSize*4, bSize*2, bSize, bSize*2, null);
+                    break;
+                case 6:
+                    g2.drawImage(tile[86].image, bSize*4, bSize*2, bSize, bSize*2, null);
+                    break;
+                case 7:
+                    g2.drawImage(tile[87].image, bSize*4, bSize*2, bSize, bSize*2, null);
+                    break;
+                case 8:
+                    g2.drawImage(tile[88].image, bSize*4, bSize*2, bSize, bSize*2, null);
+                    break;
+                case 9:
+                    g2.drawImage(tile[89].image, bSize*4, bSize*2, bSize, bSize*2, null);
+                    break;
+                case 0:
+                    g2.drawImage(tile[90].image, bSize*4, bSize*2, bSize, bSize*2, null);
+                    break;
+
+            }
+
+        } else if (startBattle || !wait) {
+
+            switch (carloMoneyA/100) {
+                case 1:
+                    g2.drawImage(tile[81].image, bSize*2, bSize*2, bSize, bSize*2, null);
+                    break;
+                case 2:
+                    g2.drawImage(tile[82].image, bSize*2, bSize*2, bSize, bSize*2, null);
+                    break;
+                case 3:
+                    g2.drawImage(tile[83].image, bSize*2, bSize*2, bSize, bSize*2, null);
+                    break;
+                case 4:
+                    g2.drawImage(tile[84].image, bSize*2, bSize*2, bSize, bSize*2, null);
+                    break;
+                case 5:
+                    g2.drawImage(tile[85].image, bSize*2, bSize*2, bSize, bSize*2, null);
+                    break;
+                case 6:
+                    g2.drawImage(tile[86].image, bSize*2, bSize*2, bSize, bSize*2, null);
+                    break;
+                case 7:
+                    g2.drawImage(tile[87].image, bSize*2, bSize*2, bSize, bSize*2, null);
+                    break;
+                case 8:
+                    g2.drawImage(tile[88].image, bSize*2, bSize*2, bSize, bSize*2, null);
+                    break;
+                case 9:
+                    g2.drawImage(tile[89].image, bSize*2, bSize*2, bSize, bSize*2, null);
+                    break;
+                case 0:
+                    g2.drawImage(tile[90].image, bSize*2, bSize*2, bSize, bSize*2, null);
+                    break;
+            }
+
+            switch ((carloMoneyA/10)%10) {
+
+                case 1:
+                    g2.drawImage(tile[81].image, bSize*3, bSize*2, bSize, bSize*2, null);
+                    break;
+                case 2:
+                    g2.drawImage(tile[82].image, bSize*3, bSize*2, bSize, bSize*2, null);
+                    break;
+                case 3:
+                    g2.drawImage(tile[83].image, bSize*3, bSize*2, bSize, bSize*2, null);
+                    break;
+                case 4:
+                    g2.drawImage(tile[84].image, bSize*3, bSize*2, bSize, bSize*2, null);
+                    break;
+                case 5:
+                    g2.drawImage(tile[85].image, bSize*3, bSize*2, bSize, bSize*2, null);
+                    break;
+                case 6:
+                    g2.drawImage(tile[86].image, bSize*3, bSize*2, bSize, bSize*2, null);
+                    break;
+                case 7:
+                    g2.drawImage(tile[87].image, bSize*3, bSize*2, bSize, bSize*2, null);
+                    break;
+                case 8:
+                    g2.drawImage(tile[88].image, bSize*3, bSize*2, bSize, bSize*2, null);
+                    break;
+                case 9:
+                    g2.drawImage(tile[89].image, bSize*3, bSize*2, bSize, bSize*2, null);
+                    break;
+                case 0:
+                    g2.drawImage(tile[90].image, bSize*3, bSize*2, bSize, bSize*2, null);
+                    break;
+
+            }
+
+            switch (carloMoneyA%10) {
+
+                case 1:
+                    g2.drawImage(tile[81].image, bSize*4, bSize*2, bSize, bSize*2, null);
+                    break;
+                case 2:
+                    g2.drawImage(tile[82].image, bSize*4, bSize*2, bSize, bSize*2, null);
+                    break;
+                case 3:
+                    g2.drawImage(tile[83].image, bSize*4, bSize*2, bSize, bSize*2, null);
+                    break;
+                case 4:
+                    g2.drawImage(tile[84].image, bSize*4, bSize*2, bSize, bSize*2, null);
+                    break;
+                case 5:
+                    g2.drawImage(tile[85].image, bSize*4, bSize*2, bSize, bSize*2, null);
+                    break;
+                case 6:
+                    g2.drawImage(tile[86].image, bSize*4, bSize*2, bSize, bSize*2, null);
+                    break;
+                case 7:
+                    g2.drawImage(tile[87].image, bSize*4, bSize*2, bSize, bSize*2, null);
+                    break;
+                case 8:
+                    g2.drawImage(tile[88].image, bSize*4, bSize*2, bSize, bSize*2, null);
+                    break;
+                case 9:
+                    g2.drawImage(tile[89].image, bSize*4, bSize*2, bSize, bSize*2, null);
+                    break;
+                case 0:
+                    g2.drawImage(tile[90].image, bSize*4, bSize*2, bSize, bSize*2, null);
+                    break;
+
+            }
+
+        }
+
+        if (!startBattle && wait) {
+            g2.drawImage(tile[91].image, gp.screenWidth/2 - 310, 0, bSize * 8, bSize*5, null);
+        } else if (startBattle || !wait) {
+            g2.drawImage(tile[92].image, gp.screenWidth/2 - 175, 0, bSize * 5, bSize*3, null);
+            if (CarloWon && !PabloWon) {
+                if (tenSecsPassed) {
+                    g2.drawImage(tile[68].image, gp.screenWidth / 2 - bSize * 2, bSize * 3, bSize * 2, bSize, null);
+                    g2.drawImage(tile[93].image, gp.screenWidth / 2 - bSize * 3 / 2 + bSize * 2, bSize * 3, bSize * 2, bSize, null);
+                }
+            } else if (!CarloWon && PabloWon) {
+                if (tenSecsPassed) {
+                    g2.drawImage(tile[67].image, gp.screenWidth / 2 - bSize * 2, bSize * 3, bSize * 2, bSize, null);
+                    g2.drawImage(tile[93].image, gp.screenWidth / 2 - bSize * 3 / 2 + bSize * 2, bSize * 3, bSize * 2, bSize, null);
+                }
+            }
+        }
 
         // Set font size
         //g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 80F));
@@ -232,23 +861,437 @@ public class UI {
 
         g2.drawImage(tile[59].image, 0, 0, gp.screenWidth, gp.screenHeight, null);
 
+        if (turn1) {
+            g2.drawImage(tile[68].image, gp.screenWidth/2 - 60, bSize * 7/2, bSize * 2, bSize, null);
+        } else if (turn2) {
+            g2.drawImage(tile[67].image, gp.screenWidth/2 - 60, bSize * 7/2, bSize * 2, bSize, null);
+        }
+
+        switch (gp.remainingTreasures) {
+            case 1:
+                g2.drawImage(tile[81].image, gp.screenWidth/2 , bSize * 10-30, bSize/2, bSize, null);
+                break;
+            case 2:
+                g2.drawImage(tile[82].image, gp.screenWidth/2 , bSize * 10-30, bSize/2, bSize, null);
+                break;
+            case 3:
+                g2.drawImage(tile[83].image, gp.screenWidth/2 , bSize * 10-30, bSize/2, bSize, null);
+                break;
+            case 4:
+                g2.drawImage(tile[84].image, gp.screenWidth/2, bSize * 10-30, bSize/2, bSize, null);
+                break;
+            case 5:
+                g2.drawImage(tile[85].image, gp.screenWidth/2, bSize * 10-30, bSize/2, bSize, null);
+                break;
+            case 6:
+                g2.drawImage(tile[86].image, gp.screenWidth/2, bSize * 10-30, bSize/2, bSize, null);
+                break;
+            case 7:
+                g2.drawImage(tile[87].image, gp.screenWidth/2, bSize * 10-30, bSize/2, bSize, null);
+                break;
+            case 8:
+                g2.drawImage(tile[88].image, gp.screenWidth/2, bSize * 10-30, bSize/2, bSize, null);
+                break;
+            case 9:
+                g2.drawImage(tile[89].image, gp.screenWidth/2, bSize * 10-30, bSize/2, bSize, null);
+                break;
+            case 0:
+                g2.drawImage(tile[90].image, gp.screenWidth/2, bSize * 10-30, bSize/2, bSize, null);
+                break;
+        }
+
+        switch (randT) {
+            case 1:
+                tt = 71;
+                break;
+            case 2:
+                tt = 72;
+                break;
+            case 3:
+                tt = 73;
+                break;
+            case 4:
+                tt = 74;
+                break;
+            case 5:
+                tt = 75;
+                break;
+            case 6:
+                tt = 76;
+                break;
+            case 7:
+                tt = 77;
+                break;
+            case 8:
+                tt = 78;
+                break;
+        }
+
+        g2.drawImage(tile[tt].image, gp.screenWidth/2-bSize*2-30, bSize * 13/2, bSize*5, bSize, null);
+
         g2.drawImage(tile[79].image, 0, bSize*3, bSize*2, bSize*2, null);
-        g2.drawImage(tile[82].image, bSize*2, bSize*3, bSize*2, bSize*2, null);
+
+        switch (gp.carloMoney/100) {
+
+            case 1:
+                g2.drawImage(tile[81].image, bSize*2, bSize*3, bSize, bSize*2, null);
+                break;
+            case 2:
+                g2.drawImage(tile[82].image, bSize*2, bSize*3, bSize, bSize*2, null);
+                break;
+            case 3:
+                g2.drawImage(tile[83].image, bSize*2, bSize*3, bSize, bSize*2, null);
+                break;
+            case 4:
+                g2.drawImage(tile[84].image, bSize*2, bSize*3, bSize, bSize*2, null);
+                break;
+            case 5:
+                g2.drawImage(tile[85].image, bSize*2, bSize*3, bSize, bSize*2, null);
+                break;
+            case 6:
+                g2.drawImage(tile[86].image, bSize*2, bSize*3, bSize, bSize*2, null);
+                break;
+            case 7:
+                g2.drawImage(tile[87].image, bSize*2, bSize*3, bSize, bSize*2, null);
+                break;
+            case 8:
+                g2.drawImage(tile[88].image, bSize*2, bSize*3, bSize, bSize*2, null);
+                break;
+            case 9:
+                g2.drawImage(tile[89].image, bSize*2, bSize*3, bSize, bSize*2, null);
+                break;
+            case 0:
+                g2.drawImage(tile[90].image, bSize*2, bSize*3, bSize, bSize*2, null);
+                break;
+        }
+
+        switch ((gp.carloMoney/10)%10) {
+
+            case 1:
+                g2.drawImage(tile[81].image, bSize*3, bSize*3, bSize, bSize*2, null);
+                break;
+            case 2:
+                g2.drawImage(tile[82].image, bSize*3, bSize*3, bSize, bSize*2, null);
+                break;
+            case 3:
+                g2.drawImage(tile[83].image, bSize*3, bSize*3, bSize, bSize*2, null);
+                break;
+            case 4:
+                g2.drawImage(tile[84].image, bSize*3, bSize*3, bSize, bSize*2, null);
+                break;
+            case 5:
+                g2.drawImage(tile[85].image, bSize*3, bSize*3, bSize, bSize*2, null);
+                break;
+            case 6:
+                g2.drawImage(tile[86].image, bSize*3, bSize*3, bSize, bSize*2, null);
+                break;
+            case 7:
+                g2.drawImage(tile[87].image, bSize*3, bSize*3, bSize, bSize*2, null);
+                break;
+            case 8:
+                g2.drawImage(tile[88].image, bSize*3, bSize*3, bSize, bSize*2, null);
+                break;
+            case 9:
+                g2.drawImage(tile[89].image, bSize*3, bSize*3, bSize, bSize*2, null);
+                break;
+            case 0:
+                g2.drawImage(tile[90].image, bSize*3, bSize*3, bSize, bSize*2, null);
+                break;
+
+        }
+
+        switch (gp.carloMoney%10) {
+
+            case 1:
+                g2.drawImage(tile[81].image, bSize*4, bSize*3, bSize, bSize*2, null);
+                break;
+            case 2:
+                g2.drawImage(tile[82].image, bSize*4, bSize*3, bSize, bSize*2, null);
+                break;
+            case 3:
+                g2.drawImage(tile[83].image, bSize*4, bSize*3, bSize, bSize*2, null);
+                break;
+            case 4:
+                g2.drawImage(tile[84].image, bSize*4, bSize*3, bSize, bSize*2, null);
+                break;
+            case 5:
+                g2.drawImage(tile[85].image, bSize*4, bSize*3, bSize, bSize*2, null);
+                break;
+            case 6:
+                g2.drawImage(tile[86].image, bSize*4, bSize*3, bSize, bSize*2, null);
+                break;
+            case 7:
+                g2.drawImage(tile[87].image, bSize*4, bSize*3, bSize, bSize*2, null);
+                break;
+            case 8:
+                g2.drawImage(tile[88].image, bSize*4, bSize*3, bSize, bSize*2, null);
+                break;
+            case 9:
+                g2.drawImage(tile[89].image, bSize*4, bSize*3, bSize, bSize*2, null);
+                break;
+            case 0:
+                g2.drawImage(tile[90].image, bSize*4, bSize*3, bSize, bSize*2, null);
+                break;
+
+        }
+
 
         g2.drawImage(tile[79].image, gp.screenWidth-140, bSize*3, bSize*2, bSize*2, null);
-        g2.drawImage(tile[82].image, (gp.screenWidth-140)-bSize*2, bSize*3, bSize*2, bSize*2, null);
+
+
+        switch (gp.pabloMoney/100) {
+
+            case 1:
+                g2.drawImage(tile[81].image, (gp.screenWidth-140)-bSize*3, bSize*3, bSize, bSize*2, null);
+                break;
+            case 2:
+                g2.drawImage(tile[82].image, (gp.screenWidth-140)-bSize*3, bSize*3, bSize, bSize*2, null);
+                break;
+            case 3:
+                g2.drawImage(tile[83].image, (gp.screenWidth-140)-bSize*3, bSize*3, bSize, bSize*2, null);
+                break;
+            case 4:
+                g2.drawImage(tile[84].image, (gp.screenWidth-140)-bSize*3, bSize*3, bSize, bSize*2, null);
+                break;
+            case 5:
+                g2.drawImage(tile[85].image, (gp.screenWidth-140)-bSize*3, bSize*3, bSize, bSize*2, null);
+                break;
+            case 6:
+                g2.drawImage(tile[86].image, (gp.screenWidth-140)-bSize*3, bSize*3, bSize, bSize*2, null);
+                break;
+            case 7:
+                g2.drawImage(tile[87].image, (gp.screenWidth-140)-bSize*3, bSize*3, bSize, bSize*2, null);
+                break;
+            case 8:
+                g2.drawImage(tile[88].image, (gp.screenWidth-140)-bSize*3, bSize*3, bSize, bSize*2, null);
+                break;
+            case 9:
+                g2.drawImage(tile[89].image, (gp.screenWidth-140)-bSize*3, bSize*3, bSize, bSize*2, null);
+                break;
+            case 0:
+                g2.drawImage(tile[90].image, (gp.screenWidth-140)-bSize*3, bSize*3, bSize, bSize*2, null);
+                break;
+
+        }
+
+        switch ((gp.pabloMoney/10)%10) {
+
+            case 1:
+                g2.drawImage(tile[81].image, (gp.screenWidth-140)-bSize*2, bSize*3, bSize, bSize*2, null);
+                break;
+            case 2:
+                g2.drawImage(tile[82].image, (gp.screenWidth-140)-bSize*2, bSize*3, bSize, bSize*2, null);
+                break;
+            case 3:
+                g2.drawImage(tile[83].image, (gp.screenWidth-140)-bSize*2, bSize*3, bSize, bSize*2, null);
+                break;
+            case 4:
+                g2.drawImage(tile[84].image, (gp.screenWidth-140)-bSize*2, bSize*3, bSize, bSize*2, null);
+                break;
+            case 5:
+                g2.drawImage(tile[85].image, (gp.screenWidth-140)-bSize*2, bSize*3, bSize, bSize*2, null);
+                break;
+            case 6:
+                g2.drawImage(tile[86].image, (gp.screenWidth-140)-bSize*2, bSize*3, bSize, bSize*2, null);
+                break;
+            case 7:
+                g2.drawImage(tile[87].image, (gp.screenWidth-140)-bSize*2, bSize*3, bSize, bSize*2, null);
+                break;
+            case 8:
+                g2.drawImage(tile[88].image, (gp.screenWidth-140)-bSize*2, bSize*3, bSize, bSize*2, null);
+                break;
+            case 9:
+                g2.drawImage(tile[89].image, (gp.screenWidth-140)-bSize*2, bSize*3, bSize, bSize*2, null);
+                break;
+            case 0:
+                g2.drawImage(tile[90].image, (gp.screenWidth-140)-bSize*2, bSize*3, bSize, bSize*2, null);
+                break;
+
+        }
+
+        switch (gp.pabloMoney%10) {
+
+            case 1:
+                g2.drawImage(tile[81].image, (gp.screenWidth-140)-bSize, bSize*3, bSize, bSize*2, null);
+                break;
+            case 2:
+                g2.drawImage(tile[82].image, (gp.screenWidth-140)-bSize, bSize*3, bSize, bSize*2, null);
+                break;
+            case 3:
+                g2.drawImage(tile[83].image, (gp.screenWidth-140)-bSize, bSize*3, bSize, bSize*2, null);
+                break;
+            case 4:
+                g2.drawImage(tile[84].image, (gp.screenWidth-140)-bSize, bSize*3, bSize, bSize*2, null);
+                break;
+            case 5:
+                g2.drawImage(tile[85].image, (gp.screenWidth-140)-bSize, bSize*3, bSize, bSize*2, null);
+                break;
+            case 6:
+                g2.drawImage(tile[86].image, (gp.screenWidth-140)-bSize, bSize*3, bSize, bSize*2, null);
+                break;
+            case 7:
+                g2.drawImage(tile[87].image, (gp.screenWidth-140)-bSize, bSize*3, bSize, bSize*2, null);
+                break;
+            case 8:
+                g2.drawImage(tile[88].image, (gp.screenWidth-140)-bSize, bSize*3, bSize, bSize*2, null);
+                break;
+            case 9:
+                g2.drawImage(tile[89].image, (gp.screenWidth-140)-bSize, bSize*3, bSize, bSize*2, null);
+                break;
+            case 0:
+                g2.drawImage(tile[90].image, (gp.screenWidth-140)-bSize, bSize*3, bSize, bSize*2, null);
+                break;
+
+        }
+
+
+
+
 
         g2.drawImage(tile[80].image, bSize/8, bSize*6, bSize*3/2, bSize*3/2, null);
-        g2.drawImage(tile[81].image, bSize*2+bSize/8, bSize*6-20, bSize, bSize*2, null);
+
+        switch (gp.carloPower) {
+            case 1:
+                g2.drawImage(tile[81].image, bSize*2+bSize/8, bSize*6-20, bSize, bSize*2, null);
+                break;
+            case 2:
+                g2.drawImage(tile[82].image, bSize*2+bSize/8, bSize*6-20, bSize, bSize*2, null);
+                break;
+            case 3:
+                g2.drawImage(tile[83].image, bSize*2+bSize/8, bSize*6-20, bSize, bSize*2, null);
+                break;
+            case 4:
+                g2.drawImage(tile[84].image, bSize*2+bSize/8, bSize*6-20, bSize, bSize*2, null);
+                break;
+            case 5:
+                g2.drawImage(tile[85].image, bSize*2+bSize/8, bSize*6-20, bSize, bSize*2, null);
+                break;
+            case 6:
+                g2.drawImage(tile[86].image, bSize*2+bSize/8, bSize*6-20, bSize, bSize*2, null);
+                break;
+            case 7:
+                g2.drawImage(tile[87].image, bSize*2+bSize/8, bSize*6-20, bSize, bSize*2, null);
+                break;
+            case 8:
+                g2.drawImage(tile[88].image, bSize*2+bSize/8, bSize*6-20, bSize, bSize*2, null);
+                break;
+            case 9:
+                g2.drawImage(tile[89].image, bSize*2+bSize/8, bSize*6-20, bSize, bSize*2, null);
+                break;
+            case 0:
+                g2.drawImage(tile[90].image, bSize*2+bSize/8, bSize*6-20, bSize, bSize*2, null);
+                break;
+        }
 
         g2.drawImage(tile[80].image, gp.screenWidth-bSize*3/2, bSize*6, bSize*3/2, bSize*3/2, null);
-        g2.drawImage(tile[81].image, (gp.screenWidth-bSize*3/2)-bSize*3/2, bSize*6-20, bSize, bSize*2, null);
+
+        switch (gp.pabloPower) {
+            case 1:
+                g2.drawImage(tile[81].image,(gp.screenWidth-bSize*3/2)-bSize*3/2, bSize*6-20, bSize, bSize*2, null);
+                break;
+            case 2:
+                g2.drawImage(tile[82].image,(gp.screenWidth-bSize*3/2)-bSize*3/2, bSize*6-20, bSize, bSize*2, null);
+                break;
+            case 3:
+                g2.drawImage(tile[83].image,(gp.screenWidth-bSize*3/2)-bSize*3/2, bSize*6-20, bSize, bSize*2, null);
+                break;
+            case 4:
+                g2.drawImage(tile[84].image,(gp.screenWidth-bSize*3/2)-bSize*3/2, bSize*6-20, bSize, bSize*2, null);
+                break;
+            case 5:
+                g2.drawImage(tile[85].image,(gp.screenWidth-bSize*3/2)-bSize*3/2, bSize*6-20, bSize, bSize*2, null);
+                break;
+            case 6:
+                g2.drawImage(tile[86].image,(gp.screenWidth-bSize*3/2)-bSize*3/2, bSize*6-20, bSize, bSize*2, null);
+                break;
+            case 7:
+                g2.drawImage(tile[87].image,(gp.screenWidth-bSize*3/2)-bSize*3/2, bSize*6-20, bSize, bSize*2, null);
+                break;
+            case 8:
+                g2.drawImage(tile[88].image,(gp.screenWidth-bSize*3/2)-bSize*3/2, bSize*6-20, bSize, bSize*2, null);
+                break;
+            case 9:
+                g2.drawImage(tile[89].image,(gp.screenWidth-bSize*3/2)-bSize*3/2, bSize*6-20, bSize, bSize*2, null);
+                break;
+            case 0:
+                g2.drawImage(tile[90].image,(gp.screenWidth-bSize*3/2)-bSize*3/2, bSize*6-20, bSize, bSize*2, null);
+                break;
+        }
+
 
         g2.drawImage(tile[20].image, bSize/4, bSize*9, bSize, bSize, null);
-        g2.drawImage(tile[81].image, bSize*2+bSize/8, bSize*9-20, bSize, bSize*2, null);
+
+        switch (gp.carloPoints) {
+            case 1:
+                g2.drawImage(tile[81].image, bSize*2+bSize/8, bSize*9-20, bSize, bSize*2, null);
+                break;
+            case 2:
+                g2.drawImage(tile[82].image, bSize*2+bSize/8, bSize*9-20, bSize, bSize*2, null);
+                break;
+            case 3:
+                g2.drawImage(tile[83].image, bSize*2+bSize/8, bSize*9-20, bSize, bSize*2, null);
+                break;
+            case 4:
+                g2.drawImage(tile[84].image, bSize*2+bSize/8, bSize*9-20, bSize, bSize*2, null);
+                break;
+            case 5:
+                g2.drawImage(tile[85].image, bSize*2+bSize/8, bSize*9-20, bSize, bSize*2, null);
+                break;
+            case 6:
+                g2.drawImage(tile[86].image, bSize*2+bSize/8, bSize*9-20, bSize, bSize*2, null);
+                break;
+            case 7:
+                g2.drawImage(tile[87].image, bSize*2+bSize/8, bSize*9-20, bSize, bSize*2, null);
+                break;
+            case 8:
+                g2.drawImage(tile[88].image, bSize*2+bSize/8, bSize*9-20, bSize, bSize*2, null);
+                break;
+            case 9:
+                g2.drawImage(tile[89].image, bSize*2+bSize/8, bSize*9-20, bSize, bSize*2, null);
+                break;
+            case 0:
+                g2.drawImage(tile[90].image, bSize*2+bSize/8, bSize*9-20, bSize, bSize*2, null);
+                break;
+        }
+
+
+
 
         g2.drawImage(tile[20].image, gp.screenWidth-100, bSize*9, bSize, bSize, null);
-        g2.drawImage(tile[81].image, (gp.screenWidth-bSize*3/2)-bSize*3/2, bSize*9-20, bSize, bSize*2, null);
+
+
+        switch (gp.pabloPoints) {
+            case 1:
+                g2.drawImage(tile[81].image, (gp.screenWidth-bSize*3/2)-bSize*3/2, bSize*9-20, bSize, bSize*2, null);
+            case 2:
+                g2.drawImage(tile[82].image, (gp.screenWidth-bSize*3/2)-bSize*3/2, bSize*9-20, bSize, bSize*2, null);
+                break;
+            case 3:
+                g2.drawImage(tile[83].image, (gp.screenWidth-bSize*3/2)-bSize*3/2, bSize*9-20, bSize, bSize*2, null);
+                break;
+            case 4:
+                g2.drawImage(tile[84].image, (gp.screenWidth-bSize*3/2)-bSize*3/2, bSize*9-20, bSize, bSize*2, null);
+                break;
+            case 5:
+                g2.drawImage(tile[85].image, (gp.screenWidth-bSize*3/2)-bSize*3/2, bSize*9-20, bSize, bSize*2, null);
+                break;
+            case 6:
+                g2.drawImage(tile[86].image, (gp.screenWidth-bSize*3/2)-bSize*3/2, bSize*9-20, bSize, bSize*2, null);
+                break;
+            case 7:
+                g2.drawImage(tile[87].image, (gp.screenWidth-bSize*3/2)-bSize*3/2, bSize*9-20, bSize, bSize*2, null);
+                break;
+            case 8:
+                g2.drawImage(tile[88].image, (gp.screenWidth-bSize*3/2)-bSize*3/2, bSize*9-20, bSize, bSize*2, null);
+                break;
+            case 9:
+                g2.drawImage(tile[89].image, (gp.screenWidth-bSize*3/2)-bSize*3/2, bSize*9-20, bSize, bSize*2, null);
+                break;
+            case 0:
+                g2.drawImage(tile[90].image, (gp.screenWidth-bSize*3/2)-bSize*3/2, bSize*9-20, bSize, bSize*2, null);
+                break;
+        }
+
 
     }
 
@@ -306,6 +1349,36 @@ public class UI {
         g2.drawImage(tile[69].image, 0, 0, gp.screenWidth, gp.screenHeight, null);
         g2.drawImage(tile[41].image, 0, gp.screenHeight / 2, bSize * 8, bSize * 12, null);
         g2.drawImage(tile[70].image, bSize * 10, (gp.screenHeight/2)-bSize*2, bSize * 12, bSize * 12, null);
+
+    }
+
+    public void drawEndScreen () {
+
+        // Get the current image from the array based on currentImageIndex
+        BufferedImage currentImage = gif[currentImageIndex];
+
+        // Draw the current image onto the screen
+        g2.drawImage(currentImage, 0, 0, gp.screenWidth, gp.screenHeight, null);
+        g2.drawImage(tile[51].image, bSize*4, bSize, bSize * 8, bSize * 3, null);
+        if (gp.carloWonGame) {
+            g2.drawImage(tile[113].image, 0, gp.screenHeight / 2, bSize * 8, bSize * 12, null);
+            g2.drawImage(tile[68].image, gp.screenWidth / 2 + bSize * 2, bSize * 6, bSize * 2, bSize, null);
+            g2.drawImage(tile[93].image, gp.screenWidth / 2 - bSize * 3 / 2 + bSize * 6, bSize * 6, bSize * 2, bSize, null);
+        } else if (gp.pabloWonGame) {
+            g2.drawImage(tile[112].image, 0, gp.screenHeight / 2, bSize * 8, bSize * 12, null);
+            g2.drawImage(tile[67].image, gp.screenWidth / 2 + bSize * 2, bSize * 6, bSize * 2, bSize, null);
+            g2.drawImage(tile[93].image, gp.screenWidth / 2 - bSize * 3 / 2 + bSize * 6, bSize * 6, bSize * 2, bSize, null);
+        }
+
+
+
+        // Increment the image index for the next frame
+        currentImageIndex++;
+
+        // If we reached the end of the array, loop back to the beginning
+        if (currentImageIndex >= gif.length) {
+            currentImageIndex = 0;
+        }
 
     }
 

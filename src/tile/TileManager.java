@@ -10,6 +10,7 @@ import java.awt.image.BufferedImage;
 import java.io.*;
 
 import static entity.Carlo.dice;
+import static main.GamePanel.*;
 
 public class TileManager {
 
@@ -30,7 +31,7 @@ public class TileManager {
     public TileManager(GamePanel gp) {
 
         this.gp = gp;
-        tile = new Tile[100];
+        tile = new Tile[150];
         gif = new BufferedImage[4];
         gif2 = new BufferedImage[8];
         obsTileNum = new int[gp.maxScreenCol][gp.maxScreenRow];
@@ -129,8 +130,39 @@ public class TileManager {
             tile[79] = new Tile(ImageIO.read(getClass().getResourceAsStream("/backgrounds/money.png")), false);
             tile[80] = new Tile(ImageIO.read(getClass().getResourceAsStream("/backgrounds/power.png")), false);
             // Numbers
-            tile[81] = new Tile(ImageIO.read(getClass().getResourceAsStream("/text/0.png")), false);
-            tile[82] = new Tile(ImageIO.read(getClass().getResourceAsStream("/text/500.png")), false);
+            tile[81] = new Tile(ImageIO.read(getClass().getResourceAsStream("/numbers/1.png")), false);
+            tile[82] = new Tile(ImageIO.read(getClass().getResourceAsStream("/numbers/2.png")), false);
+            tile[83] = new Tile(ImageIO.read(getClass().getResourceAsStream("/numbers/3.png")), false);
+            tile[84] = new Tile(ImageIO.read(getClass().getResourceAsStream("/numbers/4.png")), false);
+            tile[85] = new Tile(ImageIO.read(getClass().getResourceAsStream("/numbers/5.png")), false);
+            tile[86] = new Tile(ImageIO.read(getClass().getResourceAsStream("/numbers/6.png")), false);
+            tile[87] = new Tile(ImageIO.read(getClass().getResourceAsStream("/numbers/7.png")), false);
+            tile[88] = new Tile(ImageIO.read(getClass().getResourceAsStream("/numbers/8.png")), false);
+            tile[89] = new Tile(ImageIO.read(getClass().getResourceAsStream("/numbers/9.png")), false);
+            tile[90] = new Tile(ImageIO.read(getClass().getResourceAsStream("/numbers/0.png")), false);
+            //
+            tile[91] = new Tile(ImageIO.read(getClass().getResourceAsStream("/backgrounds/pressb.png")), false);
+            tile[92] = new Tile(ImageIO.read(getClass().getResourceAsStream("/backgrounds/itson.png")), false);
+            tile[93] = new Tile(ImageIO.read(getClass().getResourceAsStream("/text/wins.png")), false);
+            //
+            tile[101] = new Tile(ImageIO.read(getClass().getResourceAsStream("/text/diamondr.png")), false);
+            tile[102] = new Tile(ImageIO.read(getClass().getResourceAsStream("/text/jewel.png")), false);
+            tile[103] = new Tile(ImageIO.read(getClass().getResourceAsStream("/text/goldeng.png")), false);
+            tile[104] = new Tile(ImageIO.read(getClass().getResourceAsStream("/text/crystalg.png")), false);
+            tile[105] = new Tile(ImageIO.read(getClass().getResourceAsStream("/text/woodenm.png")), false);
+            tile[106] = new Tile(ImageIO.read(getClass().getResourceAsStream("/text/paladins.png")), false);
+            tile[107] = new Tile(ImageIO.read(getClass().getResourceAsStream("/text/goldenk.png")), false);
+            tile[108] = new Tile(ImageIO.read(getClass().getResourceAsStream("/text/dragonss.png")), false);
+            //
+            tile[109] = new Tile(ImageIO.read(getClass().getResourceAsStream("/text/trap.png")), false);
+            tile[110] = new Tile(ImageIO.read(getClass().getResourceAsStream("/text/100.png")), false);
+            tile[111] = new Tile(ImageIO.read(getClass().getResourceAsStream("/text/150.png")), false);
+            //
+            tile[112] = new Tile(ImageIO.read(getClass().getResourceAsStream("/players/PabloD1.png")), false);
+            tile[113] = new Tile(ImageIO.read(getClass().getResourceAsStream("/players/CarloD1.png")), false);
+            //
+            tile[114] = new Tile(ImageIO.read(getClass().getResourceAsStream("/backgrounds/outline.png")), false);
+
 
 
             for (int i = 0; i < gif.length; i++) {
@@ -251,14 +283,38 @@ public class TileManager {
 
 
         // Treasures
-        g2.drawImage(tile[32].image, bSize * 3 + iAdj, bSize * 2 + iAdj, iSize, iSize, null);
-        g2.drawImage(tile[33].image, bSize * 8 + iAdj, bSize * 2 + iAdj, iSize, iSize, null);
-        g2.drawImage(tile[34].image, bSize * 6 + iAdj, bSize * 4 + iAdj, iSize, iSize, null);
-        g2.drawImage(tile[20].image, bSize * 9 + iAdj, bSize * 5 + iAdj, iSize, iSize, null);
-        g2.drawImage(tile[20].image, bSize * 2 + iAdj, bSize * 6 + iAdj, iSize, iSize, null);
-        g2.drawImage(tile[34].image, bSize * 6 + iAdj, bSize * 7 + iAdj, iSize, iSize, null);
-        g2.drawImage(tile[33].image, bSize * 3 + iAdj, bSize * 9 + iAdj, iSize, iSize, null);
-        g2.drawImage(tile[32].image, bSize * 9 + iAdj, bSize * 9 + iAdj, iSize, iSize, null);
+        g2.drawImage(tile[38].image, bSize * 3, bSize * 2, bSize, bSize, null);
+        if (randomNumber == treasureIndex1)
+        g2.drawImage(tile[114].image, bSize * 3, bSize * 2, bSize, bSize, null);
+
+        g2.drawImage(tile[37].image, bSize * 8, bSize * 2, bSize, bSize, null);
+        if (randomNumber == treasureIndex2)
+        g2.drawImage(tile[114].image, bSize * 8, bSize * 2, bSize, bSize, null);
+
+        g2.drawImage(tile[36].image, bSize * 6, bSize * 4, bSize, bSize, null);
+        if (randomNumber == treasureIndex3)
+        g2.drawImage(tile[114].image, bSize * 6, bSize * 4, bSize, bSize, null);
+
+        g2.drawImage(tile[40].image, bSize * 9, bSize * 5, bSize, bSize, null);
+        if (randomNumber == treasureIndex4)
+        g2.drawImage(tile[114].image, bSize * 9, bSize * 5, bSize, bSize, null);
+
+        g2.drawImage(tile[39].image, bSize * 2, bSize * 6, bSize, bSize, null);
+        if (randomNumber == treasureIndex5)
+        g2.drawImage(tile[114].image, bSize * 2, bSize * 6, bSize, bSize, null);
+
+        g2.drawImage(tile[38].image, bSize * 6, bSize * 7, bSize, bSize, null);
+        if (randomNumber == treasureIndex6)
+        g2.drawImage(tile[114].image, bSize * 6, bSize * 7, bSize, bSize, null);
+
+        g2.drawImage(tile[37].image, bSize * 3, bSize * 9, bSize, bSize, null);
+        if (randomNumber == treasureIndex7)
+        g2.drawImage(tile[114].image, bSize * 3, bSize * 9, bSize, bSize, null);
+
+        g2.drawImage(tile[36].image, bSize * 9, bSize * 9, bSize, bSize, null);
+        if (randomNumber == treasureIndex8)
+        g2.drawImage(tile[114].image, bSize * 9, bSize * 9, bSize, bSize, null);
+
 
         // Markets
         g2.drawImage(tile[26].image, bSize * 4 + iAdj, bSize + iAdj, iSize, iSize, null);
@@ -271,19 +327,23 @@ public class TileManager {
         g2.drawImage(tile[29].image, bSize * 6 - 20, bSize * 5 - 20, bSize + 20, bSize + 30, null);
 
         // Traps
-        g2.drawImage(tile[24].image, bSize * 10 + twAdj, bSize + twAdj, tSize, tSize, null);
-        g2.drawImage(tile[25].image, bSize + twAdj, bSize * 3 + twAdj, tSize, tSize, null);
-        g2.drawImage(tile[24].image, bSize * 4 + twAdj, bSize * 5 + twAdj, tSize, tSize, null);
-        g2.drawImage(tile[25].image, bSize * 5 + twAdj, bSize * 8 + twAdj, tSize, tSize, null);
-        g2.drawImage(tile[24].image, bSize * 10 + twAdj, bSize * 10 + twAdj, tSize, tSize, null);
+        g2.drawImage(tile[40].image, bSize * 10, bSize, bSize, bSize, null);
+        g2.drawImage(tile[39].image, bSize, bSize * 3, bSize, bSize, null);
+        g2.drawImage(tile[38].image, bSize * 4, bSize * 5, bSize, bSize, null);
+        g2.drawImage(tile[37].image, bSize * 5, bSize * 8, bSize, bSize, null);
+        g2.drawImage(tile[36].image, bSize * 8, bSize * 10, bSize, bSize, null);
 
         // Starting House
         g2.drawImage(tile[3].image, 0, bSize, bSize, bSize, null);
         g2.drawImage(tile[3].image, bSize, bSize, bSize, bSize, null);
         g2.drawImage(tile[28].image, 0, bSize - 20, bSize, bSize + 20, null);
+        //
+        g2.drawImage(tile[3].image, bSize*11, bSize*10, bSize, bSize, null);
+        g2.drawImage(tile[3].image, bSize*10, bSize*10, bSize, bSize, null);
+        g2.drawImage(tile[28].image, bSize*11, bSize*10 - 20, bSize, bSize + 20, null);
 
         // Lost Items
-        g2.drawImage(tile[38].image, bSize, bSize, bSize, bSize, null);
+        g2.drawImage(tile[38].image, bSize*2, bSize, bSize, bSize, null);
         g2.drawImage(tile[36].image, bSize * 7, bSize, bSize, bSize, null);
         g2.drawImage(tile[37].image, bSize * 9, bSize * 2, bSize, bSize, null);
         g2.drawImage(tile[35].image, bSize * 3, bSize * 3, bSize, bSize, null);
@@ -292,7 +352,7 @@ public class TileManager {
         g2.drawImage(tile[39].image, bSize * 5, bSize * 6, bSize, bSize, null);
         g2.drawImage(tile[40].image, bSize * 10, bSize * 6, bSize, bSize, null);
         g2.drawImage(tile[39].image, bSize * 8, bSize * 7, bSize, bSize, null);
-        g2.drawImage(tile[35].image, bSize * 2, bSize * 8, bSize, bSize, null);
+        g2.drawImage(tile[35].image, bSize * 3, bSize * 7, bSize, bSize, null);
         g2.drawImage(tile[37].image, bSize * 2, bSize * 9, bSize, bSize, null);
         g2.drawImage(tile[36].image, bSize * 7, bSize * 9, bSize, bSize, null);
         g2.drawImage(tile[38].image, bSize * 5, bSize * 10, bSize, bSize, null);

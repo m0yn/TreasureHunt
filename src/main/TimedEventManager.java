@@ -35,7 +35,7 @@ public class TimedEventManager {
                 battleStartTime = System.nanoTime(); // Set battle start time only once
                 bTimeSet = true;
             }
-                if (currentTime - battleStartTime >= 10_000_000_000L) {
+                if (currentTime - battleStartTime >= 2_000_000_000L) {
                     tenSecsPassed = true;
             }
         }

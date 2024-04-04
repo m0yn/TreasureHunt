@@ -7,6 +7,7 @@ import static entity.Entity.*;
 import static entity.Carlo.squares;
 import static entity.Pablo.squares2;
 import static main.GamePanel.*;
+import static main.UI.ySX;
 import static main.UI.yX;
 
 // KeyListener interface to retrieve keyboard events.
@@ -15,8 +16,8 @@ public class KeyHandler implements KeyListener {
     // Boolean variables to check whether buttons are pressed.
     public boolean upPressed, downPressed, leftPressed, rightPressed;
     public boolean upPressed2, downPressed2, leftPressed2, rightPressed2;
-    public boolean startGame, startBoard;
-    public boolean purchase;
+    public static boolean startGame, startBoard, startBattle, startEnd;
+    public static boolean select;
 
     // This method is called when a key is typed, but it is not used in this implementation.
     @Override
@@ -88,24 +89,74 @@ public class KeyHandler implements KeyListener {
                 case KeyEvent.VK_P:
                     startBoard = true;
                     break;
+                case KeyEvent.VK_E:
+                    startEnd = true;
+                    break;
             }
         } else if (gameState == marketState) {
             switch (e.getKeyCode()) {
                 case KeyEvent.VK_UP:
                     yX--;
+                    System.out.println(yX);
                     break;
                 case KeyEvent.VK_DOWN:
                     yX++;
+                    System.out.println(yX);
                     break;
                 case KeyEvent.VK_SPACE:
-                    purchase = true;
+                    select = true;
                     break;
                 case KeyEvent.VK_ENTER:
                     startGame = true;
                     break;
             }
 
-        } else {
+        } else if (gameState == battleState) {
+            switch (e.getKeyCode()) {
+                case KeyEvent.VK_B:
+                    startBattle = true;
+                    break;
+                case KeyEvent.VK_ENTER:
+                    startGame = true;
+                    break;
+            }
+        } else if (gameState == trapState) {
+            switch (e.getKeyCode()) {
+                case KeyEvent.VK_DOWN:
+                    ySX--;
+                    System.out.println(ySX);
+                    break;
+                case KeyEvent.VK_UP:
+                    ySX++;
+                    System.out.println(ySX);
+                    break;
+                case KeyEvent.VK_SPACE:
+                    System.out.println("selected");
+                    select = true;
+                    break;
+                case KeyEvent.VK_ENTER:
+                    startGame = true;
+                    break;
+            }
+        } else if (gameState == lostState) {
+            if (e.getKeyCode() == KeyEvent.VK_ENTER)
+                startGame = true;
+            else if (e.getKeyCode() == KeyEvent.VK_SPACE)
+                select = true;
+        } else if (gameState == castleState) {
+            if (e.getKeyCode() == KeyEvent.VK_ENTER)
+                startGame = true;
+            else if (e.getKeyCode() == KeyEvent.VK_SPACE)
+                select = true;
+        } else if (gameState == treasureState) {
+            if (e.getKeyCode() == KeyEvent.VK_ENTER)
+                startGame = true;
+            else if (e.getKeyCode() == KeyEvent.VK_SPACE)
+                select = true;
+        } else if (gameState == startState) {
+            if (e.getKeyCode() == KeyEvent.VK_ENTER)
+                startGame = true;
+        } else if (gameState == boardState) {
             if (e.getKeyCode() == KeyEvent.VK_ENTER)
                 startGame = true;
         }
@@ -167,7 +218,13 @@ public class KeyHandler implements KeyListener {
                 startBoard = false;
                 break;
             case KeyEvent.VK_SPACE:
-                purchase = false;
+                select = false;
+                break;
+            case KeyEvent.VK_B:
+                startBattle = false;
+                break;
+            case KeyEvent.VK_E:
+                startEnd = false;
                 break;
         }
     }

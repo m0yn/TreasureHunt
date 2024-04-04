@@ -21,6 +21,7 @@ public class Sound {
         soundURL[6] = getClass().getResource("/music/tthemeO.wav");
         soundURL[7] = getClass().getResource("/music/silenceO.wav");
         soundURL[8] = getClass().getResource("/music/vkillerO.wav");
+        soundURL[9] = getClass().getResource("/music/fightM.wav");
 
     }
 

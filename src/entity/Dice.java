@@ -10,7 +10,7 @@ public class Dice { // Declaration of the Dice class
 
         Random random = new Random(); // Creating a new Random object
         result = random.nextInt(6) + 1; // Generating a random integer between 1 and 6 (inclusive) and assigning it to result
-        System.out.println(result); // Printing the result to the console
+        //System.out.println(result); // Printing the result to the console
         return result; // Returning the generated result
     }
 
