@@ -101,7 +101,7 @@ public class TileManager {
             tile[52] = new Tile(ImageIO.read(getClass().getResourceAsStream("/backgrounds/StartScreen.png")), false);
             tile[53] = new Tile(ImageIO.read(getClass().getResourceAsStream("/backgrounds/Colorful.png")), false);
             tile[54] = new Tile(ImageIO.read(getClass().getResourceAsStream("/text/WhiteS.png")), false);
-            tile[55] = new Tile(ImageIO.read(getClass().getResourceAsStream("/text/wait.png")), false);
+            tile[55] = new Tile(ImageIO.read(getClass().getResourceAsStream("/text/instr.png")), false);
             tile[56] = new Tile(ImageIO.read(getClass().getResourceAsStream("/text/ON.png")), false);
             tile[57] = new Tile(ImageIO.read(getClass().getResourceAsStream("/text/carloW.png")), false);
             tile[58] = new Tile(ImageIO.read(getClass().getResourceAsStream("/text/pabloW.png")), false);
@@ -162,7 +162,6 @@ public class TileManager {
             tile[113] = new Tile(ImageIO.read(getClass().getResourceAsStream("/players/CarloD1.png")), false);
             //
             tile[114] = new Tile(ImageIO.read(getClass().getResourceAsStream("/backgrounds/outline.png")), false);
-            tile[115] = new Tile(ImageIO.read(getClass().getResourceAsStream("/backgrounds/castle1.png")), false);
             tile[115] = new Tile(ImageIO.read(getClass().getResourceAsStream("/backgrounds/castle1.png")), false);
 
 

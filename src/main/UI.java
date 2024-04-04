@@ -84,7 +84,7 @@ public class UI {
                 n++;
             }
             g2.drawImage(tile[12].image, 0, 0, gp.screenWidth, gp.screenHeight, null);
-            g2.drawImage(tile[55].image, (gp.screenWidth/2)-220, (gp.screenHeight/2)-100, bSize*5, bSize, null);
+            g2.drawImage(tile[55].image, (gp.screenWidth/2)-220, (gp.screenHeight/2)-300, bSize*5, bSize*5, null);
             if (eightSecsPassed)
                 drawStartScreen();
         }
