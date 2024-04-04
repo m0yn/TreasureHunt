@@ -77,8 +77,8 @@ public class GamePanel extends JPanel implements Runnable {
         carlo.setDefaultValues();
         carlo.getPlayerImage();
 
-        pablo = new Pablo(this, keyH, 0, 200, 3);
-        carlo = new Carlo(this, keyH, 0, 100, 2);
+        pablo = new Pablo(this, keyH, 0, 100, 1);
+        carlo = new Carlo(this, keyH, 0, 100, 1);
 
         carlo.setDefaultValues();
         carlo.getPlayerImage();
@@ -261,7 +261,8 @@ public class GamePanel extends JPanel implements Runnable {
             gameState = castleState;
             if (keyH.select) {
                 if (cPoints != 0) {
-                carlo.points = cPoints;
+                carlo.points += cPoints;
+                cPoints = 0;
                 carlo.money += 500;
                 System.out.println(carlo.money);
                 ui.treasureSought = false;
@@ -277,7 +278,8 @@ public class GamePanel extends JPanel implements Runnable {
             gameState = castleState; // switches to Castle State
             if (keyH.select) {
                 if (pPoints != 0) {
-                    pablo.points = pPoints;
+                    pablo.points += pPoints;
+                    pPoints = 0;
                     pablo.money += 500;
                     System.out.println(pablo.money);
                     ui.treasureSought = false;

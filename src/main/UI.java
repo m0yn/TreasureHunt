@@ -39,7 +39,8 @@ public class UI {
     public static int tt, qq, randT, randP;
     public int li;
     public int q = 0;
-
+    public int ss = 69;
+    public boolean darw;
 
 
     // Constructor
@@ -140,6 +141,7 @@ public class UI {
 
         else if (gp.gameState == gp.castleState) {
 
+            darw = false;
             drawCastleScreen();
             if (!castleSong) {
                 gp.stopMusic();
@@ -184,6 +186,7 @@ public class UI {
         else if (gp.gameState == gp.treasureState) {
 
             g2.drawImage(tile[qq].image, bSize * 13, gp.screenHeight/8, bSize * 5, bSize * 4, null);
+
 
         }
 
@@ -397,7 +400,41 @@ public class UI {
 
         if (!startBattle && wait) {
 
-            switch (pabloMoneyB/100) {
+            switch (pabloMoneyB/1000) {
+                case 1:
+                    g2.drawImage(tile[81].image, (gp.screenWidth-140)-bSize*4, bSize*2, bSize, bSize*2, null);
+                    break;
+                case 2:
+                    g2.drawImage(tile[82].image, (gp.screenWidth-140)-bSize*4, bSize*2, bSize, bSize*2, null);
+                    break;
+                case 3:
+                    g2.drawImage(tile[83].image, (gp.screenWidth-140)-bSize*4, bSize*2, bSize, bSize*2, null);
+                    break;
+                case 4:
+                    g2.drawImage(tile[84].image, (gp.screenWidth-140)-bSize*4, bSize*2, bSize, bSize*2, null);
+                    break;
+                case 5:
+                    g2.drawImage(tile[85].image, (gp.screenWidth-140)-bSize*4, bSize*2, bSize, bSize*2, null);
+                    break;
+                case 6:
+                    g2.drawImage(tile[86].image, (gp.screenWidth-140)-bSize*4, bSize*2, bSize, bSize*2, null);
+                    break;
+                case 7:
+                    g2.drawImage(tile[87].image, (gp.screenWidth-140)-bSize*4, bSize*2, bSize, bSize*2, null);
+                    break;
+                case 8:
+                    g2.drawImage(tile[88].image, (gp.screenWidth-140)-bSize*4, bSize*2, bSize, bSize*2, null);
+                    break;
+                case 9:
+                    g2.drawImage(tile[89].image, (gp.screenWidth-140)-bSize*4, bSize*2, bSize, bSize*2, null);
+                    break;
+                case 0:
+                    g2.drawImage(tile[90].image, (gp.screenWidth-140)-bSize*4, bSize*2, bSize, bSize*2, null);
+                    break;
+            }
+
+            switch ((pabloMoneyB/100)%10) {
+
                 case 1:
                     g2.drawImage(tile[81].image, (gp.screenWidth-140)-bSize*3, bSize*2, bSize, bSize*2, null);
                     break;
@@ -428,6 +465,7 @@ public class UI {
                 case 0:
                     g2.drawImage(tile[90].image, (gp.screenWidth-140)-bSize*3, bSize*2, bSize, bSize*2, null);
                     break;
+
             }
 
             switch ((pabloMoneyB/10)%10) {
@@ -502,7 +540,41 @@ public class UI {
 
         } else if (startBattle || !wait) {
 
-            switch (pabloMoneyA/100) {
+            switch (pabloMoneyA/1000) {
+                case 1:
+                    g2.drawImage(tile[81].image, (gp.screenWidth-140)-bSize*4, bSize*2, bSize, bSize*2, null);
+                    break;
+                case 2:
+                    g2.drawImage(tile[82].image, (gp.screenWidth-140)-bSize*4, bSize*2, bSize, bSize*2, null);
+                    break;
+                case 3:
+                    g2.drawImage(tile[83].image, (gp.screenWidth-140)-bSize*4, bSize*2, bSize, bSize*2, null);
+                    break;
+                case 4:
+                    g2.drawImage(tile[84].image, (gp.screenWidth-140)-bSize*4, bSize*2, bSize, bSize*2, null);
+                    break;
+                case 5:
+                    g2.drawImage(tile[85].image, (gp.screenWidth-140)-bSize*4, bSize*2, bSize, bSize*2, null);
+                    break;
+                case 6:
+                    g2.drawImage(tile[86].image, (gp.screenWidth-140)-bSize*4, bSize*2, bSize, bSize*2, null);
+                    break;
+                case 7:
+                    g2.drawImage(tile[87].image, (gp.screenWidth-140)-bSize*4, bSize*2, bSize, bSize*2, null);
+                    break;
+                case 8:
+                    g2.drawImage(tile[88].image, (gp.screenWidth-140)-bSize*4, bSize*2, bSize, bSize*2, null);
+                    break;
+                case 9:
+                    g2.drawImage(tile[89].image, (gp.screenWidth-140)-bSize*4, bSize*2, bSize, bSize*2, null);
+                    break;
+                case 0:
+                    g2.drawImage(tile[90].image, (gp.screenWidth-140)-bSize*4, bSize*2, bSize, bSize*2, null);
+                    break;
+            }
+
+            switch ((pabloMoneyA/100)%10) {
+
                 case 1:
                     g2.drawImage(tile[81].image, (gp.screenWidth-140)-bSize*3, bSize*2, bSize, bSize*2, null);
                     break;
@@ -533,6 +605,7 @@ public class UI {
                 case 0:
                     g2.drawImage(tile[90].image, (gp.screenWidth-140)-bSize*3, bSize*2, bSize, bSize*2, null);
                     break;
+
             }
 
             switch ((pabloMoneyA/10)%10) {
@@ -612,7 +685,7 @@ public class UI {
 
         if (!startBattle && wait) {
 
-            switch (carloMoneyB/100) {
+            switch (carloMoneyB/1000) {
 
                 case 1:
                     g2.drawImage(tile[81].image, bSize*2, bSize*2, bSize, bSize*2, null);
@@ -647,7 +720,7 @@ public class UI {
 
             }
 
-            switch ((carloMoneyB/10)%10) {
+            switch ((carloMoneyB/100)%10) {
 
                 case 1:
                     g2.drawImage(tile[81].image, bSize*3, bSize*2, bSize, bSize*2, null);
@@ -678,6 +751,41 @@ public class UI {
                     break;
                 case 0:
                     g2.drawImage(tile[90].image, bSize*3, bSize*2, bSize, bSize*2, null);
+                    break;
+
+            }
+
+            switch ((carloMoneyB)/10%10) {
+
+                case 1:
+                    g2.drawImage(tile[81].image, bSize*4, bSize*2, bSize, bSize*2, null);
+                    break;
+                case 2:
+                    g2.drawImage(tile[82].image, bSize*4, bSize*2, bSize, bSize*2, null);
+                    break;
+                case 3:
+                    g2.drawImage(tile[83].image, bSize*4, bSize*2, bSize, bSize*2, null);
+                    break;
+                case 4:
+                    g2.drawImage(tile[84].image, bSize*4, bSize*2, bSize, bSize*2, null);
+                    break;
+                case 5:
+                    g2.drawImage(tile[85].image, bSize*4, bSize*2, bSize, bSize*2, null);
+                    break;
+                case 6:
+                    g2.drawImage(tile[86].image, bSize*4, bSize*2, bSize, bSize*2, null);
+                    break;
+                case 7:
+                    g2.drawImage(tile[87].image, bSize*4, bSize*2, bSize, bSize*2, null);
+                    break;
+                case 8:
+                    g2.drawImage(tile[88].image, bSize*4, bSize*2, bSize, bSize*2, null);
+                    break;
+                case 9:
+                    g2.drawImage(tile[89].image, bSize*4, bSize*2, bSize, bSize*2, null);
+                    break;
+                case 0:
+                    g2.drawImage(tile[90].image, bSize*4, bSize*2, bSize, bSize*2, null);
                     break;
 
             }
@@ -685,41 +793,41 @@ public class UI {
             switch (carloMoneyB%10) {
 
                 case 1:
-                    g2.drawImage(tile[81].image, bSize*4, bSize*2, bSize, bSize*2, null);
+                    g2.drawImage(tile[81].image, bSize*5, bSize*2, bSize, bSize*2, null);
                     break;
                 case 2:
-                    g2.drawImage(tile[82].image, bSize*4, bSize*2, bSize, bSize*2, null);
+                    g2.drawImage(tile[82].image, bSize*5, bSize*2, bSize, bSize*2, null);
                     break;
                 case 3:
-                    g2.drawImage(tile[83].image, bSize*4, bSize*2, bSize, bSize*2, null);
+                    g2.drawImage(tile[83].image, bSize*5, bSize*2, bSize, bSize*2, null);
                     break;
                 case 4:
-                    g2.drawImage(tile[84].image, bSize*4, bSize*2, bSize, bSize*2, null);
+                    g2.drawImage(tile[84].image, bSize*5, bSize*2, bSize, bSize*2, null);
                     break;
                 case 5:
-                    g2.drawImage(tile[85].image, bSize*4, bSize*2, bSize, bSize*2, null);
+                    g2.drawImage(tile[85].image, bSize*5, bSize*2, bSize, bSize*2, null);
                     break;
                 case 6:
-                    g2.drawImage(tile[86].image, bSize*4, bSize*2, bSize, bSize*2, null);
+                    g2.drawImage(tile[86].image, bSize*5, bSize*2, bSize, bSize*2, null);
                     break;
                 case 7:
-                    g2.drawImage(tile[87].image, bSize*4, bSize*2, bSize, bSize*2, null);
+                    g2.drawImage(tile[87].image, bSize*5, bSize*2, bSize, bSize*2, null);
                     break;
                 case 8:
-                    g2.drawImage(tile[88].image, bSize*4, bSize*2, bSize, bSize*2, null);
+                    g2.drawImage(tile[88].image, bSize*5, bSize*2, bSize, bSize*2, null);
                     break;
                 case 9:
-                    g2.drawImage(tile[89].image, bSize*4, bSize*2, bSize, bSize*2, null);
+                    g2.drawImage(tile[89].image, bSize*5, bSize*2, bSize, bSize*2, null);
                     break;
                 case 0:
-                    g2.drawImage(tile[90].image, bSize*4, bSize*2, bSize, bSize*2, null);
+                    g2.drawImage(tile[90].image, bSize*5, bSize*2, bSize, bSize*2, null);
                     break;
 
             }
 
         } else if (startBattle || !wait) {
 
-            switch (carloMoneyA/100) {
+            switch (carloMoneyA/1000) {
                 case 1:
                     g2.drawImage(tile[81].image, bSize*2, bSize*2, bSize, bSize*2, null);
                     break;
@@ -752,7 +860,7 @@ public class UI {
                     break;
             }
 
-            switch ((carloMoneyA/10)%10) {
+            switch ((carloMoneyA/100)%10) {
 
                 case 1:
                     g2.drawImage(tile[81].image, bSize*3, bSize*2, bSize, bSize*2, null);
@@ -787,7 +895,7 @@ public class UI {
 
             }
 
-            switch (carloMoneyA%10) {
+            switch ((carloMoneyA/10)%10) {
 
                 case 1:
                     g2.drawImage(tile[81].image, bSize*4, bSize*2, bSize, bSize*2, null);
@@ -818,6 +926,41 @@ public class UI {
                     break;
                 case 0:
                     g2.drawImage(tile[90].image, bSize*4, bSize*2, bSize, bSize*2, null);
+                    break;
+
+            }
+
+            switch (carloMoneyA%10) {
+
+                case 1:
+                    g2.drawImage(tile[81].image, bSize*5, bSize*2, bSize, bSize*2, null);
+                    break;
+                case 2:
+                    g2.drawImage(tile[82].image, bSize*5, bSize*2, bSize, bSize*2, null);
+                    break;
+                case 3:
+                    g2.drawImage(tile[83].image, bSize*5, bSize*2, bSize, bSize*2, null);
+                    break;
+                case 4:
+                    g2.drawImage(tile[84].image, bSize*5, bSize*2, bSize, bSize*2, null);
+                    break;
+                case 5:
+                    g2.drawImage(tile[85].image, bSize*5, bSize*2, bSize, bSize*2, null);
+                    break;
+                case 6:
+                    g2.drawImage(tile[86].image, bSize*5, bSize*2, bSize, bSize*2, null);
+                    break;
+                case 7:
+                    g2.drawImage(tile[87].image, bSize*5, bSize*2, bSize, bSize*2, null);
+                    break;
+                case 8:
+                    g2.drawImage(tile[88].image, bSize*5, bSize*2, bSize, bSize*2, null);
+                    break;
+                case 9:
+                    g2.drawImage(tile[89].image, bSize*5, bSize*2, bSize, bSize*2, null);
+                    break;
+                case 0:
+                    g2.drawImage(tile[90].image, bSize*5, bSize*2, bSize, bSize*2, null);
                     break;
 
             }
@@ -931,7 +1074,7 @@ public class UI {
 
         g2.drawImage(tile[79].image, 0, bSize*3, bSize*2, bSize*2, null);
 
-        switch (gp.carloMoney/100) {
+        switch (gp.carloMoney/1000) {
 
             case 1:
                 g2.drawImage(tile[81].image, bSize*2, bSize*3, bSize, bSize*2, null);
@@ -965,7 +1108,7 @@ public class UI {
                 break;
         }
 
-        switch ((gp.carloMoney/10)%10) {
+        switch ((gp.carloMoney/100)%10) {
 
             case 1:
                 g2.drawImage(tile[81].image, bSize*3, bSize*3, bSize, bSize*2, null);
@@ -1000,7 +1143,7 @@ public class UI {
 
         }
 
-        switch (gp.carloMoney%10) {
+        switch ((gp.carloMoney/10)%10) {
 
             case 1:
                 g2.drawImage(tile[81].image, bSize*4, bSize*3, bSize, bSize*2, null);
@@ -1035,11 +1178,81 @@ public class UI {
 
         }
 
+        switch (gp.carloMoney%10) {
+
+            case 1:
+                g2.drawImage(tile[81].image, bSize*5, bSize*3, bSize, bSize*2, null);
+                break;
+            case 2:
+                g2.drawImage(tile[82].image, bSize*5, bSize*3, bSize, bSize*2, null);
+                break;
+            case 3:
+                g2.drawImage(tile[83].image, bSize*5, bSize*3, bSize, bSize*2, null);
+                break;
+            case 4:
+                g2.drawImage(tile[84].image, bSize*5, bSize*3, bSize, bSize*2, null);
+                break;
+            case 5:
+                g2.drawImage(tile[85].image, bSize*5, bSize*3, bSize, bSize*2, null);
+                break;
+            case 6:
+                g2.drawImage(tile[86].image, bSize*5, bSize*3, bSize, bSize*2, null);
+                break;
+            case 7:
+                g2.drawImage(tile[87].image, bSize*5, bSize*3, bSize, bSize*2, null);
+                break;
+            case 8:
+                g2.drawImage(tile[88].image, bSize*5, bSize*3, bSize, bSize*2, null);
+                break;
+            case 9:
+                g2.drawImage(tile[89].image, bSize*5, bSize*3, bSize, bSize*2, null);
+                break;
+            case 0:
+                g2.drawImage(tile[90].image, bSize*5, bSize*3, bSize, bSize*2, null);
+                break;
+
+        }
+
 
         g2.drawImage(tile[79].image, gp.screenWidth-140, bSize*3, bSize*2, bSize*2, null);
 
 
-        switch (gp.pabloMoney/100) {
+        switch (gp.pabloMoney/1000) {
+
+            case 1:
+                g2.drawImage(tile[81].image, (gp.screenWidth-140)-bSize*4, bSize*3, bSize, bSize*2, null);
+                break;
+            case 2:
+                g2.drawImage(tile[82].image, (gp.screenWidth-140)-bSize*4, bSize*3, bSize, bSize*2, null);
+                break;
+            case 3:
+                g2.drawImage(tile[83].image, (gp.screenWidth-140)-bSize*4, bSize*3, bSize, bSize*2, null);
+                break;
+            case 4:
+                g2.drawImage(tile[84].image, (gp.screenWidth-140)-bSize*4, bSize*3, bSize, bSize*2, null);
+                break;
+            case 5:
+                g2.drawImage(tile[85].image, (gp.screenWidth-140)-bSize*4, bSize*3, bSize, bSize*2, null);
+                break;
+            case 6:
+                g2.drawImage(tile[86].image, (gp.screenWidth-140)-bSize*4, bSize*3, bSize, bSize*2, null);
+                break;
+            case 7:
+                g2.drawImage(tile[87].image, (gp.screenWidth-140)-bSize*4, bSize*3, bSize, bSize*2, null);
+                break;
+            case 8:
+                g2.drawImage(tile[88].image, (gp.screenWidth-140)-bSize*4, bSize*3, bSize, bSize*2, null);
+                break;
+            case 9:
+                g2.drawImage(tile[89].image, (gp.screenWidth-140)-bSize*4, bSize*3, bSize, bSize*2, null);
+                break;
+            case 0:
+                g2.drawImage(tile[90].image, (gp.screenWidth-140)-bSize*4, bSize*3, bSize, bSize*2, null);
+                break;
+
+        }
+
+        switch ((gp.pabloMoney/100)%10) {
 
             case 1:
                 g2.drawImage(tile[81].image, (gp.screenWidth-140)-bSize*3, bSize*3, bSize, bSize*2, null);
@@ -1263,6 +1476,7 @@ public class UI {
         switch (gp.pabloPoints) {
             case 1:
                 g2.drawImage(tile[81].image, (gp.screenWidth-bSize*3/2)-bSize*3/2, bSize*9-20, bSize, bSize*2, null);
+                break;
             case 2:
                 g2.drawImage(tile[82].image, (gp.screenWidth-bSize*3/2)-bSize*3/2, bSize*9-20, bSize, bSize*2, null);
                 break;
@@ -1346,7 +1560,13 @@ public class UI {
 
     public void drawCastleScreen () {
 
-        g2.drawImage(tile[69].image, 0, 0, gp.screenWidth, gp.screenHeight, null);
+        if (!darw) {
+            g2.drawImage(tile[ss].image, 0, 0, gp.screenWidth, gp.screenHeight, null);
+            if (select) {
+                ss = 115;
+            }
+            darw = true;
+        }
         g2.drawImage(tile[41].image, 0, gp.screenHeight / 2, bSize * 8, bSize * 12, null);
         g2.drawImage(tile[70].image, bSize * 10, (gp.screenHeight/2)-bSize*2, bSize * 12, bSize * 12, null);
 

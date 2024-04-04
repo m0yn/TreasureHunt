@@ -89,9 +89,6 @@ public class KeyHandler implements KeyListener {
                 case KeyEvent.VK_P:
                     startBoard = true;
                     break;
-                case KeyEvent.VK_E:
-                    startEnd = true;
-                    break;
             }
         } else if (gameState == marketState) {
             switch (e.getKeyCode()) {
@@ -222,9 +219,6 @@ public class KeyHandler implements KeyListener {
                 break;
             case KeyEvent.VK_B:
                 startBattle = false;
-                break;
-            case KeyEvent.VK_E:
-                startEnd = false;
                 break;
         }
     }

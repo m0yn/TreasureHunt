@@ -162,7 +162,8 @@ public class TileManager {
             tile[113] = new Tile(ImageIO.read(getClass().getResourceAsStream("/players/CarloD1.png")), false);
             //
             tile[114] = new Tile(ImageIO.read(getClass().getResourceAsStream("/backgrounds/outline.png")), false);
-
+            tile[115] = new Tile(ImageIO.read(getClass().getResourceAsStream("/backgrounds/castle1.png")), false);
+            tile[115] = new Tile(ImageIO.read(getClass().getResourceAsStream("/backgrounds/castle1.png")), false);
 
 
             for (int i = 0; i < gif.length; i++) {
