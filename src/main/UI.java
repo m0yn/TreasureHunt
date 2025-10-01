@@ -1,8 +1,10 @@
 package main;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.Color;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.text.DecimalFormat;
 
 import static entity.Entity.*;
@@ -23,6 +25,20 @@ public class UI {
     int messageCounter = 0; // Counter for message display
     public boolean gameFinished; // Flag to indicate if the game is finished
     int[][] battleNum; // Array to store battle numbers
+    int splashTimer = 0;
+    float alpha = 0f;
+    float starAlpha = 0f; // transparency for star
+    int endTimer = 0;
+    boolean showEndLogo = false;
+    int creditsY = 0;
+    int creditsSpeed = 2;            // pixels per frame (adjust for timing)
+    boolean showCredits = false;     // toggle when ready
+    boolean creditsStart;
+    float logoAlpha = 1f;        // logo fully visible at first
+    boolean fadingOutLogo = false;
+    int creditsStartFrame = 0;
+
+
 
     double playTime; // Variable to store playtime
     DecimalFormat dFormat = new DecimalFormat("#0.00"); // Format for playtime display
@@ -43,11 +59,10 @@ public class UI {
     public boolean darw;
 
 
+
     // Constructor
     public UI(GamePanel gp) {
         this.gp = gp; // Initialize GamePanel instance
-        arial_40 = new Font("Arial", Font.PLAIN, 40); // Initialize font
-        arial_80B = new Font("Arial", Font.BOLD, 80); // Initialize font
     }
 
     // Method to display a message
@@ -83,8 +98,48 @@ public class UI {
                 gp.playMusic(0);
                 n++;
             }
+
             g2.drawImage(tile[12].image, 0, 0, gp.screenWidth, gp.screenHeight, null);
-            g2.drawImage(tile[55].image, (gp.screenWidth/2)-220, (gp.screenHeight/2)-300, bSize*5, bSize*5, null);
+
+            // --- LOGO FADE ---
+            if (splashTimer < 70) { // fade in
+                alpha = splashTimer / 70f;
+            } else if (splashTimer < 210) { // fully visible
+                alpha = 1f;
+            } else if (splashTimer < 280) { // fade out
+                alpha = 1f - ((splashTimer - 210) / 70f);
+            }
+
+            // Draw logo with alpha
+            g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha));
+            g2.drawImage(tile[120].image, 0, 0, gp.screenWidth, gp.screenHeight, null);
+
+            // --- STAR FADE (delayed by 4s = ~140 frames at 35FPS) ---
+            if (splashTimer > 70) {
+                float starAlpha;
+                int starFadeStart = 70; // 4s
+                int starFadeDuration = 70; // same 2s fade as logo
+                int t = splashTimer - starFadeStart;
+
+                if (t < starFadeDuration) { // fade in
+                    starAlpha = t / (float) starFadeDuration;
+                } else if (t < 210 - starFadeStart) { // fully visible
+                    starAlpha = 1f;
+                } else if (t < 280 - starFadeStart) { // fade out
+                    starAlpha = 1f - ((t - (210 - starFadeStart)) / (float) starFadeDuration);
+                } else {
+                    starAlpha = 0f;
+                }
+
+                g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, starAlpha));
+                g2.drawImage(tile[121].image, 0, 0, gp.screenWidth, gp.screenHeight, null);
+            }
+
+            // Reset alpha
+            g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
+
+            splashTimer++;
+
             if (eightSecsPassed)
                 drawStartScreen();
         }
@@ -93,8 +148,13 @@ public class UI {
 
             if (!treasureSought) {
                 randT = Randomizer.treasureSelect();
+                gp.chT = false;
+                gp.phT = false;
                 treasureSought = true;
             }
+
+            if (gp.cPoints != 0) g2.drawImage(tile[117].image, bSize * 13, gp.screenHeight/4, bSize * 5, bSize, null);
+            else if (gp.pPoints != 0) g2.drawImage(tile[118].image, bSize * 13, gp.screenHeight/4, bSize * 5, bSize, null);
 
             wait = true;
             battleOccurred = false;
@@ -191,8 +251,8 @@ public class UI {
         }
 
         else if (gp.gameState == gp.endState) {
-
             drawEndScreen();
+
             if (!endSong) {
                 gp.stopMusic();
                 gp.playMusic(9);
@@ -204,7 +264,66 @@ public class UI {
                 playSong = false;
             }
 
+            endTimer++;
+
+// Show logo after ~11.73s
+            if (endTimer >= 411) {
+                showEndLogo = true;
+            }
+
+            if (showEndLogo && !showCredits) {
+                // Draw logo
+                g2.drawImage(tile[120].image, 0, 0, gp.screenWidth, gp.screenHeight, null);
+
+                // Fade in star starting ~14.77s
+                if (endTimer >= 505) {
+                    int fadeDuration = 70; // ~2s fade (70 frames at 35FPS)
+                    int framesSinceStart = endTimer - 505;
+
+                    if (framesSinceStart < fadeDuration) {
+                        starAlpha = framesSinceStart / (float)fadeDuration;
+                    } else {
+                        starAlpha = 1f;
+                    }
+
+                    // Draw star with alpha
+                    g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, starAlpha));
+                    g2.drawImage(tile[121].image, 0, 0, gp.screenWidth, gp.screenHeight, null);
+                    g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
+                }
+            }
+
+            if (endTimer >= 700 && !showCredits) {
+                showCredits = true;
+                creditsStart = true;
+                creditsStartFrame = endTimer; // record when credits began
+            }
+
+            if (showCredits) {
+                // Replace logo with solid black background
+                g2.setColor(Color.BLACK);
+                g2.fillRect(0, 0, gp.screenWidth, gp.screenHeight);
+
+                // Only set once at the very beginning
+                if (creditsStart) {
+                    creditsY = gp.screenHeight;
+                    creditsStart = false; // flag to ensure it only initializes once
+                }
+
+                // Draw credits image
+                g2.drawImage(tile[122].image, 0, creditsY, gp.screenWidth, tile[122].image.getHeight(), null);
+
+                // Move upward
+                creditsY -= creditsSpeed;
+
+                // Stop scrolling when fully gone
+                if (creditsY + tile[122].image.getHeight() < 0) {
+                    showCredits = false; // credits finished
+                }
+            }
+
         }
+
 
 
     }
@@ -1559,17 +1678,38 @@ public class UI {
     }
 
     public void drawCastleScreen () {
-
         if (!darw) {
-            g2.drawImage(tile[ss].image, 0, 0, gp.screenWidth, gp.screenHeight, null);
-            if (select) {
-                ss = 115;
+            if (gp.carloCastle && !gp.pabloCastle && gp.chT) {
+                g2.drawImage(tile[115].image, 0, 0, gp.screenWidth, gp.screenHeight, null);
+                g2.drawImage(tile[41].image, 0, gp.screenHeight / 2, bSize * 8, bSize * 12, null);
+            } else if (gp.carloCastle && !gp.pabloCastle && !gp.chT) {
+                g2.drawImage(tile[116].image, 0, 0, gp.screenWidth, gp.screenHeight, null);
+                g2.drawImage(tile[41].image, 0, gp.screenHeight / 2, bSize * 8, bSize * 12, null);
+            } else if (gp.pabloCastle && !gp.carloCastle && gp.phT) {
+                g2.drawImage(tile[115].image, 0, 0, gp.screenWidth, gp.screenHeight, null);
+                g2.drawImage(tile[69].image, 0, gp.screenHeight / 2, bSize * 8, bSize * 12, null);
+            } else if (gp.pabloCastle && !gp.carloCastle && !gp.phT) {
+                g2.drawImage(tile[116].image, 0, 0, gp.screenWidth, gp.screenHeight, null);
+                g2.drawImage(tile[69].image, 0, gp.screenHeight / 2, bSize * 8, bSize * 12, null);
+            } else if (gp.pabloCastle && gp.carloCastle) {
+                if (gp.chT) {
+                    g2.drawImage(tile[115].image, 0, 0, gp.screenWidth, gp.screenHeight, null);
+                    g2.drawImage(tile[41].image, 0, gp.screenHeight / 2, bSize * 8, bSize * 12, null);
+                } else if (gp.phT) {
+                    g2.drawImage(tile[115].image, 0, 0, gp.screenWidth, gp.screenHeight, null);
+                    g2.drawImage(tile[69].image, 0, gp.screenHeight / 2, bSize * 8, bSize * 12, null);
+                } else {
+                    g2.drawImage(tile[119].image, 0, 0, gp.screenWidth, gp.screenHeight, null);
+                }
             }
             darw = true;
         }
-        g2.drawImage(tile[41].image, 0, gp.screenHeight / 2, bSize * 8, bSize * 12, null);
-        g2.drawImage(tile[70].image, bSize * 10, (gp.screenHeight/2)-bSize*2, bSize * 12, bSize * 12, null);
 
+//        if (gp.carloCastle == true && gp.pabloCastle == false)
+//            g2.drawImage(tile[41].image, 0, gp.screenHeight / 2, bSize * 8, bSize * 12, null);
+//        else g2.drawImage(tile[69].image, 0, gp.screenHeight / 2, bSize * 8, bSize * 12, null);
+
+        g2.drawImage(tile[70].image, bSize * 10, (gp.screenHeight/2)-bSize*2, bSize * 12, bSize * 12, null);
     }
 
     public void drawEndScreen () {

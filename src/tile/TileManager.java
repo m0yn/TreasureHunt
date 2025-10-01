@@ -29,7 +29,6 @@ public class TileManager {
 
     // Constructor fot TileManager to get and assign object images to screen tiles.
     public TileManager(GamePanel gp) {
-
         this.gp = gp;
         tile = new Tile[150];
         gif = new BufferedImage[4];
@@ -38,24 +37,22 @@ public class TileManager {
         mktTileNum = new int[gp.maxScreenCol][gp.maxScreenRow];
         getTileImage();
         loadObs();
-
     }
 
     // Assets for game objects.
     public void getTileImage() {
-
         try {
-
-            tile[0] = new Tile(ImageIO.read(getClass().getResourceAsStream("/tiles/blank.png")), false);
-            tile[1] = new Tile(ImageIO.read(getClass().getResourceAsStream("/tiles/wall2.png")), true);
-            tile[2] = new Tile(ImageIO.read(getClass().getResourceAsStream("/tiles/brick2.png")), true);
-            tile[3] = new Tile(ImageIO.read(getClass().getResourceAsStream("/tiles/carpet1.png")), false);
-            tile[4] = new Tile(ImageIO.read(getClass().getResourceAsStream("/tiles/dirt1.png")), false);
-            tile[5] = new Tile(ImageIO.read(getClass().getResourceAsStream("/tiles/grass2.png")), false);
-            tile[6] = new Tile(ImageIO.read(getClass().getResourceAsStream("/tiles/ground1.png")), false);
-            tile[7] = new Tile(ImageIO.read(getClass().getResourceAsStream("/tiles/ground2.png")), false);
-            tile[8] = new Tile(ImageIO.read(getClass().getResourceAsStream("/tiles/ice1.png")), false);
-            tile[9] = new Tile(ImageIO.read(getClass().getResourceAsStream("/tiles/lava1.png")), false);
+            // Game Map
+            tile[0]  = new Tile(ImageIO.read(getClass().getResourceAsStream("/tiles/blank.png")), false);
+            tile[1]  = new Tile(ImageIO.read(getClass().getResourceAsStream("/tiles/wall2.png")), true);
+            tile[2]  = new Tile(ImageIO.read(getClass().getResourceAsStream("/tiles/brick2.png")), true);
+            tile[3]  = new Tile(ImageIO.read(getClass().getResourceAsStream("/tiles/carpet1.png")), false);
+            tile[4]  = new Tile(ImageIO.read(getClass().getResourceAsStream("/tiles/dirt1.png")), false);
+            tile[5]  = new Tile(ImageIO.read(getClass().getResourceAsStream("/tiles/grass2.png")), false);
+            tile[6]  = new Tile(ImageIO.read(getClass().getResourceAsStream("/tiles/ground1.png")), false);
+            tile[7]  = new Tile(ImageIO.read(getClass().getResourceAsStream("/tiles/ground2.png")), false);
+            tile[8]  = new Tile(ImageIO.read(getClass().getResourceAsStream("/tiles/ice1.png")), false);
+            tile[9]  = new Tile(ImageIO.read(getClass().getResourceAsStream("/tiles/lava1.png")), false);
             tile[10] = new Tile(ImageIO.read(getClass().getResourceAsStream("/tiles/metal1.png")), false);
             tile[11] = new Tile(ImageIO.read(getClass().getResourceAsStream("/tiles/metal2.png")), false);
             tile[12] = new Tile(ImageIO.read(getClass().getResourceAsStream("/tiles/metal3.png")), false);
@@ -87,46 +84,35 @@ public class TileManager {
             tile[38] = new Tile(ImageIO.read(getClass().getResourceAsStream("/items/house4.png")), false);
             tile[39] = new Tile(ImageIO.read(getClass().getResourceAsStream("/items/house5.png")), false);
             tile[40] = new Tile(ImageIO.read(getClass().getResourceAsStream("/items/house6.png")), false);
-            tile[41] = new Tile(ImageIO.read(getClass().getResourceAsStream("/players/Carlo.png")), false);
-            tile[42] = new Tile(ImageIO.read(getClass().getResourceAsStream("/players/Pablo.png")), false);
+            // HUD
             tile[43] = new Tile(ImageIO.read(getClass().getResourceAsStream("/bars/powerBar.png")), false);
             tile[44] = new Tile(ImageIO.read(getClass().getResourceAsStream("/bars/healthBar.png")), false);
+            tile[60] = new Tile(ImageIO.read(getClass().getResourceAsStream("/players/CarloP.png")), false);
+            tile[61] = new Tile(ImageIO.read(getClass().getResourceAsStream("/players/PabloP.png")), false);
+            tile[67] = new Tile(ImageIO.read(getClass().getResourceAsStream("/text/pablo.png")), false);
+            tile[68] = new Tile(ImageIO.read(getClass().getResourceAsStream("/text/carlo.png")), false);
+            tile[62] = new Tile(ImageIO.read(getClass().getResourceAsStream("/text/Status.png")), false);
             tile[45] = new Tile(ImageIO.read(getClass().getResourceAsStream("/objects/Dice1.png")), false);
             tile[46] = new Tile(ImageIO.read(getClass().getResourceAsStream("/objects/Dice2.png")), false);
             tile[47] = new Tile(ImageIO.read(getClass().getResourceAsStream("/objects/Dice3.png")), false);
             tile[48] = new Tile(ImageIO.read(getClass().getResourceAsStream("/objects/Dice4.png")), false);
             tile[49] = new Tile(ImageIO.read(getClass().getResourceAsStream("/objects/Dice5.png")), false);
             tile[50] = new Tile(ImageIO.read(getClass().getResourceAsStream("/objects/Dice6.png")), false);
-            tile[51] = new Tile(ImageIO.read(getClass().getResourceAsStream("/text/Light.png")), false);
+            // Art
+            tile[41] = new Tile(ImageIO.read(getClass().getResourceAsStream("/players/Carlo.png")), false);
+            tile[42] = new Tile(ImageIO.read(getClass().getResourceAsStream("/players/Pablo.png")), false);
             tile[52] = new Tile(ImageIO.read(getClass().getResourceAsStream("/backgrounds/StartScreen.png")), false);
             tile[53] = new Tile(ImageIO.read(getClass().getResourceAsStream("/backgrounds/Colorful.png")), false);
-            tile[54] = new Tile(ImageIO.read(getClass().getResourceAsStream("/text/WhiteS.png")), false);
-            tile[55] = new Tile(ImageIO.read(getClass().getResourceAsStream("/text/instr.png")), false);
-            tile[56] = new Tile(ImageIO.read(getClass().getResourceAsStream("/text/ON.png")), false);
-            tile[57] = new Tile(ImageIO.read(getClass().getResourceAsStream("/text/carloW.png")), false);
-            tile[58] = new Tile(ImageIO.read(getClass().getResourceAsStream("/text/pabloW.png")), false);
             tile[59] = new Tile(ImageIO.read(getClass().getResourceAsStream("/backgrounds/paper2.png")), false);
-            tile[60] = new Tile(ImageIO.read(getClass().getResourceAsStream("/players/CarloP.png")), false);
-            tile[61] = new Tile(ImageIO.read(getClass().getResourceAsStream("/players/PabloP.png")), false);
-            tile[62] = new Tile(ImageIO.read(getClass().getResourceAsStream("/text/Status.png")), false);
             tile[63] = new Tile(ImageIO.read(getClass().getResourceAsStream("/backgrounds/scroll.png")), false);
             tile[64] = new Tile(ImageIO.read(getClass().getResourceAsStream("/backgrounds/market.png")), false);
+            tile[69] = new Tile(ImageIO.read(getClass().getResourceAsStream("/players/PabloR1.png")), false);
+            tile[70] = new Tile(ImageIO.read(getClass().getResourceAsStream("/players/knight.png")), false);
+            tile[114] = new Tile(ImageIO.read(getClass().getResourceAsStream("/backgrounds/outline.png")), false);
+            tile[115] = new Tile(ImageIO.read(getClass().getResourceAsStream("/backgrounds/castle3.png")), false);
+            // Icons
             tile[65] = new Tile(ImageIO.read(getClass().getResourceAsStream("/backgrounds/star.png")), false);
             tile[66] = new Tile(ImageIO.read(getClass().getResourceAsStream("/backgrounds/arrow.png")), false);
-            tile[67] = new Tile(ImageIO.read(getClass().getResourceAsStream("/text/pablo.png")), false);
-            tile[68] = new Tile(ImageIO.read(getClass().getResourceAsStream("/text/carlo.png")), false);
-            tile[69] = new Tile(ImageIO.read(getClass().getResourceAsStream("/backgrounds/castle.png")), false);
-            tile[70] = new Tile(ImageIO.read(getClass().getResourceAsStream("/players/knight.png")), false);
-            // Treasures
-            tile[71] = new Tile(ImageIO.read(getClass().getResourceAsStream("/text/diamondRing.png")), false);
-            tile[72] = new Tile(ImageIO.read(getClass().getResourceAsStream("/text/jewelSword.png")), false);
-            tile[73] = new Tile(ImageIO.read(getClass().getResourceAsStream("/text/goldenGoblet.png")), false);
-            tile[74] = new Tile(ImageIO.read(getClass().getResourceAsStream("/text/crystalGoblet.png")), false);
-            tile[75] = new Tile(ImageIO.read(getClass().getResourceAsStream("/text/woodenBow.png")), false);
-            tile[76] = new Tile(ImageIO.read(getClass().getResourceAsStream("/text/paladinShield.png")), false);
-            tile[77] = new Tile(ImageIO.read(getClass().getResourceAsStream("/text/goldenKey.png")), false);
-            tile[78] = new Tile(ImageIO.read(getClass().getResourceAsStream("/text/dragonScroll.png")), false);
-            //
             tile[79] = new Tile(ImageIO.read(getClass().getResourceAsStream("/backgrounds/money.png")), false);
             tile[80] = new Tile(ImageIO.read(getClass().getResourceAsStream("/backgrounds/power.png")), false);
             // Numbers
@@ -140,11 +126,16 @@ public class TileManager {
             tile[88] = new Tile(ImageIO.read(getClass().getResourceAsStream("/numbers/8.png")), false);
             tile[89] = new Tile(ImageIO.read(getClass().getResourceAsStream("/numbers/9.png")), false);
             tile[90] = new Tile(ImageIO.read(getClass().getResourceAsStream("/numbers/0.png")), false);
-            //
-            tile[91] = new Tile(ImageIO.read(getClass().getResourceAsStream("/backgrounds/pressb.png")), false);
+            // Messages
+            tile[56] = new Tile(ImageIO.read(getClass().getResourceAsStream("/text/ON.png")), false);
+            tile[57] = new Tile(ImageIO.read(getClass().getResourceAsStream("/text/carloW.png")), false);
+            tile[58] = new Tile(ImageIO.read(getClass().getResourceAsStream("/text/pabloW.png")), false);
+            tile[55] = new Tile(ImageIO.read(getClass().getResourceAsStream("/text/instr.png")), false);
+            tile[51] = new Tile(ImageIO.read(getClass().getResourceAsStream("/text/Light.png")), false);
             tile[92] = new Tile(ImageIO.read(getClass().getResourceAsStream("/backgrounds/itson.png")), false);
             tile[93] = new Tile(ImageIO.read(getClass().getResourceAsStream("/text/wins.png")), false);
-            //
+            tile[110] = new Tile(ImageIO.read(getClass().getResourceAsStream("/text/100.png")), false);
+            tile[111] = new Tile(ImageIO.read(getClass().getResourceAsStream("/text/150.png")), false);
             tile[101] = new Tile(ImageIO.read(getClass().getResourceAsStream("/text/diamondr.png")), false);
             tile[102] = new Tile(ImageIO.read(getClass().getResourceAsStream("/text/jewel.png")), false);
             tile[103] = new Tile(ImageIO.read(getClass().getResourceAsStream("/text/goldeng.png")), false);
@@ -153,79 +144,70 @@ public class TileManager {
             tile[106] = new Tile(ImageIO.read(getClass().getResourceAsStream("/text/paladins.png")), false);
             tile[107] = new Tile(ImageIO.read(getClass().getResourceAsStream("/text/goldenk.png")), false);
             tile[108] = new Tile(ImageIO.read(getClass().getResourceAsStream("/text/dragonss.png")), false);
-            //
+            // Treasures
+            tile[71] = new Tile(ImageIO.read(getClass().getResourceAsStream("/text/diamondRing.png")), false);
+            tile[72] = new Tile(ImageIO.read(getClass().getResourceAsStream("/text/jewelSword.png")), false);
+            tile[73] = new Tile(ImageIO.read(getClass().getResourceAsStream("/text/goldenGoblet.png")), false);
+            tile[74] = new Tile(ImageIO.read(getClass().getResourceAsStream("/text/crystalGoblet.png")), false);
+            tile[75] = new Tile(ImageIO.read(getClass().getResourceAsStream("/text/woodenBow.png")), false);
+            tile[76] = new Tile(ImageIO.read(getClass().getResourceAsStream("/text/paladinShield.png")), false);
+            tile[77] = new Tile(ImageIO.read(getClass().getResourceAsStream("/text/goldenKey.png")), false);
+            tile[78] = new Tile(ImageIO.read(getClass().getResourceAsStream("/text/dragonScroll.png")), false);
+            // Prompts
+            tile[54] = new Tile(ImageIO.read(getClass().getResourceAsStream("/text/whiteS.png")), false);
             tile[109] = new Tile(ImageIO.read(getClass().getResourceAsStream("/text/trap.png")), false);
-            tile[110] = new Tile(ImageIO.read(getClass().getResourceAsStream("/text/100.png")), false);
-            tile[111] = new Tile(ImageIO.read(getClass().getResourceAsStream("/text/150.png")), false);
-            //
+            tile[91] = new Tile(ImageIO.read(getClass().getResourceAsStream("/backgrounds/pressb.png")), false);
+            // Characters
             tile[112] = new Tile(ImageIO.read(getClass().getResourceAsStream("/players/PabloD1.png")), false);
             tile[113] = new Tile(ImageIO.read(getClass().getResourceAsStream("/players/CarloD1.png")), false);
-            //
-            tile[114] = new Tile(ImageIO.read(getClass().getResourceAsStream("/backgrounds/outline.png")), false);
-            tile[115] = new Tile(ImageIO.read(getClass().getResourceAsStream("/backgrounds/castle1.png")), false);
+            tile[116] = new Tile(ImageIO.read(getClass().getResourceAsStream("/backgrounds/castle4.png")), false);
+            tile[117] = new Tile(ImageIO.read(getClass().getResourceAsStream("/text/cht.png")), false);
+            tile[118] = new Tile(ImageIO.read(getClass().getResourceAsStream("/text/pht.png")), false);
+            tile[119] = new Tile(ImageIO.read(getClass().getResourceAsStream("/backgrounds/castle5.png")), false);
+            tile[120] = new Tile(ImageIO.read(getClass().getResourceAsStream("/backgrounds/m0yn.png")), false);
+            tile[121] = new Tile(ImageIO.read(getClass().getResourceAsStream("/backgrounds/redstar.png")), false);
+            tile[122] = new Tile(ImageIO.read(getClass().getResourceAsStream("/backgrounds/credits.png")), false);
 
-
+            // Rain effect of start screen.
             for (int i = 0; i < gif.length; i++) {
                     // Load image from file
                     gif[i] = ImageIO.read(getClass().getResourceAsStream("/backgrounds/rain" + (i+1) + ".png"));
             }
-
+            // Waterfall effect of battle screen.
             for (int k = 0; k < gif2.length; k++) {
                 // Load image from file
                 gif2[k] = ImageIO.read(getClass().getResourceAsStream("/backgrounds/fall" + k + ".png"));
             }
-
-
-
-
-        } catch (IOException e) {
-
-            e.printStackTrace();
-
-        }
-
+        } catch (IOException e) { e.printStackTrace(); }
     }
 
+    // Draw the obstacles.
     public void loadObs() {
-
         try {
-
             InputStream is = getClass().getResourceAsStream("/maps/obstacles.txt");
             BufferedReader br = new BufferedReader((new InputStreamReader(is)));
-
             int col = 0;
             int row = 0;
 
             while (col < GRID && row < GRID) {
-
                 String line = br.readLine();
 
                 while (col < GRID) {
-
                     String numbers[] = line.split(" ");
 
                     int num = Integer.parseInt(numbers[col]);
 
                     obsTileNum[col][row] = num;
                     col++;
-
                 }
 
                 if (col == GRID) {
-
                     col = 0;
                     row++;
-
                 }
-
             }
-
             br.close();
-
-        } catch (Exception e) {
-
-        }
-
+        } catch (Exception e) {}
     }
 
     // Function to draw elements on the screen.

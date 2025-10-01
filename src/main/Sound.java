@@ -38,19 +38,16 @@ public class Sound {
     }
 
     public void play() {
-
-        clip.start();
-
+        if (clip != null) clip.start();
     }
 
     public void loop() {
-
         clip.loop(clip.LOOP_CONTINUOUSLY);
-
     }
 
     public void stop() {
 
+        if (clip != null)
         clip.stop();
 
     }

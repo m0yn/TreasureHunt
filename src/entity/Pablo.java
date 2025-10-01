@@ -59,20 +59,24 @@ public class Pablo extends Entity {
 
     // Updates player 2's state for each game tick
     public void update2() {
-
         collisionOn2 = false;
         gp.cChecker2.checkTile2(this);
 
         if (turn2 == true) {
 
             // Adjusts player 2's position and speed after collision detection
-            if (collisionOn2) {  // If collision detected
-
+            if (collisionOn2 == true || WorldX2 > 880 || WorldX2 < 0) {  // If collision detected
                 turn1 = false;
                 speed2 = 0;
 
                 // Adjust player position based on collision and direction
-                if (WorldX2 % 80 != 0 && WorldY2 % 80 == 0 && direction2 == "left") {
+                if (WorldX2 > 880 && direction2 == "right") {
+                    WorldX2 = 880;
+                    squares2 += 16;
+                } else if (WorldX2 < 0 && direction2 == "left") {
+                    WorldX2 = 0;
+                    squares2 += 16;
+                } else if (WorldX2 % 80 != 0 && WorldY2 % 80 == 0 && direction2 == "left") {
                     WorldX2 = ((WorldX2 / 80) + 1) * 80;
                     squares2 += 16;
                 } else if (WorldX2 % 80 != 0 && WorldY2 % 80 == 0 && direction2 == "right") {
@@ -111,7 +115,9 @@ public class Pablo extends Entity {
             }
 
             // Resets player position and speed based on dice roll if squares2 reaches 0
-            if (squares2 == 0) {
+            if (squares2 <= 0) {
+
+                squares2 = 0;
                 speed2 = 0;
                 int tileX = (WorldX2 + bSize / 2) / bSize;
                 int tileY = (WorldY2 + bSize / 2) / bSize;
@@ -121,7 +127,6 @@ public class Pablo extends Entity {
                 squares = dice.roll() * 80;
 
             } else if (squares2 == (dice2.result*80)-16) {
-                System.out.println("works!!");
                 gp.pabloCastle = false;
                 gp.pabloMarket = false;
 

@@ -7,7 +7,7 @@ import static entity.Carlo.squares;
 import static entity.Entity.*;
 import static entity.Entity.WorldY;
 import static entity.Pablo.squares2;
-import static main.GamePanel.battleState;
+import static main.GamePanel.*;
 import static main.KeyHandler.startBattle;
 import static main.UI.text2;
 import static tile.TileManager.bSize;
@@ -34,10 +34,6 @@ public class BattleSystem {
 
         while (z==0) {
             wait = true;
-            System.out.println(pabloMoneyB);
-            System.out.println(carloMoneyB);
-            System.out.println(pabloPowerB);
-            System.out.println(carloPowerB);
             z++;
         }
 
@@ -52,7 +48,6 @@ public class BattleSystem {
                     player.WorldY = bSize;
                     if (startBattle) {
                         wait = false;
-                        System.out.println("Pablo wins!!");  // Print winner
                         player2.money += ((player2.power - player.power) / (player.power + player2.power)) * player.money;
                         player.money -= ((player2.power - player.power) / (player.power + player2.power)) * player.money;
                         player2.power -= player.power;
@@ -61,10 +56,10 @@ public class BattleSystem {
                         pabloPowerA = (int) player2.power;
                         carloMoneyA = (int) player.money;
                         pabloMoneyA = (int) player2.money;
-                        System.out.println(pabloMoneyA);
-                        System.out.println(carloMoneyA);
-                        System.out.println(pabloPowerA);
-                        System.out.println(carloPowerA);
+                        if (cPoints != 0) {
+                            pPoints = 1;
+                            cPoints = 0;
+                        }
                         battleOccurred = true;
                     }
                 }
@@ -74,11 +69,10 @@ public class BattleSystem {
                 PabloWon = false;
                 CarloWon = true;
                 if (!battleOccurred) {
-                    player2.WorldX2 = 0;
-                    player2.WorldY2 = bSize;
+                    player2.WorldX2 = bSize*11;
+                    player2.WorldY2 = bSize*10;
                     if (startBattle) {
                         wait = false;
-                        System.out.println("Carlo wins!!");  // Print winner
                         player.money += ((player.power - player2.power) / (player.power + player2.power)) * player2.money;
                         player2.money -= ((player.power - player2.power) / (player.power + player2.power)) * player2.money;
                         player.power -= player2.power;
@@ -87,10 +81,10 @@ public class BattleSystem {
                         pabloPowerA = (int) player2.power;
                         carloMoneyA = (int) player.money;
                         pabloMoneyA = (int) player2.money;
-                        System.out.println(pabloMoneyA);
-                        System.out.println(carloMoneyA);
-                        System.out.println(pabloPowerA);
-                        System.out.println(carloPowerA);
+                        if (pPoints != 0) {
+                            cPoints = 1;
+                            pPoints = 0;
+                        }
                         battleOccurred = true;
                     }
                 }
@@ -104,13 +98,12 @@ public class BattleSystem {
             //text2 = "Carlo wins!";  // Set battle result text
 
             if (!battleOccurred) {
-                player2.WorldX2 = 0;
-                player2.WorldY2 = bSize;
+                player2.WorldX2 = bSize*11;
+                player2.WorldY2 = bSize*10;
                 if (startBattle) {
                     wait = false;
                     PabloWon = false;
                     CarloWon = true;
-                    System.out.println("Carlo wins!!");  // Print winner
                     player.money += ((player.power - player2.power) / (player.power + player2.power)) * player2.money;
                     player2.money -= ((player.power - player2.power) / (player.power + player2.power)) * player2.money;
                     player.power -= player2.power;
@@ -119,10 +112,10 @@ public class BattleSystem {
                     pabloPowerA = (int) player2.power;
                     carloMoneyA = (int) player.money;
                     pabloMoneyA = (int) player2.money;
-                    System.out.println(pabloMoneyA);
-                    System.out.println(carloMoneyA);
-                    System.out.println(pabloPowerA);
-                    System.out.println(carloPowerA);
+                    if (pPoints != 0) {
+                        cPoints = 1;
+                        pPoints = 0;
+                    }
                     battleOccurred = true;
                 }
             }
@@ -146,10 +139,10 @@ public class BattleSystem {
                     pabloPowerA = (int) player2.power;
                     carloMoneyA = (int) player.money;
                     pabloMoneyA = (int) player2.money;
-                    System.out.println(pabloMoneyA);
-                    System.out.println(carloMoneyA);
-                    System.out.println(pabloPowerA);
-                    System.out.println(carloPowerA);
+                    if (cPoints != 0) {
+                        pPoints = 1;
+                        cPoints = 0;
+                    }
                     battleOccurred = true;
                 }
             }

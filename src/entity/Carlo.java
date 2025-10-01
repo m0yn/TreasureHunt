@@ -65,12 +65,18 @@ public class Carlo extends Entity {
 
         if (turn1 == true) {  // If it's player's turn
 
-            if (collisionOn) {  // If collision detected
+            if (collisionOn == true || WorldX < 0 || WorldX > 880) {  // If collision detected
                 turn2 = false;
                 speed = 0;
 
                 // Adjust player position based on collision and direction
-                if (WorldX % 80 != 0 && WorldY % 80 == 0 && direction == "left") {
+                if (WorldX < 0 && direction == "left") {
+                    WorldX = 0;
+                    squares += 16;
+                } else if (WorldX > 880 && direction == "right") {
+                    WorldX = 880;
+                    squares += 16;
+                } else if (WorldX % 80 != 0 && WorldY % 80 == 0 && direction == "left") {
                     WorldX = ((WorldX / 80) + 1) * 80;
                     squares += 16;
                 } else if (WorldX % 80 != 0 && WorldY % 80 == 0 && direction == "right") {
@@ -106,7 +112,8 @@ public class Carlo extends Entity {
                 speed = 16;  // Set movement speed
             }
 
-            if (squares == 0) {  // If movement is completed
+            if (squares <= 0) {  // If movement is completed
+                squares = 0;
                 speed = 0;  // Stop movement
 
                 // Get current tile position
@@ -121,7 +128,6 @@ public class Carlo extends Entity {
                 squares2 = dice2.roll() * 80;  // Roll dice for next player movement
 
             } else if (squares == (dice.result*80)-16) {
-                System.out.println("works!!");
                 gp.carloCastle = false;
                 gp.carloMarket = false;
 

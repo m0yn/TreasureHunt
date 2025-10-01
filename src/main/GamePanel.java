@@ -19,7 +19,7 @@ import static tile.TileManager.bSize;
 import static main.BattleSystem.battle;
 
 
-public class GamePanel extends JPanel implements Runnable {
+public class    GamePanel extends JPanel implements Runnable {
     public final int originalTileSize = 32;
     public final int scale = 3;
     public final int tileSize = originalTileSize * scale;
@@ -47,13 +47,13 @@ public class GamePanel extends JPanel implements Runnable {
     public static boolean carloWonGame, pabloWonGame;
 
     //
-    public boolean carloMarket, pabloMarket, carloCastle, pabloCastle, treasureFound, numsGenerated;
+    public boolean carloMarket, pabloMarket, carloCastle, pabloCastle, treasureFound, numsGenerated, chT, phT;
     public boolean tr1, tr2, tr3, tr4, tr5, li1, li2, li3, li4, li5, li6, li7, li8 ,li9 ,li10, li11 ,li12, li13,
     tre1, tre2, tre3, tre4, tre5, tre6, tre7, tre8, ptre1, ptre2, ptre3, ptre4, ptre5, ptre6, ptre7, ptre8,
             tre1c, tre2c, tre3c, tre4c, tre5c, tre6c, tre7c, tre8c;
     public int pabloMoney, carloMoney, pabloPower, carloPower, pabloPoints, carloPoints, remainingTreasures;
     public static int treasureIndex1, treasureIndex2, treasureIndex3, treasureIndex4, treasureIndex5, treasureIndex6, treasureIndex7, treasureIndex8;
-    public int cPoints = 0, pPoints = 0;
+    public static int cPoints = 0, pPoints = 0;
     public boolean t1, t2, t3, t4, t5, t6, t7, t8;
     boolean[] conditions = {t1, t2, t3, t4, t5, t6, t7, t8};
     public static int randomNumber;
@@ -166,7 +166,12 @@ public class GamePanel extends JPanel implements Runnable {
         }
 
         if (WorldX == WorldX2 && WorldY == WorldY2 && WorldX != 0) {
-            gameState = battleState;
+            if ((WorldX == bSize * 4 && WorldY == bSize) ||
+                    (WorldX == bSize * 6 && WorldY == bSize * 3) ||
+                    (WorldX == bSize && WorldY == bSize * 7) ||
+                    (WorldX == bSize * 4 && WorldY == bSize * 10) ||
+                    (WorldX == bSize * 8 && WorldY == bSize * 8) || (WorldX == bSize * 6 && WorldY == bSize * 5)) {
+            } else gameState = battleState;
         }
 
         if (keyH.startBoard) {
@@ -178,190 +183,181 @@ public class GamePanel extends JPanel implements Runnable {
         }
 
         if ((WorldX == bSize * 4 && WorldY == bSize || WorldX == bSize * 6 && WorldY == bSize * 3 || WorldX == bSize && WorldY == bSize * 7
-                || WorldX == bSize * 4 && WorldY == bSize * 10 || WorldX == bSize * 8 && WorldY == bSize * 8) && !carloMarket && squares != dice.result*80) {
+                || WorldX == bSize * 4 && WorldY == bSize * 10 || WorldX == bSize * 8 && WorldY == bSize * 8) && !carloMarket) {
             gameState = marketState;
-            if (turn1 && keyH.select) {
 
+            if (keyH.startGame) carloMarket = true;
+
+            if (turn1 && keyH.select) {
+                carloMarket = true;
                 if (yX == -1 || yX == 0 || yX == 3 || yX == 6) {
-                    carlo.money -= 50;
-                    carlo.power++;
-                    if (carlo.money < 0) {
-                        carlo.money += 50;
-                        carlo.power--;
+                    if (carlo.money >= 50) {   // only allow if enough money
+                        carlo.money -= 50;
+                        carlo.power++;
                     }
-                    carloMarket = true;
                 } else if (yX == 1 || yX == 4 || yX == 7) {
-                    carlo.money -= 100;
-                    carlo.power += 2;
-                    if (carlo.money < 0) {
-                        carlo.money += 100;
-                        carlo.power -= 2;
+                    if (carlo.money >= 100) {
+                        carlo.money -= 100;
+                        carlo.power += 2;
                     }
-                    carloMarket = true;
                 } else if (yX == 2 || yX == 5 || yX == 8) {
-                    carlo.money -= 150;
-                    carlo.power += 3;
-                    if (carlo.money < 0) {
-                        carlo.money += 150;
-                        carlo.power -= 3;
+                    if (carlo.money >= 150) {
+                        carlo.money -= 150;
+                        carlo.power += 3;
                     }
-                    carloMarket = true;
                 } else if (yX == 9) {
-                    if (carlo.money >= 300) {
-                        randomNumber = Randomizer.generateNumberExcludingConditionally(conditions);
-                        System.out.println(randomNumber);
-                        carlo.money -= 300;
+                    if (carlo.money >= 800) {
+                        randomNumber = ui.randT;
+                        carlo.money -= 800;
                     }
-                    carloMarket = true;
                 }
             }
         }
 
         if ((WorldX2 == bSize * 4 && WorldY2 == bSize || WorldX2 == bSize * 6 && WorldY2 == bSize * 3 || WorldX2 == bSize && WorldY2 == bSize * 7
-                || WorldX2 == bSize * 4 && WorldY2 == bSize * 10 || WorldX2 == bSize * 8 && WorldY2 == bSize * 8) && !pabloMarket && squares2 != dice2.result*80) {
+                || WorldX2 == bSize * 4 && WorldY2 == bSize * 10 || WorldX2 == bSize * 8 && WorldY2 == bSize * 8) && !pabloMarket) {
             gameState = marketState;
-            if (turn2 && keyH.select) {
 
+            if (keyH.startGame) pabloMarket = true;
+
+            if (turn2 && keyH.select) {
+                pabloMarket = true;
                 if (yX == -1 || yX == 0 || yX == 3 || yX == 6) {
-                    pablo.money -= 50;
-                    pablo.power++;
-                    if (pablo.money < 0) {
-                        pablo.money += 50;
-                        pablo.power--;
+                    if (pablo.money >= 50) {
+                        pablo.money -= 50;
+                        pablo.power++;
                     }
-                    pabloMarket = true;
                 } else if (yX == 1 || yX == 4 || yX == 7) {
-                    pablo.money -= 100;
-                    pablo.power += 2;
-                    if (pablo.money < 0) {
-                        pablo.money += 100;
-                        pablo.power -= 2;
+                    if (pablo.money >= 100) {
+                        pablo.money -= 100;
+                        pablo.power += 2;
                     }
-                    pabloMarket = true;
                 } else if (yX == 2 || yX == 5 || yX == 8) {
-                    pablo.money -= 150;
-                    pablo.power += 3;
-                    if (pablo.money < 0) {
-                        pablo.money += 150;
-                        pablo.power -= 3;
+                    if (pablo.money >= 150) {
+                        pablo.money -= 150;
+                        pablo.power += 3;
                     }
-                    pabloMarket = true;
                 } else if (yX == 9) {
-                    if (pablo.money >= 300) {
-                        randomNumber = Randomizer.generateNumberExcludingConditionally(conditions);
-                        System.out.println(randomNumber);
-                        pablo.money -= 300;
+                    if (pablo.money >= 800) {
+                        randomNumber = ui.randT;
+                        pablo.money -= 800;
                     }
-                    pabloMarket = true;
                 }
             }
         }
 
         if (WorldX == bSize * 6 && WorldY == bSize * 5 && !carloCastle && squares != dice.result*80) {
             gameState = castleState;
-            if (keyH.select) {
+            carloCastle = true;
                 if (cPoints != 0) {
                 carlo.points += cPoints;
                 cPoints = 0;
-                carlo.money += 500;
-                System.out.println(carlo.money);
+                chT = true;
                 ui.treasureSought = false;
-                carloCastle = true;
-                } else
-                    carloCastle = true;
-            }
-
+                }
         }
 
         // If Pablo lands at the castle tile, switch to Castle State.
         if (WorldX2 == bSize * 6 && WorldY2 == bSize * 5 && !pabloCastle && squares2 != dice2.result*80) { // "!pabloCastle" condition to only do the action once. "squares2 != dice2.result" condition so that player isn't stuck in the state if his turn ends on a castle tile.
             gameState = castleState; // switches to Castle State
-            if (keyH.select) {
+            pabloCastle = true;
                 if (pPoints != 0) {
                     pablo.points += pPoints;
                     pPoints = 0;
-                    pablo.money += 500;
-                    System.out.println(pablo.money);
+                    phT = true;
                     ui.treasureSought = false;
-                    pabloCastle = true;
-                } else
-                    pabloCastle = true;
-            }
-
+                }
         }
-
-
-//        if (gameState == castleState) {
-//            if ((turn1 && squares == 0) || (turn1 && squares !=0 && squares != dice.result*80)) {
-//                if (cPoints != 0) {
-//                    carlo.points = cPoints;
-//                    carlo.money += 500;
-//                    ui.treasureSought = false;
-//                }
-//            }
-//        }
-
-
 
         // For Traps, for Carlo.
         if (WorldX == bSize*8 && WorldY == bSize*10 && !tr1) {
                 gameState = trapState;
 
                 if (keyH.select) {
-                    if (ySX == 0 || ySX == -1) {
+                    if (carlo.money >= 50 && (ySX == 0 || ySX == -1)) {
                         carlo.money -= 50;
                         tr1 = true;
                     } else if (ySX == 1 || ySX == 2) {
                         carlo.power--;
                         tr1 = true;
+                        if (carlo.power <= 0) {
+                            carlo.power = 0;
+                            WorldX = 0;
+                            WorldY = bSize;
+                            squares = 0;
+                        }
                     }
                 }
             } else if (WorldX == bSize*5 && WorldY == bSize*8 && !tr2) {
             gameState = trapState;
 
             if (keyH.select) {
-                if (ySX == 0 || ySX == -1) {
+                if (carlo.money >= 50 && (ySX == 0 || ySX == -1)) {
                     carlo.money -= 50;
                     tr2 = true;
                 } else if (ySX == 1 || ySX == 2) {
                     carlo.power--;
                     tr2 = true;
+                    if (carlo.power <= 0) {
+                        carlo.power = 0;
+                        WorldX = 0;
+                        WorldY = bSize;
+                        squares = 0;
+                    }
                 }
             }
         } else if (WorldX == bSize*4 && WorldY == bSize*5 && !tr3) {
             gameState = trapState;
 
             if (keyH.select) {
-                if (ySX == 0 || ySX == -1) {
+                if (carlo.money >= 50 && (ySX == 0 || ySX == -1)) {
                     carlo.money -= 50;
                     tr3 = true;
                 } else if (ySX == 1 || ySX == 2) {
                     carlo.power--;
                     tr3 = true;
+                    if (carlo.power <= 0) {
+                        carlo.power = 0;
+                        WorldX = 0;
+                        WorldY = bSize;
+                        squares = 0;
+                    }
                 }
             }
         } else if (WorldX == bSize && WorldY == bSize*3 && !tr4) {
             gameState = trapState;
 
             if (keyH.select) {
-                if (ySX == 0 || ySX == -1) {
+                if (carlo.money >= 50 && (ySX == 0 || ySX == -1)) {
                     carlo.money -= 50;
                     tr4 = true;
                 } else if (ySX == 1 || ySX == 2) {
                     carlo.power--;
                     tr4 = true;
+                    if (carlo.power <= 0) {
+                        carlo.power = 0;
+                        WorldX = 0;
+                        WorldY = bSize;
+                        squares = 0;
+                    }
                 }
             }
         } else if (WorldX == bSize*10 && WorldY == bSize && !tr5) {
             gameState = trapState;
 
             if (keyH.select) {
-                if (ySX == 0 || ySX == -1) {
+                if (carlo.money >= 50 && (ySX == 0 || ySX == -1)) {
                     carlo.money -= 50;
                     tr5 = true;
                 } else if (ySX == 1 || ySX == 2) {
                     carlo.power--;
                     tr5 = true;
+                    if (carlo.power <= 0) {
+                        carlo.power = 0;
+                        WorldX = 0;
+                        WorldY = bSize;
+                        squares = 0;
+                    }
                 }
             }
         }
@@ -371,60 +367,90 @@ public class GamePanel extends JPanel implements Runnable {
             gameState = trapState;
 
             if (keyH.select) {
-                if (ySX == 0 || ySX == -1) {
+                if (pablo.money >= 50 && (ySX == 0 || ySX == -1)) {
                     pablo.money -= 50;
                     tr1 = true;
                 } else if (ySX == 1 || ySX == 2) {
                     pablo.power--;
                     tr1 = true;
+                    if (pablo.power <= 0) {
+                        pablo.power = 0;
+                        WorldX2 = bSize*11;
+                        WorldY2 = bSize*10;
+                        squares2 = 0;
+                    }
                 }
             }
         } else if (WorldX2 == bSize*5 && WorldY2 == bSize*8 && !tr2) {
             gameState = trapState;
 
             if (keyH.select) {
-                if (ySX == 0 || ySX == -1) {
+                if (pablo.money >= 50 && (ySX == 0 || ySX == -1)) {
                     pablo.money -= 50;
                     tr2 = true;
                 } else if (ySX == 1 || ySX == 2) {
                     pablo.power--;
                     tr2 = true;
+                    if (pablo.power <= 0) {
+                        pablo.power = 0;
+                        WorldX2 = bSize*11;
+                        WorldY2 = bSize*10;
+                        squares2 = 0;
+                    }
                 }
             }
         } else if (WorldX2 == bSize*4 && WorldY2 == bSize*5 && !tr3) {
             gameState = trapState;
 
             if (keyH.select) {
-                if (ySX == 0 || ySX == -1) {
+                if (pablo.money >= 50 && (ySX == 0 || ySX == -1)) {
                     pablo.money -= 50;
                     tr3 = true;
                 } else if (ySX == 1 || ySX == 2) {
                     pablo.power--;
                     tr3 = true;
+                    if (pablo.power <= 0) {
+                        pablo.power = 0;
+                        WorldX2 = bSize*11;
+                        WorldY2 = bSize*10;
+                        squares2 = 0;
+                    }
                 }
             }
         } else if (WorldX2 == bSize && WorldY2 == bSize*3 && !tr4) {
             gameState = trapState;
 
             if (keyH.select) {
-                if (ySX == 0 || ySX == -1) {
+                if (pablo.money >= 50 && (ySX == 0 || ySX == -1)) {
                     pablo.money -= 50;
                     tr4 = true;
                 } else if (ySX == 1 || ySX == 2) {
                     pablo.power--;
                     tr4 = true;
+                    if (pablo.power <= 0) {
+                        pablo.power = 0;
+                        WorldX2 = bSize*11;
+                        WorldY2 = bSize*10;
+                        squares2 = 0;
+                    }
                 }
             }
         } else if (WorldX2 == bSize*10 && WorldY2 == bSize && !tr5) {
             gameState = trapState;
 
             if (keyH.select) {
-                if (ySX == 0 || ySX == -1) {
+                if (pablo.money >= 50 && (ySX == 0 || ySX == -1)) {
                     pablo.money -= 50;
                     tr5 = true;
                 } else if (ySX == 1 || ySX == 2) {
                     pablo.power--;
                     tr5 = true;
+                    if (pablo.power <= 0) {
+                        pablo.power = 0;
+                        WorldX2 = bSize*11;
+                        WorldY2 = bSize*10;
+                        squares2 = 0;
+                    }
                 }
             }
         }
@@ -886,8 +912,6 @@ public class GamePanel extends JPanel implements Runnable {
 
                 gameState = treasureState;
 
-                System.out.println("Index is " + treasureIndex1);
-
                 switch (treasureIndex1) {
 
                     case 1:
@@ -934,8 +958,6 @@ public class GamePanel extends JPanel implements Runnable {
             } else if (WorldX == bSize * 8 && WorldY == bSize * 2 && !tre2) {
                 gameState = treasureState;
 
-                System.out.println("Index is " + treasureIndex2);
-
                 switch (treasureIndex2) {
 
                     case 1:
@@ -979,8 +1001,6 @@ public class GamePanel extends JPanel implements Runnable {
                 tre2 = true;
             } else if (WorldX == bSize * 6 && WorldY == bSize * 4 && !tre3) {
                 gameState = treasureState;
-
-                System.out.println("Index is " + treasureIndex3);
 
                 switch (treasureIndex3) {
 
@@ -1026,8 +1046,6 @@ public class GamePanel extends JPanel implements Runnable {
             } else if (WorldX == bSize * 9 && WorldY == bSize * 5 && !tre4) {
                 gameState = treasureState;
 
-                System.out.println("Index is " + treasureIndex4);
-
                 switch (treasureIndex4) {
 
                     case 1:
@@ -1071,8 +1089,6 @@ public class GamePanel extends JPanel implements Runnable {
                 tre4 = true;
             } else if (WorldX == bSize * 2 && WorldY == bSize * 6 && !tre5) {
                 gameState = treasureState;
-
-                System.out.println("Index is " + treasureIndex5);
 
                 switch (treasureIndex5) {
 
@@ -1118,7 +1134,6 @@ public class GamePanel extends JPanel implements Runnable {
             } else if (WorldX == bSize * 6 && WorldY == bSize * 7 && !tre6) {
                 gameState = treasureState;
 
-                System.out.println("Index is " + treasureIndex6);
                 switch (treasureIndex6) {
 
                     case 1:
@@ -1162,8 +1177,6 @@ public class GamePanel extends JPanel implements Runnable {
                 tre6 = true;
             } else if (WorldX == bSize * 3 && WorldY == bSize * 9 && !tre7) {
                 gameState = treasureState;
-
-                System.out.println("Index is " + treasureIndex7);
 
                 switch (treasureIndex7) {
 
@@ -1209,8 +1222,6 @@ public class GamePanel extends JPanel implements Runnable {
             } else if (WorldX == bSize * 9 && WorldY == bSize * 9 && !tre8) {
 
                 gameState = treasureState;
-
-                System.out.println("Index is " + treasureIndex8);
 
                 switch (treasureIndex8) {
 
@@ -1261,7 +1272,6 @@ public class GamePanel extends JPanel implements Runnable {
 
                 gameState = treasureState;
 
-                System.out.println("Index is " + treasureIndex1);
                 switch (treasureIndex1) {
 
                     case 1:
@@ -1307,7 +1317,6 @@ public class GamePanel extends JPanel implements Runnable {
             } else if (WorldX2 == bSize * 8 && WorldY2 == bSize * 2 && !ptre2) {
                 gameState = treasureState;
 
-                System.out.println("Index is " + treasureIndex2);
                 switch (treasureIndex2) {
 
                     case 1:
@@ -1353,7 +1362,6 @@ public class GamePanel extends JPanel implements Runnable {
             } else if (WorldX2 == bSize * 6 && WorldY2 == bSize * 4 && !ptre3) {
                 gameState = treasureState;
 
-                System.out.println("Index is " + treasureIndex3);
 
                 switch (treasureIndex3) {
 
@@ -1400,7 +1408,6 @@ public class GamePanel extends JPanel implements Runnable {
             } else if (WorldX2 == bSize * 9 && WorldY2 == bSize * 5 && !ptre4) {
                 gameState = treasureState;
 
-                System.out.println("Index is " + treasureIndex4);
                 switch (treasureIndex4) {
 
                     case 1:
@@ -1446,7 +1453,6 @@ public class GamePanel extends JPanel implements Runnable {
             } else if (WorldX2 == bSize * 2 && WorldY2 == bSize * 6 && !ptre5) {
                 gameState = treasureState;
 
-                System.out.println("Index is " + treasureIndex5);
                 switch (treasureIndex5) {
 
                     case 1:
@@ -1482,7 +1488,7 @@ public class GamePanel extends JPanel implements Runnable {
                         t8 = true;
                         break;
                 }
-                if (treasureIndex1 == ui.randT) {
+                if (treasureIndex5 == ui.randT) {
                     pPoints++;
                     tre5c = true;
                     tre5 = true;
@@ -1492,7 +1498,6 @@ public class GamePanel extends JPanel implements Runnable {
             } else if (WorldX2 == bSize * 6 && WorldY2 == bSize * 7 && !ptre6) {
                 gameState = treasureState;
 
-                System.out.println("Index is " + treasureIndex6);
                 switch (treasureIndex6) {
 
                     case 1:
@@ -1538,7 +1543,6 @@ public class GamePanel extends JPanel implements Runnable {
             } else if (WorldX2 == bSize * 3 && WorldY2 == bSize * 9 && !ptre7) {
                 gameState = treasureState;
 
-                System.out.println("Index is " + treasureIndex7);
                 switch (treasureIndex7) {
 
                     case 1:
@@ -1585,8 +1589,6 @@ public class GamePanel extends JPanel implements Runnable {
 
                 gameState = treasureState;
 
-                System.out.println("Index is " + treasureIndex8);
-
                 switch (treasureIndex8) {
 
                     case 1:
@@ -1632,11 +1634,18 @@ public class GamePanel extends JPanel implements Runnable {
 
 
         if (WorldX == WorldX2 && WorldY == WorldY2 && WorldX != 0) {
-            gameState = battleState;
-            keyH.startGame = false;
+            if ((WorldX == bSize * 4 && WorldY == bSize) ||
+            (WorldX == bSize * 6 && WorldY == bSize * 3) ||
+                    (WorldX == bSize && WorldY == bSize * 7) ||
+                    (WorldX == bSize * 4 && WorldY == bSize * 10) ||
+                    (WorldX == bSize * 8 && WorldY == bSize * 8) || (WorldX == bSize * 6 && WorldY == bSize * 5)) {
+            } else {
+                gameState = battleState;
+                keyH.startGame = false;
+            }
         }
 
-        if (remainingTreasures == 0) {
+        if (carlo.points >= 5 || pablo.points >= 5 || remainingTreasures == 0) {
             gameState = endState;
             if (carlo.points > pablo.points) {
                 carloWonGame = true;

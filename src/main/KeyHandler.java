@@ -94,11 +94,9 @@ public class KeyHandler implements KeyListener {
             switch (e.getKeyCode()) {
                 case KeyEvent.VK_UP:
                     yX--;
-                    System.out.println(yX);
                     break;
                 case KeyEvent.VK_DOWN:
                     yX++;
-                    System.out.println(yX);
                     break;
                 case KeyEvent.VK_SPACE:
                     select = true;
@@ -121,14 +119,11 @@ public class KeyHandler implements KeyListener {
             switch (e.getKeyCode()) {
                 case KeyEvent.VK_DOWN:
                     ySX--;
-                    System.out.println(ySX);
                     break;
                 case KeyEvent.VK_UP:
                     ySX++;
-                    System.out.println(ySX);
                     break;
                 case KeyEvent.VK_SPACE:
-                    System.out.println("selected");
                     select = true;
                     break;
                 case KeyEvent.VK_ENTER:

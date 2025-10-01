@@ -52,25 +52,4 @@ public class Randomizer { // Declaration of the Dice class
         generatedNumbers.add(result);
         return result;
     }
-
-    public static int generateNumberExcludingConditionally(boolean[] conditions) {
-        Random random = new Random();
-        int result;
-
-        do {
-            result = random.nextInt(8) + 1;
-        } while (isExcluded(result, conditions));
-
-        return result;
-    }
-
-    private static boolean isExcluded(int number, boolean[] conditions) {
-        for (int i = 0; i < conditions.length; i++) {
-            if (conditions[i] && (number == (i + 1))) {
-                return true;
-            }
-        }
-        return false;
-    }
-
 }
