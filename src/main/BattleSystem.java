@@ -44,13 +44,12 @@ public class BattleSystem {
                 PabloWon = true;
                 CarloWon = false;
                 if (!battleOccurred) {
-                    player.WorldX = 0;
-                    player.WorldY = bSize;
                     if (startBattle) {
+                        player.WorldX = 0;
+                        player.WorldY = bSize;
+                        squares = 0;
                         wait = false;
-                        player2.money += ((player2.power - player.power) / (player.power + player2.power)) * player.money;
-                        player.money -= ((player2.power - player.power) / (player.power + player2.power)) * player.money;
-                        player2.power -= player.power;
+                        player2.power = 0;
                         player.power = 0;
                         carloPowerA = (int) player.power;
                         pabloPowerA = (int) player2.power;
@@ -69,13 +68,12 @@ public class BattleSystem {
                 PabloWon = false;
                 CarloWon = true;
                 if (!battleOccurred) {
-                    player2.WorldX2 = bSize*11;
-                    player2.WorldY2 = bSize*10;
                     if (startBattle) {
+                        player2.WorldX2 = bSize*11;
+                        player2.WorldY2 = bSize*10;
+                        squares2 = 0;
                         wait = false;
-                        player.money += ((player.power - player2.power) / (player.power + player2.power)) * player2.money;
-                        player2.money -= ((player.power - player2.power) / (player.power + player2.power)) * player2.money;
-                        player.power -= player2.power;
+                        player.power = 0;
                         player2.power = 0;
                         carloPowerA = (int) player.power;
                         pabloPowerA = (int) player2.power;
@@ -98,9 +96,10 @@ public class BattleSystem {
             //text2 = "Carlo wins!";  // Set battle result text
 
             if (!battleOccurred) {
-                player2.WorldX2 = bSize*11;
-                player2.WorldY2 = bSize*10;
                 if (startBattle) {
+                    player2.WorldX2 = bSize*11;
+                    player2.WorldY2 = bSize*10;
+                    squares2 = 0;
                     wait = false;
                     PabloWon = false;
                     CarloWon = true;
@@ -126,11 +125,11 @@ public class BattleSystem {
             PabloWon = true;
             CarloWon = false;
             if (!battleOccurred) {
-                player.WorldX = 0;
-                player.WorldY = bSize;
                 if (startBattle) {
+                    player.WorldX = 0;
+                    player.WorldY = bSize;
+                    squares = 0;
                     wait = false;
-                    System.out.println("Pablo wins!!");  // Print winner
                     player2.money += ((player2.power - player.power) / (player.power + player2.power)) * player.money;
                     player.money -= ((player2.power - player.power) / (player.power + player2.power)) * player.money;
                     player2.power -= player.power;

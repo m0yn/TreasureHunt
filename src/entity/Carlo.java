@@ -116,6 +116,8 @@ public class Carlo extends Entity {
                 squares = 0;
                 speed = 0;  // Stop movement
 
+                if (!(WorldX == bSize * 6 && WorldY == bSize * 5)) gp.carloCastle = false;
+
                 // Get current tile position
                 int tileX = (WorldX + bSize / 2) / bSize;
                 int tileY = (WorldY + bSize / 2) / bSize;
@@ -124,11 +126,12 @@ public class Carlo extends Entity {
                 WorldX = tileX * bSize;
                 WorldY = tileY * bSize;
 
-                turn2 = true;  // Set next player's turn
-                squares2 = dice2.roll() * 80;  // Roll dice for next player movement
+                turn1 = false;
+                turn2 = true;
+                squares2 = dice2.roll() * 80;
 
             } else if (squares == (dice.result*80)-16) {
-                gp.carloCastle = false;
+
                 gp.carloMarket = false;
 
                 if (gp.tre1 && !gp.tre1c) {

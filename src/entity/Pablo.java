@@ -119,15 +119,21 @@ public class Pablo extends Entity {
 
                 squares2 = 0;
                 speed2 = 0;
+
+                if (!(WorldX2 == bSize * 6 && WorldY2 == bSize * 5)) gp.pabloCastle = false;
+
                 int tileX = (WorldX2 + bSize / 2) / bSize;
                 int tileY = (WorldY2 + bSize / 2) / bSize;
+
                 WorldX2 = tileX * bSize;
                 WorldY2 = tileY * bSize;
+
+                turn2 = false;
                 turn1 = true;
                 squares = dice.roll() * 80;
 
             } else if (squares2 == (dice2.result*80)-16) {
-                gp.pabloCastle = false;
+
                 gp.pabloMarket = false;
 
                 if (gp.ptre1 && !gp.tre1c) {

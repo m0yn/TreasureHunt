@@ -42,9 +42,8 @@ public class    GamePanel extends JPanel implements Runnable {
     public static final int trapState = 7;
     public static final int lostState = 8;
     public static final int treasureState = 9;
-    public static final int inventoryState = 10;
     public static final int endState = 11;
-    public static boolean carloWonGame, pabloWonGame;
+    public static boolean carloWonGame, pabloWonGame,  bttle;
 
     //
     public boolean carloMarket, pabloMarket, carloCastle, pabloCastle, treasureFound, numsGenerated, chT, phT;
@@ -1684,10 +1683,7 @@ public class    GamePanel extends JPanel implements Runnable {
             pablo.update2();
         }
 
-        if (gameState == battleState) {
-            // Engage battle mode
-            battle(carlo, pablo);
-        }
+        if (gameState == battleState) battle(carlo, pablo);
 
     }
 

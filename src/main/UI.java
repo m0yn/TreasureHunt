@@ -1739,7 +1739,5 @@ public class UI {
         if (currentImageIndex >= gif.length) {
             currentImageIndex = 0;
         }
-
     }
-
 }
