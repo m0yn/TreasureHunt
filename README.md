@@ -20,6 +20,7 @@ _A fun, competitive, and nostalgic local multiplayer adventure! Two players take
 
 - The Status Board is available to the players at any moment with the press of a button.
 - Whenever you are prompted in the game, you must select an option with Space and *then* press Enter to continue the game.
+- You simply press Enter to continue if you ever get a popup for: finding a treasure, finding a lost item, or after delivering the treasure to the castle.
 - When you are in the battle screen, you must initiate the battle with the B button in order to be allowed to continue the game with Enter.
 - When you land in a trap, you must select an option with Space before you are allowed to continue the game with Enter. If you have no money to pay then you must select the "Take the hit" option in order to continue.
 
