@@ -83,7 +83,7 @@ The victor of the battle will take a certain amount of money from their defeated
 The winner of the battle will take their defeated opponent's treasure and send them back to their starting square, regardless of the power points' difference.
 
 ## Setup
-1. Make sure you have **Java 21 or higher** installed. You can download the latest Java SE directly from [Oracle's website](https://www.oracle.com/java/technologies/downloads/).
+1. Make sure you have **Java 21 or higher** installed. You can download the latest Java SE directly from [Oracle's website](https://www.oracle.com/java/technologies/downloads/#jdk25-windows).
 3. Download the game from the [Releases](https://github.com/m0yn/TreasureHunt/releases) page.
 4. Run the .jar file and have fun!
 
