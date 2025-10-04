@@ -18,8 +18,13 @@ _A fun, competitive, and nostalgic local multiplayer adventure! Two players take
 | Status Board  | P |
 | Fight (In Battle Screen)  | B |
 
+- The Status Board is available to the players at any moment with the press of a button.
+- Whenever you are prompted in the game, you must select an option with Space and *then* press Enter to continue the game.
+- When you are in the battle screen, you must initiate the battle with the B button in order to be allowed to continue the game with Enter.
+- When you land in a trap, you must select an option with Space before you are allowed to continue the game with Enter. If you have no money to pay then you must select the "Take the hit" option in order to continue.
+
 ## Objective
-Players take turns based on rolling the dice to explore the houses in the map, each of which includes either a stash of money, a trap, or a treasure. Your goal is to find the treasure currently sought after by the castle, which is written in the status board. Once you do you will head to the castle to sell the treasure to the guard and be on your way to find the next treasure. The player who collects more treasures at the end of the game wins! If the game ends with players having the same number of treasures found each then the game will use the power points as a tiebreaker, followed by money and then finally if all attributes are equal, the winner will be the player who delivered their 4 treasures first.
+Players take turns based on rolling the dice to explore the houses in the map, each of which includes either a stash of money, a trap, or a treasure. Your goal is to find the treasure currently sought after by the castle, which is written in the status board. You do this by going through and exploring the houses in the map. Once you find the sought after treasure you will head to the castle to hand the treasure to the guard and be on your way to find the next treasure. The player who collects more treasures at the end of the game wins! If the game ends with players having the same number of treasures found each then the game will use the power points as a tiebreaker, followed by money and then finally if all attributes are equal, the winner will be the player who delivered their 4 treasures first.
 ## Map
 The map is comprised of 102 squares (including each character’s starting square). The map includes 32 locations (26 Houses, 5 Markets, and the Castle), 4 protruding wall blocks, and the 2 main characters (Carlo and Pablo).
  The 26 houses contain:
